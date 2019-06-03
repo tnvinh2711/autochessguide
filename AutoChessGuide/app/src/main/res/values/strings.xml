@@ -1,7 +1,5 @@
 <resources>
-    <string name="app_name">Duo Example</string>
-
-    <string name="hello_blank_fragment">This is the main fragment</string>
+    <string name="app_name">Auto Chess Guild</string>
 
     <array name="menuOptions">
         <item>Units</item>

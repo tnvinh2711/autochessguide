@@ -2,9 +2,13 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    >
-
+    android:layout_height="140dp"
+   >
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:src="@drawable/wall"
+        android:scaleType="centerCrop"/>
     <TextView
         android:id="@+id/duo_view_header_text_title"
         android:layout_width="wrap_content"
@@ -13,9 +17,12 @@
         android:layout_marginTop="32dp"
         android:text="Auto Chess"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@android:color/white"
-        android:textSize="24sp"
-        android:textStyle="bold"/>
+        android:textSize="30sp"
+        android:textColor="@color/light_font"
+        android:shadowColor="@color/text_shadow"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="2" />
 
     <TextView
         android:id="@+id/duo_view_header_text_sub_title"
@@ -25,14 +32,10 @@
         android:layout_marginLeft="32dp"
         android:text="GUIDE"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@android:color/white"
+        android:textColor="@color/light_font"
+        android:shadowColor="@color/text_shadow"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="2"
         android:textStyle="italic"/>
-
-    <View
-        android:id="@+id/duo_view_header_border"
-        android:layout_width="match_parent"
-        android:layout_height="0.1dp"
-        android:layout_below="@+id/duo_view_header_text_sub_title"
-        android:layout_marginTop="32dp"
-        android:background="@android:color/white"/>
 </RelativeLayout>

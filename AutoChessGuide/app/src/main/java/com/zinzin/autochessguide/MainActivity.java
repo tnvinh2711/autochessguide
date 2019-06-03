@@ -6,10 +6,23 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.zinzin.autochessguide.fragment.BuiderFragment;
+import com.zinzin.autochessguide.fragment.CreepsFragment;
+import com.zinzin.autochessguide.fragment.ItemFragment;
+import com.zinzin.autochessguide.fragment.UnitsFragment;
+import com.zinzin.autochessguide.model.Units;
+import com.zinzin.autochessguide.utils.SetImage;
+import com.zinzin.autochessguide.utils.Utils;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import nl.psdcompany.duonavigationdrawer.views.DuoDrawerLayout;
 import nl.psdcompany.duonavigationdrawer.views.DuoMenuView;
@@ -18,6 +31,8 @@ import nl.psdcompany.duonavigationdrawer.widgets.DuoDrawerToggle;
 public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMenuClickListener {
     private MenuAdapter mMenuAdapter;
     private ViewHolder mViewHolder;
+    private UnitsFragment unitsFragment;
+    private List<Units> unitsListFull;
 
     private ArrayList<String> mTitles = new ArrayList<>();
 
@@ -39,10 +54,19 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
         // Handle drawer actions
         handleDrawer();
 
-        // Show main fragment in container
-        goToFragment(new MainFragment(), false);
         mMenuAdapter.setViewSelected(0, true);
         setTitle(mTitles.get(0));
+        String text = Utils.parseFile(this,"Units.txt");
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<Units>>() {}.getType();
+        List<Units> unitsList = gson.fromJson(text, type);
+        unitsListFull = SetImage.fullUnitsList(unitsList);
+        Log.e("parseUnits: ",unitsListFull.size()+"");
+        // Show main fragment in container
+        unitsFragment = UnitsFragment.newInstance();
+        unitsFragment.setListUnits(unitsListFull);
+        goToFragment(unitsFragment, false);
+
     }
 
     private void handleToolbar() {
@@ -75,7 +99,6 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
 
     @Override
     public void onHeaderClicked() {
-        Toast.makeText(this, "onHeaderClicked", Toast.LENGTH_SHORT).show();
     }
 
     private void goToFragment(Fragment fragment, boolean addToBackStack) {
@@ -85,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
             transaction.addToBackStack(null);
         }
 
-        transaction.add(R.id.container, fragment).commit();
+        transaction.replace(R.id.container, fragment).commit();
     }
 
     @Override
@@ -98,8 +121,22 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
 
         // Navigate to the right fragment
         switch (position) {
+            case 0:
+                unitsFragment = UnitsFragment.newInstance();
+                unitsFragment.setListUnits(unitsListFull);
+                goToFragment(unitsFragment, false);
+                break;
+            case 1:
+                goToFragment(new ItemFragment(), false);
+                break;
+            case 2:
+                goToFragment(new CreepsFragment(), false);
+                break;
+            case 3:
+                goToFragment(new BuiderFragment(), false);
+                break;
             default:
-                goToFragment(new MainFragment(), false);
+                goToFragment(new UnitsFragment(), false);
                 break;
         }
 
@@ -118,5 +155,9 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
             mToolbar = (Toolbar) findViewById(R.id.toolbar);
             mToolbar.setBackgroundColor(getResources().getColor(R.color.toolbar));
         }
+    }
+
+    @Override
+    public void onBackPressed() {
     }
 }
