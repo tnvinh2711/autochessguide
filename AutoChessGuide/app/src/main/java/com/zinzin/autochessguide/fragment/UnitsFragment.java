@@ -24,10 +24,12 @@ import android.widget.Toast;
 import com.adroitandroid.chipcloud.ChipCloud;
 import com.adroitandroid.chipcloud.ChipListener;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.gson.Gson;
 import com.zinzin.autochessguide.DetailActivity;
 import com.zinzin.autochessguide.R;
 import com.zinzin.autochessguide.adapter.UnitsFullAdapter;
 import com.zinzin.autochessguide.model.Units;
+import com.zinzin.autochessguide.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -120,7 +122,9 @@ public class UnitsFragment extends Fragment {
         unitsFullAdapter.setListener(new UnitsFullAdapter.OnItemClickListener() {
             @Override
             public void OnItemClick(Units item, int position) {
-                startActivity(new Intent(getActivity(), DetailActivity.class));
+                Intent intent = new Intent(getActivity(), DetailActivity.class);
+                intent.putExtra("unit", Utils.convertObjToJson(item));
+                startActivity(intent);
             }
         });
     }
