@@ -46,7 +46,9 @@ public class UnitsFullAdapter extends RecyclerView.Adapter<UnitsFullAdapter.View
         Units units = unitsList.get(position);
         viewHolder.ivIconUnit.setImageDrawable(activity.getResources().getDrawable(units.getIcon_image()));
         viewHolder.tvNameUnit.setText(units.getName());
+        viewHolder.tvNameUnit.setTextColor(activity.getResources().getColor(units.getColor_name()));
         viewHolder.tvNameUnitDota.setText("("+units.getDotaConvert()+")");
+        viewHolder.tvNameUnitDota.setTextColor(activity.getResources().getColor(units.getColor_name()));
     }
     public void updateList(List<Units> list){
         unitsList = list;

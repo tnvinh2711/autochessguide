@@ -10,6 +10,7 @@ public class Units {
     private int icon_image;
     private int mini_image;
     private int skill_image;
+    private int color_name;
     @SerializedName("name")
     @Expose
     private String name;
@@ -239,5 +240,13 @@ public class Units {
 
     public void setSkill_image(int skill_image) {
         this.skill_image = skill_image;
+    }
+
+    public int getColor_name() {
+        return color_name;
+    }
+
+    public void setColor_name(int color_name) {
+        this.color_name = color_name;
     }
 }

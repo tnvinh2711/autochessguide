@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +30,10 @@ import com.zinzin.autochessguide.adapter.UnitsFullAdapter;
 import com.zinzin.autochessguide.model.Units;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -46,9 +50,9 @@ public class UnitsFragment extends Fragment {
     private List<Units> unitsList = new ArrayList<>();
     private List<Units> unitsFilter = new ArrayList<>();
 
-    private List<String> listCostSelected = new ArrayList<>();
-    private List<String> listClassSelected = new ArrayList<>();
-    private List<String> listRacesSelected = new ArrayList<>();
+    private String costSelected = "";
+    private String classSelected = "";
+    private String racesSelected = "";
 
     private boolean isFilter = false;
 
@@ -138,34 +142,34 @@ public class UnitsFragment extends Fragment {
         chipCloudCost.setChipListener(new ChipListener() {
             @Override
             public void chipSelected(int index) {
-                listCostSelected.add(listCost[index]);
+                costSelected = listCost[index];
             }
 
             @Override
             public void chipDeselected(int index) {
-                listCostSelected.remove(listCost[index]);
+                costSelected = "";
             }
         });
         chipCloudClass.setChipListener(new ChipListener() {
             @Override
             public void chipSelected(int index) {
-                listClassSelected.add(listClass[index]);
+                classSelected = (listClass[index]);
             }
 
             @Override
             public void chipDeselected(int index) {
-                listClassSelected.remove(listClass[index]);
+                classSelected = "";
             }
         });
         chipCloudRace.setChipListener(new ChipListener() {
             @Override
             public void chipSelected(int index) {
-                listRacesSelected.add(listRace[index]);
+                racesSelected = listRace[index];
             }
 
             @Override
             public void chipDeselected(int index) {
-                listRacesSelected.remove(listRace[index]);
+                racesSelected = "";
             }
         });
         tvReset.setOnClickListener(new View.OnClickListener() {
@@ -175,9 +179,9 @@ public class UnitsFragment extends Fragment {
                 chipCloudClass.setMode(ChipCloud.Mode.NONE);
                 chipCloudRace.setMode(ChipCloud.Mode.NONE);
 
-                listCostSelected.clear();
-                listClassSelected.clear();
-                listRacesSelected.clear();
+                costSelected = "";
+                classSelected = "";
+                racesSelected = "";
 
             }
         });
@@ -185,45 +189,47 @@ public class UnitsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 mBottomSheetDialog.dismiss();
-                getListFilter(listCostSelected, listClassSelected, listRacesSelected);
             }
         });
         mBottomSheetDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
-                getListFilter(listCostSelected, listClassSelected, listRacesSelected);
+                getListFilter();
             }
         });
         mBottomSheetDialog.setContentView(sheetView);
     }
 
-    private void getListFilter(List<String> listCostSelected, List<String> listClassSelected, List<String> listRacesSelected) {
-        if(listClassSelected.size() > 0 || listCostSelected.size() >0 || listRacesSelected.size() > 0 ){
-            unitsFilter.clear();
+    private void getListFilter() {
+        unitsFilter.clear();
+        if (!costSelected.equals("") || !classSelected.equals("") || !racesSelected.equals("")) {
             isFilter = true;
-            try {
-                for(int i = 0; i< unitsList.size(); i++){
-                    if(listCostSelected.size()> 0){
-                        for (String costUnits: listCostSelected){
-                            if (unitsList.get(i).getCost().equals(costUnits)) unitsFilter.add(unitsList.get(i));
-                        }
+            if (!costSelected.equals("")) {
+                for (int i = 0; i < unitsList.size(); i++) {
+                    if (unitsList.get(i).getCost().equals(costSelected))
+                        unitsFilter.add(unitsList.get(i));
+                }
+            } else {
+                unitsFilter.addAll(unitsList);
+            }
+            if (!classSelected.equals("")) {
+                for (int i = unitsFilter.size() - 1; i >= 0; i--) {
+                    if (!unitsFilter.get(i).getClass_().equals(classSelected)) {
+                        unitsFilter.remove(i);
                     }
-                    if(listClassSelected.size()> 0){
-                        for (String classUnits: listClassSelected){
-                            if (unitsList.get(i).getClass_().equals(classUnits)) unitsFilter.add(unitsList.get(i));
-                        }
-                    }
-                    if(listRacesSelected.size()> 0){
-                        for (String raceUnits: listRacesSelected){
-                            for (String baseRaceUnits: unitsList.get(i).getRace()){
-                                if (baseRaceUnits.equals(raceUnits)) unitsFilter.add(unitsList.get(i));
-                            }
-                        }
+                }
+            }
+            if (!racesSelected.equals("")) {
+                for (int i = unitsFilter.size() - 1; i >= 0; i--) {
+                    if (unitsFilter.get(i).getRace().size() > 1) {
+                        if (!unitsFilter.get(i).getRace().get(0).equals(racesSelected) && !unitsFilter.get(i).getRace().get(1).equals(racesSelected))
+                            unitsFilter.remove(i);
+                    } else {
+                        if (!unitsFilter.get(i).getRace().get(0).equals(racesSelected))
+                            unitsFilter.remove(i);
                     }
 
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
             }
             Set<Units> set = new HashSet<>(unitsFilter);
             unitsFilter.clear();
@@ -234,6 +240,13 @@ public class UnitsFragment extends Fragment {
             unitsFilter = unitsList;
 
         }
+        Collections.sort(unitsFilter, new Comparator<Units>() {
+            @Override
+            public int compare(Units lhs, Units rhs) {
+
+                return lhs.getName().compareToIgnoreCase(rhs.getName());
+            }
+        });
         unitsFullAdapter.updateList(unitsFilter);
     }
 
@@ -245,7 +258,7 @@ public class UnitsFragment extends Fragment {
 
     private void filter(String text) {
         List<Units> unitsBase = new ArrayList<>();
-        if(isFilter){
+        if (isFilter) {
             unitsBase = unitsFilter;
         } else {
             unitsBase = unitsList;

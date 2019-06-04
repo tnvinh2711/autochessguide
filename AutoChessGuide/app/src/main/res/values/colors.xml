@@ -11,4 +11,12 @@
     <color name="text_shadow">#7F000000</color>
     <color name="text_shadow_white">#FFFFFF</color>
     <color name="text_search_box">#D2D3D7</color>
+
+    <color name="color_cost_1">#FFFFFF</color>
+    <color name="color_cost_2">#bbbbff</color>
+    <color name="color_cost_3">#4444ff</color>
+    <color name="color_cost_4">#E908E6</color>
+    <color name="color_cost_5">#ff8800</color>
+
+
 </resources>
