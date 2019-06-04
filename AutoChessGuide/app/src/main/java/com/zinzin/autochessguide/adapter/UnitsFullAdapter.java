@@ -48,7 +48,10 @@ public class UnitsFullAdapter extends RecyclerView.Adapter<UnitsFullAdapter.View
         viewHolder.tvNameUnit.setText(units.getName());
         viewHolder.tvNameUnitDota.setText("("+units.getDotaConvert()+")");
     }
-
+    public void updateList(List<Units> list){
+        unitsList = list;
+        notifyDataSetChanged();
+    }
     @Override
     public int getItemCount() {
         return unitsList.size();

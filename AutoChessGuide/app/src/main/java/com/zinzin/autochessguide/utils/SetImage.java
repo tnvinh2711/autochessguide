@@ -130,158 +130,158 @@ public class SetImage {
 
         unitsListFull.get(24).setFull_image(R.drawable.kunkka_f);
         unitsListFull.get(24).setIcon_image(R.drawable.a25);
-        unitsListFull.get(24).setMini_image(R.mipmap.kunkka_a);
-        unitsListFull.get(24).setSkill_image(R.mipmap.kunkka_s);
+        unitsListFull.get(24).setMini_image(R.drawable.kunkka_a);
+        unitsListFull.get(24).setSkill_image(R.drawable.kunkka_s);
 
-        unitsListFull.get(25).setFull_image(R.mipmap.venomancer_f);
-        unitsListFull.get(25).setIcon_image(R.mipmap.a26);
-        unitsListFull.get(25).setMini_image(R.mipmap.venomancer_a);
-        unitsListFull.get(25).setSkill_image(R.mipmap.venomancer_s);
+        unitsListFull.get(25).setFull_image(R.drawable.venomancer_f);
+        unitsListFull.get(25).setIcon_image(R.drawable.a26);
+        unitsListFull.get(25).setMini_image(R.drawable.venomancer_a);
+        unitsListFull.get(25).setSkill_image(R.drawable.venomancer_s);
 
-        unitsListFull.get(26).setFull_image(R.mipmap.lone_druid_f);
-        unitsListFull.get(26).setIcon_image(R.mipmap.a27);
-        unitsListFull.get(26).setMini_image(R.mipmap.lone_druid_a);
-        unitsListFull.get(26).setSkill_image(R.mipmap.lone_druid_s);
+        unitsListFull.get(26).setFull_image(R.drawable.lone_druid_f);
+        unitsListFull.get(26).setIcon_image(R.drawable.a27);
+        unitsListFull.get(26).setMini_image(R.drawable.lone_druid_a);
+        unitsListFull.get(26).setSkill_image(R.drawable.lone_druid_s);
 
-        unitsListFull.get(27).setFull_image(R.mipmap.axe_f);
-        unitsListFull.get(27).setIcon_image(R.mipmap.a28);
-        unitsListFull.get(27).setMini_image(R.mipmap.axe_a);
-        unitsListFull.get(27).setSkill_image(R.mipmap.axe_s);
+        unitsListFull.get(27).setFull_image(R.drawable.axe_f);
+        unitsListFull.get(27).setIcon_image(R.drawable.a28);
+        unitsListFull.get(27).setMini_image(R.drawable.axe_a);
+        unitsListFull.get(27).setSkill_image(R.drawable.axe_s);
 
-        unitsListFull.get(28).setFull_image(R.mipmap.timbersaw_f);
-        unitsListFull.get(28).setIcon_image(R.mipmap.a29);
-        unitsListFull.get(28).setMini_image(R.mipmap.timbersaw_a);
-        unitsListFull.get(28).setSkill_image(R.mipmap.timbersaw_s);
+        unitsListFull.get(28).setFull_image(R.drawable.timbersaw_f);
+        unitsListFull.get(28).setIcon_image(R.drawable.a29);
+        unitsListFull.get(28).setMini_image(R.drawable.timbersaw_a);
+        unitsListFull.get(28).setSkill_image(R.drawable.timbersaw_s);
 
-        unitsListFull.get(29).setFull_image(R.mipmap.shadow_fiend_f);
-        unitsListFull.get(29).setIcon_image(R.mipmap.a30);
-        unitsListFull.get(29).setMini_image(R.mipmap.shadow_fiend_a);
-        unitsListFull.get(29).setSkill_image(R.mipmap.shadow_fiend_s);
+        unitsListFull.get(29).setFull_image(R.drawable.shadow_fiend_f);
+        unitsListFull.get(29).setIcon_image(R.drawable.a30);
+        unitsListFull.get(29).setMini_image(R.drawable.shadow_fiend_a);
+        unitsListFull.get(29).setSkill_image(R.drawable.shadow_fiend_s);
 
-        unitsListFull.get(30).setFull_image(R.mipmap.phantom_assassin_f);
-        unitsListFull.get(30).setIcon_image(R.mipmap.a31);
-        unitsListFull.get(30).setMini_image(R.mipmap.phantom_assassin_a);
-        unitsListFull.get(30).setSkill_image(R.mipmap.phantom_assassin_s);
+        unitsListFull.get(30).setFull_image(R.drawable.phantom_assassin_f);
+        unitsListFull.get(30).setIcon_image(R.drawable.a31);
+        unitsListFull.get(30).setMini_image(R.drawable.phantom_assassin_a);
+        unitsListFull.get(30).setSkill_image(R.drawable.phantom_assassin_s);
 
-        unitsListFull.get(31).setFull_image(R.mipmap.templar_assassin_f);
-        unitsListFull.get(31).setIcon_image(R.mipmap.a32);
-        unitsListFull.get(31).setMini_image(R.mipmap.templar_assassin_a);
-        unitsListFull.get(31).setSkill_image(R.mipmap.templar_assassin_s);
+        unitsListFull.get(31).setFull_image(R.drawable.templar_assassin_f);
+        unitsListFull.get(31).setIcon_image(R.drawable.a32);
+        unitsListFull.get(31).setMini_image(R.drawable.templar_assassin_a);
+        unitsListFull.get(31).setSkill_image(R.drawable.templar_assassin_s);
 
-        unitsListFull.get(32).setFull_image(R.mipmap.puck_f);
-        unitsListFull.get(32).setIcon_image(R.mipmap.a33);
-        unitsListFull.get(32).setMini_image(R.mipmap.puck_a);
-        unitsListFull.get(32).setSkill_image(R.mipmap.puck_s);
+        unitsListFull.get(32).setFull_image(R.drawable.puck_f);
+        unitsListFull.get(32).setIcon_image(R.drawable.a33);
+        unitsListFull.get(32).setMini_image(R.drawable.puck_a);
+        unitsListFull.get(32).setSkill_image(R.drawable.puck_s);
 
-        unitsListFull.get(33).setFull_image(R.mipmap.medusa_f);
-        unitsListFull.get(33).setIcon_image(R.mipmap.a34);
-        unitsListFull.get(33).setMini_image(R.mipmap.medusa_a);
-        unitsListFull.get(33).setSkill_image(R.mipmap.medusa_s);
+        unitsListFull.get(33).setFull_image(R.drawable.medusa_f);
+        unitsListFull.get(33).setIcon_image(R.drawable.a34);
+        unitsListFull.get(33).setMini_image(R.drawable.medusa_a);
+        unitsListFull.get(33).setSkill_image(R.drawable.medusa_s);
 
-        unitsListFull.get(34).setFull_image(R.mipmap.beastmaster_f);
-        unitsListFull.get(34).setIcon_image(R.mipmap.a35);
-        unitsListFull.get(34).setMini_image(R.mipmap.beastmaster_a);
-        unitsListFull.get(34).setSkill_image(R.mipmap.beastmaster_s);
+        unitsListFull.get(34).setFull_image(R.drawable.beastmaster_f);
+        unitsListFull.get(34).setIcon_image(R.drawable.a35);
+        unitsListFull.get(34).setMini_image(R.drawable.beastmaster_a);
+        unitsListFull.get(34).setSkill_image(R.drawable.beastmaster_s);
 
-        unitsListFull.get(35).setFull_image(R.mipmap.clockwork_f);
-        unitsListFull.get(35).setIcon_image(R.mipmap.a36);
-        unitsListFull.get(35).setMini_image(R.mipmap.clockwork_a);
-        unitsListFull.get(35).setSkill_image(R.mipmap.clockwork_s);
+        unitsListFull.get(35).setFull_image(R.drawable.clockwork_f);
+        unitsListFull.get(35).setIcon_image(R.drawable.a36);
+        unitsListFull.get(35).setMini_image(R.drawable.clockwork_a);
+        unitsListFull.get(35).setSkill_image(R.drawable.clockwork_s);
 
-        unitsListFull.get(36).setFull_image(R.mipmap.bounty_hunter_f);
-        unitsListFull.get(36).setIcon_image(R.mipmap.a37);
-        unitsListFull.get(36).setMini_image(R.mipmap.bounty_hunter_a);
-        unitsListFull.get(36).setSkill_image(R.mipmap.bounty_hunter_s);
+        unitsListFull.get(36).setFull_image(R.drawable.bounty_hunter_f);
+        unitsListFull.get(36).setIcon_image(R.drawable.a37);
+        unitsListFull.get(36).setMini_image(R.drawable.bounty_hunter_a);
+        unitsListFull.get(36).setSkill_image(R.drawable.bounty_hunter_s);
 
-        unitsListFull.get(37).setFull_image(R.mipmap.necrophos_f);
-        unitsListFull.get(37).setIcon_image(R.mipmap.a38);
-        unitsListFull.get(37).setMini_image(R.mipmap.necrophos_a);
-        unitsListFull.get(37).setSkill_image(R.mipmap.necrophos_s);
+        unitsListFull.get(37).setFull_image(R.drawable.necrophos_f);
+        unitsListFull.get(37).setIcon_image(R.drawable.a38);
+        unitsListFull.get(37).setMini_image(R.drawable.necrophos_a);
+        unitsListFull.get(37).setSkill_image(R.drawable.necrophos_s);
 
-        unitsListFull.get(38).setFull_image(R.mipmap.tiny_f);
-        unitsListFull.get(38).setIcon_image(R.mipmap.a39);
-        unitsListFull.get(38).setMini_image(R.mipmap.tiny_a);
-        unitsListFull.get(38).setSkill_image(R.mipmap.tiny_s);
+        unitsListFull.get(38).setFull_image(R.drawable.tiny_f);
+        unitsListFull.get(38).setIcon_image(R.drawable.a39);
+        unitsListFull.get(38).setMini_image(R.drawable.tiny_a);
+        unitsListFull.get(38).setSkill_image(R.drawable.tiny_s);
 
-        unitsListFull.get(39).setFull_image(R.mipmap.disruptor_f);
-        unitsListFull.get(39).setIcon_image(R.mipmap.a40);
-        unitsListFull.get(39).setMini_image(R.mipmap.disruptor_a);
-        unitsListFull.get(39).setSkill_image(R.mipmap.disruptor_s);
+        unitsListFull.get(39).setFull_image(R.drawable.disruptor_f);
+        unitsListFull.get(39).setIcon_image(R.drawable.a40);
+        unitsListFull.get(39).setMini_image(R.drawable.disruptor_a);
+        unitsListFull.get(39).setSkill_image(R.drawable.disruptor_s);
 
-        unitsListFull.get(40).setFull_image(R.mipmap.juggernaut_f);
-        unitsListFull.get(40).setIcon_image(R.mipmap.a41);
-        unitsListFull.get(40).setMini_image(R.mipmap.juggernaut_a);
-        unitsListFull.get(40).setSkill_image(R.mipmap.juggernaut_s);
+        unitsListFull.get(40).setFull_image(R.drawable.juggernaut_f);
+        unitsListFull.get(40).setIcon_image(R.drawable.a41);
+        unitsListFull.get(40).setMini_image(R.drawable.juggernaut_a);
+        unitsListFull.get(40).setSkill_image(R.drawable.juggernaut_s);
 
-        unitsListFull.get(41).setFull_image(R.mipmap.anti_mage_f);
-        unitsListFull.get(41).setIcon_image(R.mipmap.a42);
-        unitsListFull.get(41).setMini_image(R.mipmap.anti_mage_a);
-        unitsListFull.get(41).setSkill_image(R.mipmap.anti_mage_s);
+        unitsListFull.get(41).setFull_image(R.drawable.anti_mage_f);
+        unitsListFull.get(41).setIcon_image(R.drawable.a42);
+        unitsListFull.get(41).setMini_image(R.drawable.anti_mage_a);
+        unitsListFull.get(41).setSkill_image(R.drawable.anti_mage_s);
 
-        unitsListFull.get(42).setFull_image(R.mipmap.crystal_maiden_f);
-        unitsListFull.get(42).setIcon_image(R.mipmap.a43);
-        unitsListFull.get(42).setMini_image(R.mipmap.crystal_maiden_a);
-        unitsListFull.get(42).setSkill_image(R.mipmap.crystal_maiden_s);
+        unitsListFull.get(42).setFull_image(R.drawable.crystal_maiden_f);
+        unitsListFull.get(42).setIcon_image(R.drawable.a43);
+        unitsListFull.get(42).setMini_image(R.drawable.crystal_maiden_a);
+        unitsListFull.get(42).setSkill_image(R.drawable.crystal_maiden_s);
 
-        unitsListFull.get(43).setFull_image(R.mipmap.razor_f);
-        unitsListFull.get(43).setIcon_image(R.mipmap.a44);
-        unitsListFull.get(43).setMini_image(R.mipmap.razor_a);
-        unitsListFull.get(43).setSkill_image(R.mipmap.razor_s);
+        unitsListFull.get(43).setFull_image(R.drawable.razor_f);
+        unitsListFull.get(43).setIcon_image(R.drawable.a44);
+        unitsListFull.get(43).setMini_image(R.drawable.razor_a);
+        unitsListFull.get(43).setSkill_image(R.drawable.razor_s);
 
-        unitsListFull.get(44).setFull_image(R.mipmap.keeper_of_the_light_f);
-        unitsListFull.get(44).setIcon_image(R.mipmap.a45);
-        unitsListFull.get(44).setMini_image(R.mipmap.keeper_of_the_light_a);
-        unitsListFull.get(44).setSkill_image(R.mipmap.keeper_of_the_light_s);
+        unitsListFull.get(44).setFull_image(R.drawable.keeper_of_the_light_f);
+        unitsListFull.get(44).setIcon_image(R.drawable.a45);
+        unitsListFull.get(44).setMini_image(R.drawable.keeper_of_the_light_a);
+        unitsListFull.get(44).setSkill_image(R.drawable.keeper_of_the_light_s);
 
-        unitsListFull.get(45).setFull_image(R.mipmap.tidehunter_f);
-        unitsListFull.get(45).setIcon_image(R.mipmap.a46);
-        unitsListFull.get(45).setMini_image(R.mipmap.tidehunter_a);
-        unitsListFull.get(45).setSkill_image(R.mipmap.tidehunter_s);
+        unitsListFull.get(45).setFull_image(R.drawable.tidehunter_f);
+        unitsListFull.get(45).setIcon_image(R.drawable.a46);
+        unitsListFull.get(45).setMini_image(R.drawable.tidehunter_a);
+        unitsListFull.get(45).setSkill_image(R.drawable.tidehunter_s);
 
-        unitsListFull.get(46).setFull_image(R.mipmap.tusk_f);
-        unitsListFull.get(46).setIcon_image(R.mipmap.a47);
-        unitsListFull.get(46).setMini_image(R.mipmap.tusk_a);
-        unitsListFull.get(46).setSkill_image(R.mipmap.tusk_s);
+        unitsListFull.get(46).setFull_image(R.drawable.tusk_f);
+        unitsListFull.get(46).setIcon_image(R.drawable.a47);
+        unitsListFull.get(46).setMini_image(R.drawable.tusk_a);
+        unitsListFull.get(46).setSkill_image(R.drawable.tusk_s);
 
-        unitsListFull.get(47).setFull_image(R.mipmap.enchantress_f);
-        unitsListFull.get(47).setIcon_image(R.mipmap.a48);
-        unitsListFull.get(47).setMini_image(R.mipmap.enchantress_a);
-        unitsListFull.get(47).setSkill_image(R.mipmap.enchantress_s);
+        unitsListFull.get(47).setFull_image(R.drawable.enchantress_f);
+        unitsListFull.get(47).setIcon_image(R.drawable.a48);
+        unitsListFull.get(47).setMini_image(R.drawable.enchantress_a);
+        unitsListFull.get(47).setSkill_image(R.drawable.enchantress_s);
 
-        unitsListFull.get(48).setFull_image(R.mipmap.viper_f);
-        unitsListFull.get(48).setIcon_image(R.mipmap.a49);
-        unitsListFull.get(48).setMini_image(R.mipmap.viper_a);
-        unitsListFull.get(48).setSkill_image(R.mipmap.viper_s);
+        unitsListFull.get(48).setFull_image(R.drawable.viper_f);
+        unitsListFull.get(48).setIcon_image(R.drawable.a49);
+        unitsListFull.get(48).setMini_image(R.drawable.viper_a);
+        unitsListFull.get(48).setSkill_image(R.drawable.viper_s);
 
-        unitsListFull.get(49).setFull_image(R.mipmap.alchemist_f);
-        unitsListFull.get(49).setIcon_image(R.mipmap.a50);
-        unitsListFull.get(49).setMini_image(R.mipmap.alchemist_a);
-        unitsListFull.get(49).setSkill_image(R.mipmap.alchemist_s);
+        unitsListFull.get(49).setFull_image(R.drawable.alchemist_f);
+        unitsListFull.get(49).setIcon_image(R.drawable.a50);
+        unitsListFull.get(49).setMini_image(R.drawable.alchemist_a);
+        unitsListFull.get(49).setSkill_image(R.drawable.alchemist_s);
 
-        unitsListFull.get(50).setFull_image(R.mipmap.treant_protector_f);
-        unitsListFull.get(50).setIcon_image(R.mipmap.a51);
-        unitsListFull.get(50).setMini_image(R.mipmap.treant_protector_a);
-        unitsListFull.get(50).setSkill_image(R.mipmap.treant_protector_s);
+        unitsListFull.get(50).setFull_image(R.drawable.treant_protector_f);
+        unitsListFull.get(50).setIcon_image(R.drawable.a51);
+        unitsListFull.get(50).setMini_image(R.drawable.treant_protector_a);
+        unitsListFull.get(50).setSkill_image(R.drawable.treant_protector_s);
 
-        unitsListFull.get(51).setFull_image(R.mipmap.morphling_f);
-        unitsListFull.get(51).setIcon_image(R.mipmap.a52);
-        unitsListFull.get(51).setMini_image(R.mipmap.morphling_a);
-        unitsListFull.get(51).setSkill_image(R.mipmap.morphling_s);
+        unitsListFull.get(51).setFull_image(R.drawable.morphling_f);
+        unitsListFull.get(51).setIcon_image(R.drawable.a52);
+        unitsListFull.get(51).setMini_image(R.drawable.morphling_a);
+        unitsListFull.get(51).setSkill_image(R.drawable.morphling_s);
 
-        unitsListFull.get(52).setFull_image(R.mipmap.lycan_f);
-        unitsListFull.get(52).setIcon_image(R.mipmap.a53);
-        unitsListFull.get(52).setMini_image(R.mipmap.lycan_a);
-        unitsListFull.get(52).setSkill_image(R.mipmap.lycan_s);
+        unitsListFull.get(52).setFull_image(R.drawable.lycan_f);
+        unitsListFull.get(52).setIcon_image(R.drawable.a53);
+        unitsListFull.get(52).setMini_image(R.drawable.lycan_a);
+        unitsListFull.get(52).setSkill_image(R.drawable.lycan_s);
 
-        unitsListFull.get(53).setFull_image(R.mipmap.windranger_f);
-        unitsListFull.get(53).setIcon_image(R.mipmap.a54);
-        unitsListFull.get(53).setMini_image(R.mipmap.windranger_a);
-        unitsListFull.get(53).setSkill_image(R.mipmap.windranger_s);
+        unitsListFull.get(53).setFull_image(R.drawable.windranger_f);
+        unitsListFull.get(53).setIcon_image(R.drawable.a54);
+        unitsListFull.get(53).setMini_image(R.drawable.windranger_a);
+        unitsListFull.get(53).setSkill_image(R.drawable.windranger_s);
 
-        unitsListFull.get(54).setFull_image(R.mipmap.furion_f);
-        unitsListFull.get(54).setIcon_image(R.mipmap.a55);
-        unitsListFull.get(54).setMini_image(R.mipmap.furion_a);
-        unitsListFull.get(54).setSkill_image(R.mipmap.furion_s);
+        unitsListFull.get(54).setFull_image(R.drawable.furion_f);
+        unitsListFull.get(54).setIcon_image(R.drawable.a55);
+        unitsListFull.get(54).setMini_image(R.drawable.furion_a);
+        unitsListFull.get(54).setSkill_image(R.drawable.furion_s);
 
         return unitsListFull;
     }
