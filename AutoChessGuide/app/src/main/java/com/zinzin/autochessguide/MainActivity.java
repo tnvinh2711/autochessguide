@@ -127,9 +127,15 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
         // Navigate to the right fragment
         switch (position) {
             case 0:
-                unitsFragment = UnitsFragment.newInstance();
-                unitsFragment.setData(unitsList,raceList,classList);
-                goToFragment(unitsFragment, false);
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        unitsFragment = UnitsFragment.newInstance();
+                        unitsFragment.setData(unitsList,raceList,classList);
+                        goToFragment(unitsFragment, false);
+                    }
+                };
+
                 break;
             case 1:
                 goToFragment(new ItemFragment(), false);
@@ -138,9 +144,14 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
                 goToFragment(new CreepsFragment(), false);
                 break;
             case 3:
-                buiderFragment = BuiderFragment.newInstance();
-                buiderFragment.setData(unitsList,raceList,classList);
-                goToFragment(buiderFragment, false);
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        buiderFragment = BuiderFragment.newInstance();
+                        buiderFragment.setData(unitsList,raceList,classList);
+                        goToFragment(buiderFragment, false);
+                    }
+                };
                 break;
             default:
                 goToFragment(new UnitsFragment(), false);

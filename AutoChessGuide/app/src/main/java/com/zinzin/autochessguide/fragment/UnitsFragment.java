@@ -77,9 +77,9 @@ public class UnitsFragment extends Fragment {
         return view;
     }
     public void setData(List<Units> unitsList,List<RaceList> raceList, List<ClassList> classList){
-        this.unitsList = unitsList;
-        this.raceList = raceList;
-        this.classList = classList;
+        this.unitsList.addAll(unitsList);
+        this.raceList.addAll(raceList);
+        this.classList.addAll(classList);
     }
 
     private void initView(View view) {
