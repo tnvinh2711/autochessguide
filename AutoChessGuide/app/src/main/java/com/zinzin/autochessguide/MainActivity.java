@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -38,7 +39,6 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
     private List<Units> unitsList = new ArrayList<>();
     private List<RaceList> raceList = new ArrayList<>();
     private List<ClassList> classList = new ArrayList<>();
-
     private UnitsFragment unitsFragment;
     private BuiderFragment buiderFragment;
 
@@ -49,7 +49,6 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mTitles = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.menuOptions)));
-
         // Initialize the views
         mViewHolder = new ViewHolder();
 
@@ -117,25 +116,20 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
     }
 
     @Override
-    public void onOptionClicked(int position, Object objectClicked) {
+    public void onOptionClicked(final int position, Object objectClicked) {
         // Set the toolbar title
         setTitle(mTitles.get(position));
 
         // Set the right options selected
         mMenuAdapter.setViewSelected(position, true);
 
+
         // Navigate to the right fragment
         switch (position) {
             case 0:
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        unitsFragment = UnitsFragment.newInstance();
-                        unitsFragment.setData(unitsList,raceList,classList);
-                        goToFragment(unitsFragment, false);
-                    }
-                };
-
+                unitsFragment = UnitsFragment.newInstance();
+                unitsFragment.setData(unitsList,raceList,classList);
+                goToFragment(unitsFragment, false);
                 break;
             case 1:
                 goToFragment(new ItemFragment(), false);
@@ -144,14 +138,9 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
                 goToFragment(new CreepsFragment(), false);
                 break;
             case 3:
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        buiderFragment = BuiderFragment.newInstance();
-                        buiderFragment.setData(unitsList,raceList,classList);
-                        goToFragment(buiderFragment, false);
-                    }
-                };
+                buiderFragment = BuiderFragment.newInstance();
+                buiderFragment.setData(unitsList,raceList,classList);
+                goToFragment(buiderFragment, false);
                 break;
             default:
                 goToFragment(new UnitsFragment(), false);
@@ -159,7 +148,12 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
         }
 
         // Close the drawer
-        mViewHolder.mDuoDrawerLayout.closeDrawer();
+        mViewHolder.mDuoDrawerLayout.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mViewHolder.mDuoDrawerLayout.closeDrawer();
+            }
+        }, 50);
     }
 
     private class ViewHolder {
