@@ -28,7 +28,10 @@ import com.google.gson.Gson;
 import com.zinzin.autochessguide.DetailActivity;
 import com.zinzin.autochessguide.R;
 import com.zinzin.autochessguide.adapter.UnitsFullAdapter;
+import com.zinzin.autochessguide.model.ClassList;
+import com.zinzin.autochessguide.model.RaceList;
 import com.zinzin.autochessguide.model.Units;
+import com.zinzin.autochessguide.utils.SetImage;
 import com.zinzin.autochessguide.utils.Utils;
 
 import java.util.ArrayList;
@@ -50,7 +53,11 @@ public class UnitsFragment extends Fragment {
     private UnitsFullAdapter unitsFullAdapter;
 
     private List<Units> unitsList = new ArrayList<>();
+    private List<RaceList> raceList = new ArrayList<>();
+    private List<ClassList> classList = new ArrayList<>();
     private List<Units> unitsFilter = new ArrayList<>();
+    private String[] listRace;
+    private String[] listClass;
 
     private String costSelected = "";
     private String classSelected = "";
@@ -65,13 +72,14 @@ public class UnitsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_units, container, false);
+
         initView(view);
         return view;
     }
-
-    public void setListUnits(List<Units> units) {
-        this.unitsList.clear();
-        this.unitsList = units;
+    public void setData(List<Units> unitsList,List<RaceList> raceList, List<ClassList> classList){
+        this.unitsList = unitsList;
+        this.raceList = raceList;
+        this.classList = classList;
     }
 
     private void initView(View view) {
@@ -137,8 +145,14 @@ public class UnitsFragment extends Fragment {
         Button btnDone = sheetView.findViewById(R.id.btn_done);
         TextView tvReset = sheetView.findViewById(R.id.tv_reset);
         final String[] listCost = new String[]{"1", "2", "3", "4", "5"};
-        final String[] listClass = new String[]{"Assassin", "Druid", "Hunter", "Knight", "Mage", "Mech", "Shaman", "Warlock", "Warrior", "Witcher"};
-        final String[] listRace = new String[]{"Beast", "Cave Clan", "Demon", "Dragon", "Dwarf", "Egersis", "Feathered", "Glacier Clan", "Goblin", "Human", "Kira", "Marine", "Spirit"};
+        listRace = new String[raceList.size()];
+        listClass = new String[classList.size()];
+        for(int i = 0; i<raceList.size(); i++){
+            listRace[i] = raceList.get(i).getName();
+        }
+        for(int i = 0; i<classList.size(); i++){
+            listClass[i] = classList.get(i).getName();
+        }
 
         chipCloudCost.addChips(listCost);
         chipCloudClass.addChips(listClass);
@@ -241,7 +255,7 @@ public class UnitsFragment extends Fragment {
         } else {
             //reset All
             isFilter = false;
-            unitsFilter = unitsList;
+            unitsFilter.addAll(unitsList);
 
         }
         Collections.sort(unitsFilter, new Comparator<Units>() {
@@ -263,9 +277,9 @@ public class UnitsFragment extends Fragment {
     private void filter(String text) {
         List<Units> unitsBase = new ArrayList<>();
         if (isFilter) {
-            unitsBase = unitsFilter;
+            unitsBase.addAll(unitsFilter);
         } else {
-            unitsBase = unitsList;
+            unitsBase.addAll(unitsList);
         }
         List<Units> listUnitsFilter = new ArrayList();
         for (Units units : unitsBase) {

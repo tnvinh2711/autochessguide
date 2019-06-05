@@ -15,6 +15,8 @@ import com.zinzin.autochessguide.fragment.BuiderFragment;
 import com.zinzin.autochessguide.fragment.CreepsFragment;
 import com.zinzin.autochessguide.fragment.ItemFragment;
 import com.zinzin.autochessguide.fragment.UnitsFragment;
+import com.zinzin.autochessguide.model.ClassList;
+import com.zinzin.autochessguide.model.RaceList;
 import com.zinzin.autochessguide.model.Units;
 import com.zinzin.autochessguide.utils.SetImage;
 import com.zinzin.autochessguide.utils.Utils;
@@ -31,8 +33,12 @@ import nl.psdcompany.duonavigationdrawer.widgets.DuoDrawerToggle;
 public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMenuClickListener {
     private MenuAdapter mMenuAdapter;
     private ViewHolder mViewHolder;
+    private List<Units> unitsList = new ArrayList<>();
+    private List<RaceList> raceList = new ArrayList<>();
+    private List<ClassList> classList = new ArrayList<>();
+
     private UnitsFragment unitsFragment;
-    private List<Units> unitsListFull;
+    private BuiderFragment buiderFragment;
 
     private ArrayList<String> mTitles = new ArrayList<>();
 
@@ -56,11 +62,12 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
 
         mMenuAdapter.setViewSelected(0, true);
         setTitle(mTitles.get(0));
-        unitsListFull = SetImage.fullUnitsList(this);
-        Log.e("parseUnits: ",unitsListFull.size()+"");
         // Show main fragment in container
+        unitsList = SetImage.fullUnitsList(this);
+        raceList = SetImage.fullRaceList(this);
+        classList = SetImage.fullClassList(this);
         unitsFragment = UnitsFragment.newInstance();
-        unitsFragment.setListUnits(unitsListFull);
+        unitsFragment.setData(unitsList,raceList,classList);
         goToFragment(unitsFragment, false);
 
     }
@@ -119,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
         switch (position) {
             case 0:
                 unitsFragment = UnitsFragment.newInstance();
-                unitsFragment.setListUnits(unitsListFull);
+                unitsFragment.setData(unitsList,raceList,classList);
                 goToFragment(unitsFragment, false);
                 break;
             case 1:
@@ -129,7 +136,9 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
                 goToFragment(new CreepsFragment(), false);
                 break;
             case 3:
-                goToFragment(new BuiderFragment(), false);
+                buiderFragment = BuiderFragment.newInstance();
+                buiderFragment.setData(unitsList,raceList,classList);
+                goToFragment(buiderFragment, false);
                 break;
             default:
                 goToFragment(new UnitsFragment(), false);

@@ -117,8 +117,6 @@ public class DetailActivity extends AppCompatActivity {
         rcvMiniIcon.setLayoutManager(layoutManager);
         miniIconAdapter = new MiniIconAdapter(this, listImg);
         rcvMiniIcon.setAdapter(miniIconAdapter);
-//        LinearLayoutManager layoutManager2
-//                = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         LinearLayoutManager layoutManager2
                 = new CustomLayoutManager(this);
         rcvUnit.setLayoutManager(layoutManager2);

@@ -1,36 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/main">
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="wrap_content"
-            android:layout_height="200dp"
-            android:id="@+id/rcv_choose">
-        </androidx.recyclerview.widget.RecyclerView>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="EDIT"
-            android:background="@drawable/border_background"
-            android:layout_gravity="center_horizontal"/>
-        <View
+        android:layout_height="match_parent">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0.1dp"
-            android:layout_marginTop="10dp"
-            android:background="#D1D1DB" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Synerge"/>
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/rcv_synergy">
-        </androidx.recyclerview.widget.RecyclerView>
-    </LinearLayout>
-</androidx.core.widget.NestedScrollView>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcv_choose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"></androidx.recyclerview.widget.RecyclerView>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:id="@+id/btn_reset"
+                android:layout_marginRight="16dp"
+                android:background="@drawable/builder_border_background"
+                android:text="Reset"
+                android:visibility="gone"
+                android:textColor="@color/text_search_box"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="right"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:layout_marginTop="10dp"
+                android:background="#D1D1DB" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Synergy"
+                android:textStyle="bold"
+                android:layout_marginBottom="18sp"
+                android:textSize="18sp"
+                android:textColor="@color/text_search_box"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcv_synergy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></androidx.recyclerview.widget.RecyclerView>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="50dp"/>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <Button
+        android:id="@+id/btn_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/builder_border_background"
+        android:text="Add/remove"
+        android:layout_marginBottom="8dp"
+        android:textColor="@color/text_search_box" />
+</RelativeLayout>

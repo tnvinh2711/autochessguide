@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class ClassList {
-
+    private int count;
     private  int imgClass;
     @SerializedName("name")
     @Expose
@@ -70,5 +70,13 @@ public class ClassList {
 
     public void setImgClass(int imgClass) {
         this.imgClass = imgClass;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 }

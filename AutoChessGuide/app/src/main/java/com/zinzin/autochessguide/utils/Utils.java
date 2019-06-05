@@ -1,6 +1,9 @@
 package com.zinzin.autochessguide.utils;
 
 import android.app.Activity;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
+import android.widget.ImageView;
 
 import com.google.gson.Gson;
 
@@ -41,5 +44,20 @@ public class Utils {
         }
         String s = stringBuilder.toString();
         return s.substring(0, s.length()-2);
+    }
+
+    public static void  setLocked(ImageView v)
+    {
+        ColorMatrix matrix = new ColorMatrix();
+        matrix.setSaturation(0);  //0 means grayscale
+        ColorMatrixColorFilter cf = new ColorMatrixColorFilter(matrix);
+        v.setColorFilter(cf);
+        v.setImageAlpha(128);   // 128 = 0.5
+    }
+
+    public static void  setUnlocked(ImageView v)
+    {
+        v.setColorFilter(null);
+        v.setImageAlpha(255);
     }
 }

@@ -11,6 +11,7 @@ public class Units {
     private int mini_image;
     private int skill_image;
     private int color_name;
+    private boolean isClick = false;
     @SerializedName("name")
     @Expose
     private String name;
@@ -248,5 +249,13 @@ public class Units {
 
     public void setColor_name(int color_name) {
         this.color_name = color_name;
+    }
+
+    public boolean isClick() {
+        return isClick;
+    }
+
+    public void setClick(boolean click) {
+        isClick = click;
     }
 }

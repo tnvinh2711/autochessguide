@@ -5,6 +5,7 @@ public class UnitsInfo {
     String name;
     String type;
     String des;
+    int count;
 
     public UnitsInfo(int imgInfo, String name, String type, String des) {
         this.imgInfo = imgInfo;
@@ -43,5 +44,21 @@ public class UnitsInfo {
 
     public void setDes(String des) {
         this.des = des;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public UnitsInfo(int imgInfo, String name, String type, String des, int count) {
+        this.imgInfo = imgInfo;
+        this.name = name;
+        this.type = type;
+        this.des = des;
+        this.count = count;
     }
 }

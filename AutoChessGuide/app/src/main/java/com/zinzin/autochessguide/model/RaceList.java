@@ -6,6 +6,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class RaceList {
     private int imgRace;
+    private int count;
     @SerializedName("name")
     @Expose
     private String name;
@@ -68,5 +69,13 @@ public class RaceList {
 
     public void setImgRace(int imgRace) {
         this.imgRace = imgRace;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 }
