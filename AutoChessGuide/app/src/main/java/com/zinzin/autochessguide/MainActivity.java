@@ -1,10 +1,12 @@
 package com.zinzin.autochessguide;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -164,5 +166,22 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
 
     @Override
     public void onBackPressed() {
+        AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+        alertDialog.setTitle("Attention");
+        alertDialog.setMessage("Are you want exit ?");
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "YES",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        System.exit(0);
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "NO",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.show();
     }
 }

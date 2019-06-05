@@ -16,7 +16,8 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcv_choose"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"></androidx.recyclerview.widget.RecyclerView>
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"></androidx.recyclerview.widget.RecyclerView>
 
             <Button
                 android:layout_width="wrap_content"
@@ -40,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:text="Synergy"
                 android:textStyle="bold"
-                android:layout_marginBottom="18sp"
+                android:layout_marginTop="18sp"
                 android:textSize="18sp"
                 android:textColor="@color/text_search_box"/>
 
@@ -50,7 +51,7 @@
                 android:layout_height="wrap_content"></androidx.recyclerview.widget.RecyclerView>
             <View
                 android:layout_width="match_parent"
-                android:layout_height="50dp"/>
+                android:layout_height="60dp"/>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

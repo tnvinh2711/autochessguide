@@ -21,6 +21,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.zinzin.autochessguide.DetailActivity;
 import com.zinzin.autochessguide.R;
 import com.zinzin.autochessguide.adapter.DetailUnitAdapter;
@@ -32,10 +34,13 @@ import com.zinzin.autochessguide.model.ClassList;
 import com.zinzin.autochessguide.model.RaceList;
 import com.zinzin.autochessguide.model.Units;
 import com.zinzin.autochessguide.model.UnitsInfo;
+import com.zinzin.autochessguide.utils.Contants;
+import com.zinzin.autochessguide.utils.Preference;
 import com.zinzin.autochessguide.utils.SetImage;
 import com.zinzin.autochessguide.utils.Utils;
 import com.zinzin.autochessguide.view.CustomLayoutManager;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -89,6 +94,11 @@ public class BuiderFragment extends Fragment {
     }
 
     private void setUpRcvSynergy() {
+        if(!Preference.getString(getActivity(),Contants.KEY_BUILDER_LIST_SYNERGY).equals("")){
+            Gson gson = new Gson();
+            Type type = new TypeToken<List<UnitsInfo>>() {}.getType();
+            unitsInfos = gson.fromJson(Preference.getString(getActivity(),Contants.KEY_BUILDER_LIST_SYNERGY), type);
+        }
         LinearLayoutManager layoutManager2
                 = new CustomLayoutManager(getActivity());
         rcvSynergy.setLayoutManager(layoutManager2);
@@ -124,7 +134,47 @@ public class BuiderFragment extends Fragment {
             Log.e("duplicatesRace", entry.getKey() + " " + entry.getValue() + "");
             for (RaceList race : raceList) {
                 if (race.getName().equals(entry.getKey())) {
-                    UnitsInfo unitsInfo = new UnitsInfo(race.getImgRace(), entry.getKey(), "Race", "", entry.getValue());
+                    UnitsInfo unitsInfo = null;
+                    switch (race.getBonus().size()){
+                        case 1:
+                            int bonus1_1 = Character.getNumericValue(race.getBonus().get(0).charAt(1));
+                            if(entry.getValue() >= bonus1_1){
+                                unitsInfo = new UnitsInfo(race.getImgRace(), entry.getKey(), "Race", race.getBonus().get(0), entry.getValue());
+                            } else {
+                                unitsInfo = new UnitsInfo(race.getImgRace(), entry.getKey(), "Race", "", entry.getValue());
+                            }
+                            break;
+                        case 2:
+                            int bonus2_1 = Character.getNumericValue(race.getBonus().get(0).charAt(1));
+                            int bonus2_2 = Character.getNumericValue(race.getBonus().get(1).charAt(1));
+                            if(entry.getValue() < bonus2_1){
+                                unitsInfo = new UnitsInfo(race.getImgRace(), entry.getKey(), "Race", "", entry.getValue());
+                            }
+                            if(entry.getValue()>= bonus2_1 && entry.getValue() < bonus2_2){
+                                unitsInfo = new UnitsInfo(race.getImgRace(), entry.getKey(), "Race", race.getBonus().get(0), entry.getValue());
+                            }
+                            if(entry.getValue() == bonus2_2){
+                                unitsInfo = new UnitsInfo(race.getImgRace(), entry.getKey(), "Race", getBonus(race.getBonus(),2), entry.getValue());
+                            }
+                            break;
+                        case 3:
+                            int bonus3_1 = Character.getNumericValue(race.getBonus().get(0).charAt(1));
+                            int bonus3_2 = Character.getNumericValue(race.getBonus().get(1).charAt(1));
+                            int bonus3_3 = Character.getNumericValue(race.getBonus().get(2).charAt(1));
+                            if(entry.getValue() < bonus3_1){
+                                unitsInfo = new UnitsInfo(race.getImgRace(), entry.getKey(), "Race", "", entry.getValue());
+                            }
+                            if(entry.getValue()>= bonus3_1 && entry.getValue() < bonus3_2){
+                                unitsInfo = new UnitsInfo(race.getImgRace(), entry.getKey(), "Race", race.getBonus().get(0), entry.getValue());
+                            }
+                            if(entry.getValue() >= bonus3_2 && entry.getValue() < bonus3_3){
+                                unitsInfo = new UnitsInfo(race.getImgRace(), entry.getKey(), "Race", getBonus(race.getBonus(),2), entry.getValue());
+                            }
+                            if(entry.getValue() == bonus3_3){
+                                unitsInfo = new UnitsInfo(race.getImgRace(), entry.getKey(), "Race", getBonus(race.getBonus(),3), entry.getValue());
+                            }
+                            break;
+                    }
                     unitsInfos.add(unitsInfo);
                 }
             }
@@ -133,7 +183,47 @@ public class BuiderFragment extends Fragment {
             Log.e("duplicatesClass", entry.getKey() + " " + entry.getValue() + "");
             for (ClassList class_ : classList) {
                 if (class_.getName().equals(entry.getKey())) {
-                    UnitsInfo unitsInfo = new UnitsInfo(class_.getImgClass(), entry.getKey(), "Class", "", entry.getValue());
+                    UnitsInfo unitsInfo = null;
+                    switch (class_.getBonus().size()){
+                        case 1:
+                            int bonus1_1 = Character.getNumericValue(class_.getBonus().get(0).charAt(1));
+                            if(entry.getValue() >= bonus1_1){
+                                unitsInfo = new UnitsInfo(class_.getImgClass(), entry.getKey(), "Class", class_.getBonus().get(0), entry.getValue());
+                            } else {
+                                unitsInfo = new UnitsInfo(class_.getImgClass(), entry.getKey(), "Class", "", entry.getValue());
+                            }
+                            break;
+                        case 2:
+                            int bonus2_1 = Character.getNumericValue(class_.getBonus().get(0).charAt(1));
+                            int bonus2_2 = Character.getNumericValue(class_.getBonus().get(1).charAt(1));
+                            if(entry.getValue() < bonus2_1){
+                                unitsInfo = new UnitsInfo(class_.getImgClass(), entry.getKey(), "Class", "", entry.getValue());
+                            }
+                            if(entry.getValue()>= bonus2_1 && entry.getValue() < bonus2_2){
+                                unitsInfo = new UnitsInfo(class_.getImgClass(), entry.getKey(), "Class", class_.getBonus().get(0), entry.getValue());
+                            }
+                            if(entry.getValue() == bonus2_2){
+                                unitsInfo = new UnitsInfo(class_.getImgClass(), entry.getKey(), "Class", getBonus(class_.getBonus(),2), entry.getValue());
+                            }
+                            break;
+                        case 3:
+                            int bonus3_1 = Character.getNumericValue(class_.getBonus().get(0).charAt(1));
+                            int bonus3_2 = Character.getNumericValue(class_.getBonus().get(1).charAt(1));
+                            int bonus3_3 = Character.getNumericValue(class_.getBonus().get(2).charAt(1));
+                            if(entry.getValue() < bonus3_1){
+                                unitsInfo = new UnitsInfo(class_.getImgClass(), entry.getKey(), "Class", "", entry.getValue());
+                            }
+                            if(entry.getValue()>= bonus3_1 && entry.getValue() < bonus3_2){
+                                unitsInfo = new UnitsInfo(class_.getImgClass(), entry.getKey(), "Class", class_.getBonus().get(0), entry.getValue());
+                            }
+                            if(entry.getValue() >= bonus3_2 && entry.getValue() < bonus3_3){
+                                unitsInfo = new UnitsInfo(class_.getImgClass(), entry.getKey(), "Class", getBonus(class_.getBonus(),2), entry.getValue());
+                            }
+                            if(entry.getValue() == bonus3_3){
+                                unitsInfo = new UnitsInfo(class_.getImgClass(), entry.getKey(), "Class", getBonus(class_.getBonus(),3), entry.getValue());
+                            }
+                            break;
+                    }
                     unitsInfos.add(unitsInfo);
                 }
             }
@@ -154,11 +244,17 @@ public class BuiderFragment extends Fragment {
                 unitsBottomAdapter.notifyDataSetChanged();
                 unitsInfos.clear();
                 unitBuilderSynergyAdapter.notifyDataSetChanged();
+                removePreference();
             }
         });
     }
 
     private void setUpRcvChoose() {
+        if(!Preference.getString(getActivity(),Contants.KEY_BUILDER_LIST_CHOOSE).equals("")){
+            Gson gson = new Gson();
+            Type type = new TypeToken<List<Units>>() {}.getType();
+            unitsChoose = gson.fromJson(Preference.getString(getActivity(),Contants.KEY_BUILDER_LIST_CHOOSE), type);
+        }
         GridLayoutManager adapterManager = new GridLayoutManager(getActivity(), 5);
         rcvChoose.setLayoutManager(adapterManager);
         unitsBuilderAdapter = new UnitsBuilderAdapter(getActivity(), unitsChoose);
@@ -196,6 +292,11 @@ public class BuiderFragment extends Fragment {
         });
         GridLayoutManager adapterManager = new GridLayoutManager(getActivity(), 4);
         rvUnits.setLayoutManager(adapterManager);
+        if(!Preference.getString(getActivity(),Contants.KEY_BUILDER_LIST_UNITS).equals("")){
+            Gson gson = new Gson();
+            Type type = new TypeToken<List<Units>>() {}.getType();
+            unitsList = gson.fromJson(Preference.getString(getActivity(),Contants.KEY_BUILDER_LIST_UNITS), type);
+        }
         unitsBottomAdapter = new UnitsBottomAdapter(getActivity(), unitsList);
         rvUnits.setAdapter(unitsBottomAdapter);
         unitsBottomAdapter.setListener(new UnitsBottomAdapter.OnItemClickListener() {
@@ -228,13 +329,26 @@ public class BuiderFragment extends Fragment {
                 if (unitsChoose.size() > 0) {
                     btnReset.setVisibility(View.VISIBLE);
                     setDataSynergy();
+                    savePreference();
                 } else {
+                    removePreference();
                     btnReset.setVisibility(View.GONE);
                 }
             }
         });
         mBottomSheetDialog.setContentView(sheetView);
 
+    }
+
+    private void savePreference() {
+        Preference.save(getActivity(), Contants.KEY_BUILDER_LIST_CHOOSE,Utils.convertObjToJson(unitsList));
+        Preference.save(getActivity(), Contants.KEY_BUILDER_LIST_CHOOSE,Utils.convertObjToJson(unitsChoose));
+        Preference.save(getActivity(), Contants.KEY_BUILDER_LIST_SYNERGY,Utils.convertObjToJson(unitsInfos));
+    }
+    private void removePreference() {
+        Preference.remove(getActivity(), Contants.KEY_BUILDER_LIST_CHOOSE);
+        Preference.remove(getActivity(), Contants.KEY_BUILDER_LIST_CHOOSE);
+        Preference.remove(getActivity(), Contants.KEY_BUILDER_LIST_SYNERGY);
     }
 
     private void filter(String text) {
@@ -264,5 +378,13 @@ public class BuiderFragment extends Fragment {
                 mBottomSheetDialog.show();
             }
         });
+    }
+
+    private String getBonus(List<String> bonus, int size){
+        StringBuilder stringBonus = new StringBuilder();
+        for(int i = 0; i < size; i++){
+            stringBonus.append(bonus.get(i)).append("\n");
+        }
+        return stringBonus.toString().substring(0,stringBonus.toString().length()-2);
     }
 }
