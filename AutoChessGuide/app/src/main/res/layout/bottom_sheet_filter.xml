@@ -61,7 +61,7 @@
         android:layout_marginRight="16dp"
         android:layout_marginBottom="10dp"
         app:selectedColor="#03A9F4"
-        app:selectMode="multi" />
+        app:selectMode="single" />
 
     <View
         android:layout_width="match_parent"
@@ -88,7 +88,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="10dp"
-        app:selectMode="multi"
+        app:selectMode="single"
         app:selectedColor="#FFC107" />
 
     <View
@@ -115,6 +115,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="10dp"
         app:selectedColor="#009688"
+        app:selectMode="single"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="10dp" />
     <Button

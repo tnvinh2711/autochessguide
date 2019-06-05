@@ -56,11 +56,7 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
 
         mMenuAdapter.setViewSelected(0, true);
         setTitle(mTitles.get(0));
-        String text = Utils.parseFile(this,"Units.txt");
-        Gson gson = new Gson();
-        Type type = new TypeToken<List<Units>>() {}.getType();
-        List<Units> unitsList = gson.fromJson(text, type);
-        unitsListFull = SetImage.fullUnitsList(unitsList);
+        unitsListFull = SetImage.fullUnitsList(this);
         Log.e("parseUnits: ",unitsListFull.size()+"");
         // Show main fragment in container
         unitsFragment = UnitsFragment.newInstance();
