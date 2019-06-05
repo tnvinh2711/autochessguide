@@ -41,7 +41,11 @@ public class UnitBuilderSynergyAdapter extends RecyclerView.Adapter<UnitBuilderS
         viewHolder.ivIcon.setImageDrawable(activity.getResources().getDrawable(unitsInfo.getImgInfo()));
         viewHolder.tvName.setText(unitsInfo.getName() + " - " + unitsInfo.getCount());
         viewHolder.tvType.setText(unitsInfo.getType());
-        if (unitsInfo.getDes().equals("")) viewHolder.tvDes.setVisibility(View.GONE);
+        if (unitsInfo.getDes().equals("")) {
+            viewHolder.tvDes.setVisibility(View.GONE);
+        } else {
+            viewHolder.tvDes.setVisibility(View.VISIBLE);
+        }
         viewHolder.tvDes.setText(unitsInfo.getDes());
     }
 

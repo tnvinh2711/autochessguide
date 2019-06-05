@@ -254,6 +254,7 @@ public class BuiderFragment extends Fragment {
             Gson gson = new Gson();
             Type type = new TypeToken<List<Units>>() {}.getType();
             unitsChoose = gson.fromJson(Preference.getString(getActivity(),Contants.KEY_BUILDER_LIST_CHOOSE), type);
+            btnReset.setVisibility(View.VISIBLE);
         }
         GridLayoutManager adapterManager = new GridLayoutManager(getActivity(), 5);
         rcvChoose.setLayoutManager(adapterManager);
@@ -293,6 +294,7 @@ public class BuiderFragment extends Fragment {
         GridLayoutManager adapterManager = new GridLayoutManager(getActivity(), 4);
         rvUnits.setLayoutManager(adapterManager);
         if(!Preference.getString(getActivity(),Contants.KEY_BUILDER_LIST_UNITS).equals("")){
+            unitsList.clear();
             Gson gson = new Gson();
             Type type = new TypeToken<List<Units>>() {}.getType();
             unitsList = gson.fromJson(Preference.getString(getActivity(),Contants.KEY_BUILDER_LIST_UNITS), type);
@@ -341,12 +343,12 @@ public class BuiderFragment extends Fragment {
     }
 
     private void savePreference() {
-        Preference.save(getActivity(), Contants.KEY_BUILDER_LIST_CHOOSE,Utils.convertObjToJson(unitsList));
+        Preference.save(getActivity(), Contants.KEY_BUILDER_LIST_UNITS,Utils.convertObjToJson(unitsList));
         Preference.save(getActivity(), Contants.KEY_BUILDER_LIST_CHOOSE,Utils.convertObjToJson(unitsChoose));
         Preference.save(getActivity(), Contants.KEY_BUILDER_LIST_SYNERGY,Utils.convertObjToJson(unitsInfos));
     }
     private void removePreference() {
-        Preference.remove(getActivity(), Contants.KEY_BUILDER_LIST_CHOOSE);
+        Preference.remove(getActivity(), Contants.KEY_BUILDER_LIST_UNITS);
         Preference.remove(getActivity(), Contants.KEY_BUILDER_LIST_CHOOSE);
         Preference.remove(getActivity(), Contants.KEY_BUILDER_LIST_SYNERGY);
     }
