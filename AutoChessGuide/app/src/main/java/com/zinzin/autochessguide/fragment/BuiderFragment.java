@@ -50,6 +50,7 @@ import java.util.Map;
  * A simple {@link Fragment} subclass.
  */
 public class BuiderFragment extends Fragment {
+    public static String TAG = BuiderFragment.class.getSimpleName();
     private RecyclerView rcvChoose, rcvSynergy;
     private Button btnAdd;
     private Button btnReset;

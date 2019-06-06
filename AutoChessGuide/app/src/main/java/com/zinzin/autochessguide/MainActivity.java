@@ -41,7 +41,10 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
     private List<ClassList> classList = new ArrayList<>();
     private UnitsFragment unitsFragment;
     private BuiderFragment buiderFragment;
-
+    private CreepsFragment creepsFragment;
+    private ItemFragment itemFragment;
+    Fragment[] fragments ;
+    String[] fragmentTAGS = new String[]{UnitsFragment.TAG,BuiderFragment.TAG,CreepsFragment.TAG,ItemFragment.TAG};
     private ArrayList<String> mTitles = new ArrayList<>();
 
     @Override
@@ -68,8 +71,14 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
         raceList = SetImage.fullRaceList(this);
         classList = SetImage.fullClassList(this);
         unitsFragment = UnitsFragment.newInstance();
+        buiderFragment = BuiderFragment.newInstance();
+        itemFragment = new ItemFragment();
+        creepsFragment = new CreepsFragment();
+        fragments = new Fragment[]{unitsFragment,buiderFragment,creepsFragment,itemFragment};
         unitsFragment.setData(unitsList,raceList,classList);
-        goToFragment(unitsFragment, false);
+        buiderFragment.setData(unitsList,raceList,classList);
+        goToFragment(unitsFragment, UnitsFragment.TAG);
+
 
     }
 
@@ -105,14 +114,23 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
     public void onHeaderClicked() {
     }
 
-    private void goToFragment(Fragment fragment, boolean addToBackStack) {
+    private void goToFragment(Fragment fragment, String tag) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-        if (addToBackStack) {
-            transaction.addToBackStack(null);
+        if (getSupportFragmentManager().findFragmentByTag(tag) == null) {
+            transaction.add(R.id.container, fragment, tag);
         }
-
-        transaction.replace(R.id.container, fragment).commit();
+        for (Fragment fragment1 : fragments) {
+            if (fragment1.getTag() != null) {
+                if (fragment1.getTag().equals(tag)) {
+                    transaction.show(fragment1);
+                } else {
+                    if (getSupportFragmentManager().findFragmentByTag(fragment1.getTag()) != null) {
+                        transaction.hide(fragment1);
+                    }
+                }
+            }
+        }
+        transaction.commit();
     }
 
     @Override
@@ -127,23 +145,21 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
         // Navigate to the right fragment
         switch (position) {
             case 0:
-                unitsFragment = UnitsFragment.newInstance();
-                unitsFragment.setData(unitsList,raceList,classList);
-                goToFragment(unitsFragment, false);
+//                unitsFragment = UnitsFragment.newInstance();
+//                unitsFragment.setData(unitsList,raceList,classList);
+                goToFragment(unitsFragment ,UnitsFragment.TAG);
                 break;
             case 1:
-                goToFragment(new ItemFragment(), false);
+                goToFragment(itemFragment,ItemFragment.TAG);
                 break;
             case 2:
-                goToFragment(new CreepsFragment(), false);
+                goToFragment(creepsFragment,CreepsFragment.TAG);
                 break;
             case 3:
-                buiderFragment = BuiderFragment.newInstance();
-                buiderFragment.setData(unitsList,raceList,classList);
-                goToFragment(buiderFragment, false);
+                goToFragment(buiderFragment,BuiderFragment.TAG);
                 break;
             default:
-                goToFragment(new UnitsFragment(), false);
+                goToFragment(unitsFragment,UnitsFragment.TAG);
                 break;
         }
 

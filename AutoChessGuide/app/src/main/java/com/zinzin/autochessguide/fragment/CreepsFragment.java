@@ -13,10 +13,10 @@ import com.zinzin.autochessguide.R;
  * A simple {@link Fragment} subclass.
  */
 public class CreepsFragment extends Fragment {
-
+    public static String TAG = CreepsFragment.class.getSimpleName();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_units, container, false);
+        View view = inflater.inflate(R.layout.fragment_creeps, container, false);
         return view;
     }
 }

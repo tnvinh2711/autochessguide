@@ -46,6 +46,7 @@ import java.util.Set;
  * A simple {@link Fragment} subclass.
  */
 public class UnitsFragment extends Fragment {
+    public static String TAG = UnitsFragment.class.getSimpleName();
     private RecyclerView rvUnits;
     private EditText edtSearch;
     private ImageView ivFilter;
