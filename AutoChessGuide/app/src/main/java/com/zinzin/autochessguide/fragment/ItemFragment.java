@@ -14,6 +14,11 @@ import com.zinzin.autochessguide.R;
  */
 public class ItemFragment extends Fragment {
     public static String TAG = ItemFragment.class.getSimpleName();
+
+    public static ItemFragment newInstance() {
+        return new ItemFragment();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_units, container, false);

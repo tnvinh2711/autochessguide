@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.zinzin.autochessguide.R;
 import com.zinzin.autochessguide.model.ClassList;
+import com.zinzin.autochessguide.model.Creep;
 import com.zinzin.autochessguide.model.RaceList;
 import com.zinzin.autochessguide.model.Units;
 
@@ -388,5 +389,13 @@ public class SetImage {
         raceList.get(11).setImgRace(R.drawable.marine);
         raceList.get(12).setImgRace(R.drawable.spirit);
         return raceList;
+    }
+
+    public static List<Creep> fullCreepList(Activity activity){
+        String text = Utils.parseFile(activity,"Creeps.txt");
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<Creep>>() {}.getType();
+        List<Creep> creepLists = gson.fromJson(text, type);
+        return creepLists;
     }
 }

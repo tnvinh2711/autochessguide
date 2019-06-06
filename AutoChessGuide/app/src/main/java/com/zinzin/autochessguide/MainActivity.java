@@ -19,6 +19,7 @@ import com.zinzin.autochessguide.fragment.CreepsFragment;
 import com.zinzin.autochessguide.fragment.ItemFragment;
 import com.zinzin.autochessguide.fragment.UnitsFragment;
 import com.zinzin.autochessguide.model.ClassList;
+import com.zinzin.autochessguide.model.Creep;
 import com.zinzin.autochessguide.model.RaceList;
 import com.zinzin.autochessguide.model.Units;
 import com.zinzin.autochessguide.utils.SetImage;
@@ -39,12 +40,12 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
     private List<Units> unitsList = new ArrayList<>();
     private List<RaceList> raceList = new ArrayList<>();
     private List<ClassList> classList = new ArrayList<>();
+    private List<Creep> creepList = new ArrayList<>();
     private UnitsFragment unitsFragment;
     private BuiderFragment buiderFragment;
     private CreepsFragment creepsFragment;
     private ItemFragment itemFragment;
-    Fragment[] fragments ;
-    String[] fragmentTAGS = new String[]{UnitsFragment.TAG,BuiderFragment.TAG,CreepsFragment.TAG,ItemFragment.TAG};
+    private Fragment[] fragments ;
     private ArrayList<String> mTitles = new ArrayList<>();
 
     @Override
@@ -66,20 +67,32 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
 
         mMenuAdapter.setViewSelected(0, true);
         setTitle(mTitles.get(0));
-        // Show main fragment in container
-        unitsList = SetImage.fullUnitsList(this);
-        raceList = SetImage.fullRaceList(this);
-        classList = SetImage.fullClassList(this);
-        unitsFragment = UnitsFragment.newInstance();
-        buiderFragment = BuiderFragment.newInstance();
-        itemFragment = new ItemFragment();
-        creepsFragment = new CreepsFragment();
-        fragments = new Fragment[]{unitsFragment,buiderFragment,creepsFragment,itemFragment};
+
+        loadData();
+        initFragment();
+
         unitsFragment.setData(unitsList,raceList,classList);
         buiderFragment.setData(unitsList,raceList,classList);
+        creepsFragment.setData(creepList);
+        // Show main fragment in container
         goToFragment(unitsFragment, UnitsFragment.TAG);
 
 
+    }
+
+    private void initFragment() {
+        unitsFragment = UnitsFragment.newInstance();
+        buiderFragment = BuiderFragment.newInstance();
+        itemFragment = ItemFragment.newInstance();
+        creepsFragment = CreepsFragment.newInstance();
+        fragments = new Fragment[]{unitsFragment,buiderFragment,creepsFragment,itemFragment};
+    }
+
+    private void loadData() {
+        unitsList = SetImage.fullUnitsList(this);
+        raceList = SetImage.fullRaceList(this);
+        classList = SetImage.fullClassList(this);
+        creepList = SetImage.fullCreepList(this);
     }
 
     private void handleToolbar() {
@@ -145,8 +158,6 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
         // Navigate to the right fragment
         switch (position) {
             case 0:
-//                unitsFragment = UnitsFragment.newInstance();
-//                unitsFragment.setData(unitsList,raceList,classList);
                 goToFragment(unitsFragment ,UnitsFragment.TAG);
                 break;
             case 1:

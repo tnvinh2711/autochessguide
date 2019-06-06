@@ -32,7 +32,7 @@ public class DetailActivity extends AppCompatActivity {
     private ImageView ivFullUnit, ivSkillUnit;
     private TextView tvName, tvCost, tvHeart, tvArmor, tvMres, tvAtkDame, tvAtkSpd, tvAtkRange;
     private TextView tvSkillName, tvSkillStatus, tvSkillDes, tvSkillTag;
-    private RecyclerView rcvUnit,rcvMiniIcon;
+    private RecyclerView rcvUnit, rcvMiniIcon;
     private Units units;
 
     @Override
@@ -72,43 +72,43 @@ public class DetailActivity extends AppCompatActivity {
     private void setData() {
         ivFullUnit.setImageDrawable(getResources().getDrawable(units.getFull_image()));
         ivSkillUnit.setImageDrawable(getResources().getDrawable(units.getSkill_image()));
-        tvName.setText(units.getName()+" ("+units.getDotaConvert()+")");
+        tvName.setText(units.getName() + " (" + units.getDotaConvert() + ")");
         tvName.setTextColor(getResources().getColor(units.getColor_name()));
-        tvCost.setText("Cost: "+ units.getCost()+"$");
-        tvHeart.setText("Heart: "+ Utils.linkStringFromArray(units.getHealth()));
-        tvArmor.setText("Armor: "+Utils.linkStringFromArray(units.getArmor()));
-        tvMres.setText("Magical Resistance: "+units.getResistance());
-        tvAtkDame.setText("Attack Damage: "+Utils.linkStringFromArray(units.getAttack()));
-        tvAtkDame.setText("Attack Speed: "+units.getSpeed());
-        tvAtkDame.setText("Attack Range: "+units.getRange());
+        tvCost.setText("Cost: " + units.getCost() + "$");
+        tvHeart.setText("Heart: " + Utils.linkStringFromArray(units.getHealth()));
+        tvArmor.setText("Armor: " + Utils.linkStringFromArray(units.getArmor()));
+        tvMres.setText("Magical Resistance: " + units.getResistance());
+        tvAtkDame.setText("Attack Damage: " + Utils.linkStringFromArray(units.getAttack()));
+        tvAtkDame.setText("Attack Speed: " + units.getSpeed());
+        tvAtkDame.setText("Attack Range: " + units.getRange());
         tvSkillName.setText(units.getSkill().get(0).getName());
         tvSkillStatus.setText(units.getSkill().get(0).getType());
         tvSkillDes.setText(units.getSkill().get(0).getDescription());
         List<UnitsTags> unitsTags = units.getSkill().get(0).getTags();
         StringBuilder stringTag = new StringBuilder();
-        for(int i = 0; i < unitsTags.size(); i++){
-           String tag = unitsTags.get(i).getName()
-                   +": "+Utils.linkStringFromArray(unitsTags.get(i).getBonus())+"\n";
+        for (int i = 0; i < unitsTags.size(); i++) {
+            String tag = unitsTags.get(i).getName()
+                    + ": " + Utils.linkStringFromArray(unitsTags.get(i).getBonus()) + "\n";
             stringTag.append(tag);
         }
-        tvSkillTag.setText(stringTag.toString().substring(0,stringTag.toString().length()-2));
+        tvSkillTag.setText(stringTag.toString().substring(0, stringTag.toString().length() - 2));
     }
 
     private void setUpRcv() {
         List<Integer> listImg = new ArrayList<>();
         List<UnitsInfo> unitsInfos = new ArrayList<>();
-        for(ClassList class_: classLists){
-            if(class_.getName().equals(units.getClass_())){
-                addClass(class_, listImg,unitsInfos);
+        for (ClassList class_ : classLists) {
+            if (class_.getName().equals(units.getClass_())) {
+                addClass(class_, listImg, unitsInfos);
             }
         }
-        for(RaceList race: raceLists){
-            if(race.getName().equals(units.getRace().get(0))){
-                addRace(race,listImg,unitsInfos);
+        for (RaceList race : raceLists) {
+            if (race.getName().equals(units.getRace().get(0))) {
+                addRace(race, listImg, unitsInfos);
             }
-            if(units.getRace().size()> 1){
-                if(race.getName().equals(units.getRace().get(1))){
-                    addRace(race,listImg,unitsInfos);
+            if (units.getRace().size() > 1) {
+                if (race.getName().equals(units.getRace().get(1))) {
+                    addRace(race, listImg, unitsInfos);
                 }
             }
         }
@@ -128,10 +128,10 @@ public class DetailActivity extends AppCompatActivity {
         listImg.add(class_.getImgClass());
         List<String> bonus = class_.getBonus();
         StringBuilder stringBonus = new StringBuilder();
-        for(int i = 0; i < bonus.size(); i++){
+        for (int i = 0; i < bonus.size(); i++) {
             stringBonus.append(bonus.get(i)).append("\n");
         }
-        unitsInfos.add(new UnitsInfo(class_.getImgClass(),class_.getName(),"Class",stringBonus.toString().substring(0,stringBonus.toString().length()-2)));
+        unitsInfos.add(new UnitsInfo(class_.getImgClass(), class_.getName(), "Class", stringBonus.toString().substring(0, stringBonus.toString().length() - 2)));
 
     }
 
@@ -139,10 +139,10 @@ public class DetailActivity extends AppCompatActivity {
         listImg.add(race.getImgRace());
         List<String> bonus = race.getBonus();
         StringBuilder stringBonus = new StringBuilder();
-        for(int i = 0; i < bonus.size(); i++){
+        for (int i = 0; i < bonus.size(); i++) {
             stringBonus.append(bonus.get(i)).append("\n");
         }
-        unitsInfos.add(new UnitsInfo(race.getImgRace(),race.getName(),"Race",stringBonus.toString().substring(0,stringBonus.toString().length()-2)));
+        unitsInfos.add(new UnitsInfo(race.getImgRace(), race.getName(), "Race", stringBonus.toString().substring(0, stringBonus.toString().length() - 2)));
 
     }
 
