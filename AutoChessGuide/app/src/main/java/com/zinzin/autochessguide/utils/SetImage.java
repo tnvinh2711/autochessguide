@@ -7,6 +7,7 @@ import com.google.gson.reflect.TypeToken;
 import com.zinzin.autochessguide.R;
 import com.zinzin.autochessguide.model.ClassList;
 import com.zinzin.autochessguide.model.Creep;
+import com.zinzin.autochessguide.model.Item;
 import com.zinzin.autochessguide.model.RaceList;
 import com.zinzin.autochessguide.model.Units;
 
@@ -390,7 +391,60 @@ public class SetImage {
         raceList.get(12).setImgRace(R.drawable.spirit);
         return raceList;
     }
-
+    public static List<Item> fullItemList(Activity activity){
+        String text = Utils.parseFile(activity,"Items.txt");
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<Item>>() {}.getType();
+        List<Item> itemList = gson.fromJson(text, type);
+        itemList.get(0).setImgItem(R.drawable.i1);
+        itemList.get(1).setImgItem(R.drawable.i2);
+        itemList.get(2).setImgItem(R.drawable.i3);
+        itemList.get(3).setImgItem(R.drawable.i4);
+        itemList.get(4).setImgItem(R.drawable.i5);
+        itemList.get(5).setImgItem(R.drawable.i6);
+        itemList.get(6).setImgItem(R.drawable.i7);
+        itemList.get(7).setImgItem(R.drawable.i8);
+        itemList.get(8).setImgItem(R.drawable.i9);
+        itemList.get(9).setImgItem(R.drawable.i10);
+        itemList.get(10).setImgItem(R.drawable.i11);
+        itemList.get(11).setImgItem(R.drawable.i12);
+        itemList.get(12).setImgItem(R.drawable.i13);
+        itemList.get(13).setImgItem(R.drawable.i14);
+        itemList.get(14).setImgItem(R.drawable.i15);
+        itemList.get(15).setImgItem(R.drawable.i16);
+        itemList.get(16).setImgItem(R.drawable.i17);
+        itemList.get(17).setImgItem(R.drawable.i18);
+        itemList.get(18).setImgItem(R.drawable.i19);
+        itemList.get(19).setImgItem(R.drawable.i20);
+        itemList.get(20).setImgItem(R.drawable.i21);
+        itemList.get(21).setImgItem(R.drawable.i22);
+        itemList.get(22).setImgItem(R.drawable.i23);
+        itemList.get(23).setImgItem(R.drawable.i24);
+        itemList.get(24).setImgItem(R.drawable.i25);
+        itemList.get(25).setImgItem(R.drawable.i26);
+        itemList.get(26).setImgItem(R.drawable.i27);
+        itemList.get(27).setImgItem(R.drawable.i28);
+        itemList.get(28).setImgItem(R.drawable.i29);
+        itemList.get(29).setImgItem(R.drawable.i30);
+        itemList.get(30).setImgItem(R.drawable.i31);
+        itemList.get(31).setImgItem(R.drawable.i32);
+        itemList.get(32).setImgItem(R.drawable.i33);
+        itemList.get(33).setImgItem(R.drawable.i34);
+        itemList.get(34).setImgItem(R.drawable.i35);
+        itemList.get(35).setImgItem(R.drawable.i36);
+        itemList.get(36).setImgItem(R.drawable.i37);
+        itemList.get(37).setImgItem(R.drawable.i38);
+        itemList.get(38).setImgItem(R.drawable.i39);
+        itemList.get(39).setImgItem(R.drawable.i40);
+        itemList.get(40).setImgItem(R.drawable.i41);
+        itemList.get(41).setImgItem(R.drawable.i42);
+        itemList.get(42).setImgItem(R.drawable.i43);
+        itemList.get(43).setImgItem(R.drawable.i44);
+        itemList.get(44).setImgItem(R.drawable.i45);
+        itemList.get(45).setImgItem(R.drawable.i46);
+        itemList.get(46).setImgItem(R.drawable.i47);
+        return itemList;
+    }
     public static List<Creep> fullCreepList(Activity activity){
         String text = Utils.parseFile(activity,"Creeps.txt");
         Gson gson = new Gson();

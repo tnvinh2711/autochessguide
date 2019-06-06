@@ -41,7 +41,9 @@ public class DetailUnitAdapter extends RecyclerView.Adapter<DetailUnitAdapter.Vi
         viewHolder.ivIcon.setImageDrawable(activity.getResources().getDrawable(unitsInfo.getImgInfo()));
         viewHolder.tvName.setText(unitsInfo.getName());
         viewHolder.tvType.setText(unitsInfo.getType());
-        viewHolder.tvDes.setText(unitsInfo.getDes());
+        String desc = unitsInfo.getDes();
+        desc = desc.replace("(","( ").replace(")"," )");
+        viewHolder.tvDes.setText(desc);
     }
 
     @Override

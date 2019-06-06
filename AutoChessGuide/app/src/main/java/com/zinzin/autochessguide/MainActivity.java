@@ -20,6 +20,7 @@ import com.zinzin.autochessguide.fragment.ItemFragment;
 import com.zinzin.autochessguide.fragment.UnitsFragment;
 import com.zinzin.autochessguide.model.ClassList;
 import com.zinzin.autochessguide.model.Creep;
+import com.zinzin.autochessguide.model.Item;
 import com.zinzin.autochessguide.model.RaceList;
 import com.zinzin.autochessguide.model.Units;
 import com.zinzin.autochessguide.utils.SetImage;
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
     private List<RaceList> raceList = new ArrayList<>();
     private List<ClassList> classList = new ArrayList<>();
     private List<Creep> creepList = new ArrayList<>();
+    private List<Item> itemList = new ArrayList<>();
     private UnitsFragment unitsFragment;
     private BuiderFragment buiderFragment;
     private CreepsFragment creepsFragment;
@@ -74,6 +76,7 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
         unitsFragment.setData(unitsList,raceList,classList);
         buiderFragment.setData(unitsList,raceList,classList);
         creepsFragment.setData(creepList);
+        itemFragment.setData(itemList);
         // Show main fragment in container
         goToFragment(unitsFragment, UnitsFragment.TAG);
 
@@ -93,6 +96,7 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
         raceList = SetImage.fullRaceList(this);
         classList = SetImage.fullClassList(this);
         creepList = SetImage.fullCreepList(this);
+        itemList = SetImage.fullItemList(this);
     }
 
     private void handleToolbar() {

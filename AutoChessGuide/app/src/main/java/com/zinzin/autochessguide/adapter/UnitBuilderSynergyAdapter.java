@@ -46,7 +46,9 @@ public class UnitBuilderSynergyAdapter extends RecyclerView.Adapter<UnitBuilderS
         } else {
             viewHolder.tvDes.setVisibility(View.VISIBLE);
         }
-        viewHolder.tvDes.setText(unitsInfo.getDes());
+        String desc = unitsInfo.getDes();
+        desc = desc.replace("(","( ").replace(")"," )");
+        viewHolder.tvDes.setText(desc);
     }
 
     @Override
