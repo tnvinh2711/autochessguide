@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,21 +25,17 @@ import android.widget.Toast;
 import com.adroitandroid.chipcloud.ChipCloud;
 import com.adroitandroid.chipcloud.ChipListener;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.google.gson.Gson;
-import com.zinzin.autochessguide.DetailActivity;
+import com.zinzin.autochessguide.DetailFragment;
 import com.zinzin.autochessguide.R;
 import com.zinzin.autochessguide.adapter.UnitsFullAdapter;
 import com.zinzin.autochessguide.model.ClassList;
 import com.zinzin.autochessguide.model.RaceList;
 import com.zinzin.autochessguide.model.Units;
-import com.zinzin.autochessguide.utils.SetImage;
-import com.zinzin.autochessguide.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -131,9 +128,12 @@ public class UnitsFragment extends Fragment {
         unitsFullAdapter.setListener(new UnitsFullAdapter.OnItemClickListener() {
             @Override
             public void OnItemClick(Units item, int position) {
-                Intent intent = new Intent(getActivity(), DetailActivity.class);
-                intent.putExtra("unit", Utils.convertObjToJson(item));
-                startActivity(intent);
+                DetailFragment detailFragment = DetailFragment.newInstance();
+                detailFragment.setData(item,raceList,classList);
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.add(R.id.container, detailFragment, DetailFragment.TAG);
+                transaction.addToBackStack(DetailFragment.TAG);
+                transaction.commit();
             }
         });
     }

@@ -6,12 +6,19 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.zinzin.autochessguide.fragment.BuiderFragment;
@@ -23,6 +30,7 @@ import com.zinzin.autochessguide.model.Creep;
 import com.zinzin.autochessguide.model.Item;
 import com.zinzin.autochessguide.model.RaceList;
 import com.zinzin.autochessguide.model.Units;
+import com.zinzin.autochessguide.utils.Preference;
 import com.zinzin.autochessguide.utils.SetImage;
 import com.zinzin.autochessguide.utils.Utils;
 
@@ -38,6 +46,8 @@ import nl.psdcompany.duonavigationdrawer.widgets.DuoDrawerToggle;
 public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMenuClickListener {
     private MenuAdapter mMenuAdapter;
     private ViewHolder mViewHolder;
+    private AdView mAdView;
+    private boolean isloadedAds = false;
     private List<Units> unitsList = new ArrayList<>();
     private List<RaceList> raceList = new ArrayList<>();
     private List<ClassList> classList = new ArrayList<>();
@@ -47,13 +57,35 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
     private BuiderFragment buiderFragment;
     private CreepsFragment creepsFragment;
     private ItemFragment itemFragment;
-    private Fragment[] fragments ;
+    private Fragment[] fragments;
     private ArrayList<String> mTitles = new ArrayList<>();
+    private InterstitialAd mInterstitialAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        MobileAds.initialize(this, "ca-app-pub-7188826417129130~8743853789");
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-7188826417129130/6429515781");
+
+        if (Preference.getBoolean(this, "firstrun", true)) {
+            mInterstitialAd.loadAd(new AdRequest.Builder().build());
+            Log.e("Timer", "first");
+        } else {
+            long timeOld = Preference.getLong(this, "Time", 0);
+            long timeNew = System.currentTimeMillis();
+            if (timeOld != 0 && timeNew - timeOld >= 86400000) {
+                Log.e("Timer", "Round 2");
+                mInterstitialAd.loadAd(new AdRequest.Builder().build());
+            } else {
+                if (!Preference.getBoolean(MainActivity.this, "LoadAds", false)) {
+                    mInterstitialAd.loadAd(new AdRequest.Builder().build());
+                }
+            }
+        }
+        mAdView = findViewById(R.id.adView);
+        loadAd();
         mTitles = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.menuOptions)));
         // Initialize the views
         mViewHolder = new ViewHolder();
@@ -73,8 +105,8 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
         loadData();
         initFragment();
 
-        unitsFragment.setData(unitsList,raceList,classList);
-        buiderFragment.setData(unitsList,raceList,classList);
+        unitsFragment.setData(unitsList, raceList, classList);
+        buiderFragment.setData(unitsList, raceList, classList);
         creepsFragment.setData(creepList);
         itemFragment.setData(itemList);
         // Show main fragment in container
@@ -83,12 +115,69 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
 
     }
 
+    private void loadAd() {
+        final AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+        mAdView.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                isloadedAds = true;
+            }
+
+            @Override
+            public void onAdClicked() {
+                isloadedAds = false;
+                mAdView.setVisibility(View.GONE);
+            }
+        });
+
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Preference.save(MainActivity.this, "firstrun", false);
+                        Preference.save(MainActivity.this, "Time", System.currentTimeMillis());
+                        Preference.save(MainActivity.this, "LoadAds", true);
+                        mInterstitialAd.show();
+                    }
+                },60000);
+            }
+
+            @Override
+            public void onAdFailedToLoad(int errorCode) {
+                Preference.getBoolean(MainActivity.this, "LoadAds", false);
+            }
+
+            @Override
+            public void onAdOpened() {
+                // Code to be executed when the ad is displayed.
+            }
+
+            @Override
+            public void onAdClicked() {
+
+            }
+
+            @Override
+            public void onAdLeftApplication() {
+                // Code to be executed when the user has left the app.
+            }
+
+            @Override
+            public void onAdClosed() {
+                // Code to be executed when the interstitial ad is closed.
+            }
+        });
+    }
+
     private void initFragment() {
         unitsFragment = UnitsFragment.newInstance();
         buiderFragment = BuiderFragment.newInstance();
         itemFragment = ItemFragment.newInstance();
         creepsFragment = CreepsFragment.newInstance();
-        fragments = new Fragment[]{unitsFragment,buiderFragment,creepsFragment,itemFragment};
+        fragments = new Fragment[]{unitsFragment, buiderFragment, creepsFragment, itemFragment};
     }
 
     private void loadData() {
@@ -162,29 +251,50 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
         // Navigate to the right fragment
         switch (position) {
             case 0:
-                goToFragment(unitsFragment ,UnitsFragment.TAG);
+                goToFragment(unitsFragment, UnitsFragment.TAG);
                 break;
             case 1:
-                goToFragment(itemFragment,ItemFragment.TAG);
+                goToFragment(itemFragment, ItemFragment.TAG);
                 break;
             case 2:
-                goToFragment(creepsFragment,CreepsFragment.TAG);
+                goToFragment(creepsFragment, CreepsFragment.TAG);
                 break;
             case 3:
-                goToFragment(buiderFragment,BuiderFragment.TAG);
+                goToFragment(buiderFragment, BuiderFragment.TAG);
+                break;
+            case 4:
+                AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+                alertDialog.setTitle("Attention");
+                alertDialog.setMessage("Are you want exit ?");
+                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "YES",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                System.exit(0);
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "NO",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.show();
                 break;
             default:
-                goToFragment(unitsFragment,UnitsFragment.TAG);
+                goToFragment(unitsFragment, UnitsFragment.TAG);
                 break;
         }
 
         // Close the drawer
-        mViewHolder.mDuoDrawerLayout.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mViewHolder.mDuoDrawerLayout.closeDrawer();
-            }
-        }, 50);
+        if (position != 4) {
+            mViewHolder.mDuoDrawerLayout.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mViewHolder.mDuoDrawerLayout.closeDrawer();
+                }
+            }, 50);
+        }
     }
 
     private class ViewHolder {
@@ -202,22 +312,14 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
 
     @Override
     public void onBackPressed() {
-        AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
-        alertDialog.setTitle("Attention");
-        alertDialog.setMessage("Are you want exit ?");
-        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "YES",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        System.exit(0);
-                        dialog.dismiss();
-                    }
-                });
-        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "NO",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-        alertDialog.show();
+        Fragment detailF = getSupportFragmentManager().findFragmentByTag(DetailFragment.TAG);
+
+        if (detailF instanceof DetailFragment && detailF.isVisible()) {
+            getSupportActionBar().show();
+            super.onBackPressed();
+
+        } else {
+            mViewHolder.mDuoDrawerLayout.openDrawer();
+        }
     }
 }

@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,20 +24,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.zinzin.autochessguide.DetailActivity;
+import com.zinzin.autochessguide.DetailFragment;
 import com.zinzin.autochessguide.R;
-import com.zinzin.autochessguide.adapter.DetailUnitAdapter;
 import com.zinzin.autochessguide.adapter.UnitBuilderSynergyAdapter;
 import com.zinzin.autochessguide.adapter.UnitsBottomAdapter;
 import com.zinzin.autochessguide.adapter.UnitsBuilderAdapter;
-import com.zinzin.autochessguide.adapter.UnitsFullAdapter;
 import com.zinzin.autochessguide.model.ClassList;
 import com.zinzin.autochessguide.model.RaceList;
 import com.zinzin.autochessguide.model.Units;
 import com.zinzin.autochessguide.model.UnitsInfo;
 import com.zinzin.autochessguide.utils.Contants;
 import com.zinzin.autochessguide.utils.Preference;
-import com.zinzin.autochessguide.utils.SetImage;
 import com.zinzin.autochessguide.utils.Utils;
 import com.zinzin.autochessguide.view.CustomLayoutManager;
 
@@ -264,9 +262,12 @@ public class BuiderFragment extends Fragment {
         unitsBuilderAdapter.setListener(new UnitsBuilderAdapter.OnItemClickListener() {
             @Override
             public void OnItemClick(Units item, int position) {
-                Intent intent = new Intent(getActivity(), DetailActivity.class);
-                intent.putExtra("unit", Utils.convertObjToJson(item));
-                startActivity(intent);
+                DetailFragment detailFragment = DetailFragment.newInstance();
+                detailFragment.setData(item,raceList,classList);
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.add(R.id.container, detailFragment, DetailFragment.TAG);
+                transaction.addToBackStack(DetailFragment.TAG);
+                transaction.commit();
             }
         });
     }

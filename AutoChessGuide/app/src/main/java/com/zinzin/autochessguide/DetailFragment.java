@@ -1,15 +1,17 @@
 package com.zinzin.autochessguide;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.gson.Gson;
 import com.zinzin.autochessguide.adapter.DetailUnitAdapter;
 import com.zinzin.autochessguide.adapter.MiniIconAdapter;
 import com.zinzin.autochessguide.model.ClassList;
@@ -17,14 +19,14 @@ import com.zinzin.autochessguide.model.RaceList;
 import com.zinzin.autochessguide.model.Units;
 import com.zinzin.autochessguide.model.UnitsInfo;
 import com.zinzin.autochessguide.model.UnitsTags;
-import com.zinzin.autochessguide.utils.SetImage;
 import com.zinzin.autochessguide.utils.Utils;
 import com.zinzin.autochessguide.view.CustomLayoutManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DetailActivity extends AppCompatActivity {
+public class DetailFragment extends Fragment {
+    public static String TAG = DetailFragment.class.getSimpleName();
     private List<ClassList> classLists = new ArrayList<>();
     private List<RaceList> raceLists = new ArrayList<>();
     private MiniIconAdapter miniIconAdapter;
@@ -34,37 +36,40 @@ public class DetailActivity extends AppCompatActivity {
     private TextView tvSkillName, tvSkillStatus, tvSkillDes, tvSkillTag;
     private RecyclerView rcvUnit, rcvMiniIcon;
     private Units units;
-
+    public static DetailFragment newInstance() {
+        return new DetailFragment();
+    }
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail);
-        String unitJson = getIntent().getStringExtra("unit");
-        Gson gson = new Gson();
-        units = gson.fromJson(unitJson, Units.class);
-        classLists = SetImage.fullClassList(this);
-        raceLists = SetImage.fullRaceList(this);
-        initView();
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_detail, container, false);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+        initView(view);
+        return view;
+    }
+    public void setData(Units units,List<RaceList> raceList, List<ClassList> classList){
+        this.units = units;
+        this.raceLists.addAll(raceList);
+        this.classLists.addAll(classList);
     }
 
-    private void initView() {
-        ivFullUnit = findViewById(R.id.iv_units_full);
-        ivSkillUnit = findViewById(R.id.iv_skill);
-        tvName = findViewById(R.id.tv_name);
-        tvCost = findViewById(R.id.tv_cost);
-        tvHeart = findViewById(R.id.tv_heart);
-        tvArmor = findViewById(R.id.tv_armor);
-        tvMres = findViewById(R.id.tv_magical_resistance);
-        tvAtkDame = findViewById(R.id.tv_atk_dame);
-        tvAtkSpd = findViewById(R.id.tv_atk_speed);
-        tvAtkRange = findViewById(R.id.tv_atk_range);
-        tvSkillName = findViewById(R.id.tv_name_skill);
-        tvSkillStatus = findViewById(R.id.tv_status_skill);
-        tvSkillDes = findViewById(R.id.tv_des_skill);
-        tvSkillTag = findViewById(R.id.tv_tag_skill);
+    private void initView(View view) {
+        ivFullUnit = view.findViewById(R.id.iv_units_full);
+        ivSkillUnit = view.findViewById(R.id.iv_skill);
+        tvName = view.findViewById(R.id.tv_name);
+        tvCost = view.findViewById(R.id.tv_cost);
+        tvHeart = view.findViewById(R.id.tv_heart);
+        tvArmor = view.findViewById(R.id.tv_armor);
+        tvMres = view.findViewById(R.id.tv_magical_resistance);
+        tvAtkDame = view.findViewById(R.id.tv_atk_dame);
+        tvAtkSpd = view.findViewById(R.id.tv_atk_speed);
+        tvAtkRange = view.findViewById(R.id.tv_atk_range);
+        tvSkillName = view.findViewById(R.id.tv_name_skill);
+        tvSkillStatus = view.findViewById(R.id.tv_status_skill);
+        tvSkillDes = view.findViewById(R.id.tv_des_skill);
+        tvSkillTag = view.findViewById(R.id.tv_tag_skill);
 //        rcvUnit = findViewById(R.id.iv_units_full);
-        rcvMiniIcon = findViewById(R.id.rcv_mini);
-        rcvUnit = findViewById(R.id.rcv_detail_unit);
+        rcvMiniIcon = view.findViewById(R.id.rcv_mini);
+        rcvUnit = view.findViewById(R.id.rcv_detail_unit);
         setData();
         setUpRcv();
     }
@@ -79,8 +84,8 @@ public class DetailActivity extends AppCompatActivity {
         tvArmor.setText("Armor: " + Utils.linkStringFromArray(units.getArmor()));
         tvMres.setText("Magical Resistance: " + units.getResistance());
         tvAtkDame.setText("Attack Damage: " + Utils.linkStringFromArray(units.getAttack()));
-        tvAtkDame.setText("Attack Speed: " + units.getSpeed());
-        tvAtkDame.setText("Attack Range: " + units.getRange());
+        tvAtkSpd.setText("Attack Speed: " + units.getSpeed());
+        tvAtkRange.setText("Attack Range: " + units.getRange());
         tvSkillName.setText(units.getSkill().get(0).getName());
         tvSkillStatus.setText(units.getSkill().get(0).getType());
         tvSkillDes.setText(units.getSkill().get(0).getDescription());
@@ -113,14 +118,14 @@ public class DetailActivity extends AppCompatActivity {
             }
         }
         LinearLayoutManager layoutManager
-                = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+                = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         rcvMiniIcon.setLayoutManager(layoutManager);
-        miniIconAdapter = new MiniIconAdapter(this, listImg);
+        miniIconAdapter = new MiniIconAdapter(getActivity(), listImg);
         rcvMiniIcon.setAdapter(miniIconAdapter);
         LinearLayoutManager layoutManager2
-                = new CustomLayoutManager(this);
+                = new CustomLayoutManager(getActivity());
         rcvUnit.setLayoutManager(layoutManager2);
-        detailUnitAdapter = new DetailUnitAdapter(this, unitsInfos);
+        detailUnitAdapter = new DetailUnitAdapter(getActivity(), unitsInfos);
         rcvUnit.setAdapter(detailUnitAdapter);
     }
 
