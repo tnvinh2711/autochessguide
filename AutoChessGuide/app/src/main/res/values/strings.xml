@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Auto Chess Guild</string>
+    <string name="app_name">Auto Chess Guide</string>
     <string name="google_ads_id">ca-app-pub-7188826417129130~8743853789</string>
 
     <array name="menuOptions">

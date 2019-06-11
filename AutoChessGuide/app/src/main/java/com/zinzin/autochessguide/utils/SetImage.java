@@ -17,6 +17,30 @@ import java.util.List;
 public class SetImage {
     public static List<Units> fullUnitsList(Activity activity){
         String text = Utils.parseFile(activity,"Units.txt");
+        text = text.replace("dota_name:","\"dota_convert\":");
+        text = text.replace("name:","\"name\":");
+        text = text.replace("id:","\"id\":");
+        text = text.replace("new:!","\"new\":");
+        text = text.replace("updated:!","\"updated\":");
+        text = text.replace("buff:!","\"buff\":");
+        text = text.replace("nerf:!","\"nerf\":");
+        text = text.replace("info:","\"info\":");
+        text = text.replace("dota_race:","\"dota_convert_r\":");
+        text = text.replace("dota_class:","\"dota_convert_c\":");
+        text = text.replace("class:","\"class\":");
+        text = text.replace("cost:","\"cost\":");
+        text = text.replace("health:","\"health\":");
+        text = text.replace("armor:","\"armor\":");
+        text = text.replace("resistance:","\"resistance\":");
+        text = text.replace("attack:","\"attack\":");
+        text = text.replace("speed:","\"speed\":");
+        text = text.replace("dps:","\"dps\":");
+        text = text.replace("range:","\"range\":");
+        text = text.replace("skill:","\"skill\":");
+        text = text.replace("type:","\"type\":");
+        text = text.replace("description:","\"description\":");
+        text = text.replace("tags:","\"tags\":");
+        text = text.replace("bonus:","\"bonus\":");
         Gson gson = new Gson();
         Type type = new TypeToken<List<Units>>() {}.getType();
         List<Units> unitsList = gson.fromJson(text, type);
@@ -355,6 +379,10 @@ public class SetImage {
 
     public static List<ClassList> fullClassList(Activity activity){
         String text = Utils.parseFile(activity,"Class.txt");
+        text = convertJson(text);
+        text = text.replace("tier:","\"tier\":");
+        text = text.replace("effect:","\"effect\":");
+        text = text.replace("bonus:","\"bonus\":");
         Gson gson = new Gson();
         Type type = new TypeToken<List<ClassList>>() {}.getType();
         List<ClassList> classLists = gson.fromJson(text, type);
@@ -372,10 +400,14 @@ public class SetImage {
     }
 
     public static List<RaceList> fullRaceList(Activity activity){
-        String text = Utils.parseFile(activity,"Races.txt");
+        String text2 = Utils.parseFile(activity,"Races.txt");
+        text2 = convertJson(text2);
+        text2 = text2.replace("tier:","\"tier\":");
+        text2 = text2.replace("effect:","\"effect\":");
+        text2 = text2.replace("bonus:","\"bonus\":");
         Gson gson = new Gson();
         Type type = new TypeToken<List<RaceList>>() {}.getType();
-        List<RaceList> raceList = gson.fromJson(text, type);
+        List<RaceList> raceList = gson.fromJson(text2, type);
         raceList.get(0).setImgRace(R.drawable.beast);
         raceList.get(1).setImgRace(R.drawable.cave_clan);
         raceList.get(2).setImgRace(R.drawable.demon);
@@ -393,6 +425,11 @@ public class SetImage {
     }
     public static List<Item> fullItemList(Activity activity){
         String text = Utils.parseFile(activity,"Items.txt");
+        text = text.replace("dota_name:","\"dota_convert\":");
+        text = text.replace("name:","\"name\":");
+        text = text.replace("bonus:","\"bonus\":");
+        text = text.replace("combine:","\"combine\":");
+        text = text.replace("dota_combine:","\"dota_convert_cb\":");
         Gson gson = new Gson();
         Type type = new TypeToken<List<Item>>() {}.getType();
         List<Item> itemList = gson.fromJson(text, type);
@@ -447,9 +484,21 @@ public class SetImage {
     }
     public static List<Creep> fullCreepList(Activity activity){
         String text = Utils.parseFile(activity,"Creeps.txt");
+        text = text.replace("round:","\"round\":");
+        text = text.replace("name:","\"name\":");
+        text = text.replace("creeps:","\"creeps\":");
         Gson gson = new Gson();
         Type type = new TypeToken<List<Creep>>() {}.getType();
         List<Creep> creepLists = gson.fromJson(text, type);
         return creepLists;
     }
+     private static String convertJson(String text){
+         text = text.replace("dota_name:","\"dota_convert\":");
+         text = text.replace("name:","\"name\":");
+         text = text.replace(",tier_up:","");
+         text = text.replace(",tier_down:","");
+         text = text.replace("!1","");
+         text = text.replace("!0","");
+         return text;
+     }
 }
