@@ -1,6 +1,7 @@
 package com.zinzin.autochessguide.utils;
 
 import android.app.Activity;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -20,7 +21,11 @@ public class SetImage {
         text = text.replace("dota_name:","\"dota_convert\":");
         text = text.replace("name:","\"name\":");
         text = text.replace("id:","\"id\":");
+        text = text.replace("tier:","\"tier\":");
+        text = text.replace("tier_up:!","\"tier_up\":");
+        text = text.replace("tier_down:!","\"tier_down\":");
         text = text.replace("new:!","\"new\":");
+        text = text.replace("popular:!","\"popular\":");
         text = text.replace("updated:!","\"updated\":");
         text = text.replace("buff:!","\"buff\":");
         text = text.replace("nerf:!","\"nerf\":");
@@ -28,6 +33,7 @@ public class SetImage {
         text = text.replace("dota_race:","\"dota_convert_r\":");
         text = text.replace("dota_class:","\"dota_convert_c\":");
         text = text.replace("class:","\"class\":");
+        text = text.replace("race:","\"race\":");
         text = text.replace("cost:","\"cost\":");
         text = text.replace("health:","\"health\":");
         text = text.replace("armor:","\"armor\":");
@@ -379,7 +385,10 @@ public class SetImage {
 
     public static List<ClassList> fullClassList(Activity activity){
         String text = Utils.parseFile(activity,"Class.txt");
-        text = convertJson(text);
+        text = text.replace("dota_name:","\"dota_convert\":");
+        text = text.replace("name:","\"name\":");
+        text = text.replace("tier_up:!","\"tier_up\":");
+        text = text.replace("tier_down:!","\"tier_down\":");
         text = text.replace("tier:","\"tier\":");
         text = text.replace("effect:","\"effect\":");
         text = text.replace("bonus:","\"bonus\":");
@@ -401,7 +410,10 @@ public class SetImage {
 
     public static List<RaceList> fullRaceList(Activity activity){
         String text2 = Utils.parseFile(activity,"Races.txt");
-        text2 = convertJson(text2);
+        text2 = text2.replace("dota_name:","\"dota_convert\":");
+        text2 = text2.replace("name:","\"name\":");
+        text2 = text2.replace("tier_up:!","\"tier_up\":");
+        text2 = text2.replace("tier_down:!","\"tier_down\":");
         text2 = text2.replace("tier:","\"tier\":");
         text2 = text2.replace("effect:","\"effect\":");
         text2 = text2.replace("bonus:","\"bonus\":");
@@ -492,13 +504,4 @@ public class SetImage {
         List<Creep> creepLists = gson.fromJson(text, type);
         return creepLists;
     }
-     private static String convertJson(String text){
-         text = text.replace("dota_name:","\"dota_convert\":");
-         text = text.replace("name:","\"name\":");
-         text = text.replace(",tier_up:","");
-         text = text.replace(",tier_down:","");
-         text = text.replace("!1","");
-         text = text.replace("!0","");
-         return text;
-     }
 }

@@ -24,6 +24,25 @@ public class Units {
     @SerializedName("tier")
     @Expose
     private String tier;
+    private Integer _new;
+    @SerializedName("updated")
+    @Expose
+    private Integer updated;
+    @SerializedName("popular")
+    @Expose
+    private Integer popular;
+    @SerializedName("buff")
+    @Expose
+    private Integer buff;
+    @SerializedName("nerf")
+    @Expose
+    private Integer nerf;
+    @SerializedName("tier_up")
+    @Expose
+    private Integer tierUp;
+    @SerializedName("tier_down")
+    @Expose
+    private Integer tierDown;
     @SerializedName("info")
     @Expose
     private String info;
@@ -98,7 +117,61 @@ public class Units {
     public void setTier(String tier) {
         this.tier = tier;
     }
+    public Integer getNew() {
+        return _new;
+    }
 
+    public void setNew(Integer _new) {
+        this._new = _new;
+    }
+
+    public Integer getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(Integer updated) {
+        this.updated = updated;
+    }
+
+    public Integer getPopular() {
+        return popular;
+    }
+
+    public void setPopular(Integer popular) {
+        this.popular = popular;
+    }
+
+    public Integer getBuff() {
+        return buff;
+    }
+
+    public void setBuff(Integer buff) {
+        this.buff = buff;
+    }
+
+    public Integer getNerf() {
+        return nerf;
+    }
+
+    public void setNerf(Integer nerf) {
+        this.nerf = nerf;
+    }
+
+    public Integer getTierUp() {
+        return tierUp;
+    }
+
+    public void setTierUp(Integer tierUp) {
+        this.tierUp = tierUp;
+    }
+
+    public Integer getTierDown() {
+        return tierDown;
+    }
+
+    public void setTierDown(Integer tierDown) {
+        this.tierDown = tierDown;
+    }
     public String getInfo() {
         return info;
     }

@@ -24,7 +24,21 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:orientation="vertical">
-
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@mipmap/update"
+                    android:id="@+id/img_status"/>
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@mipmap/down"
+                    android:id="@+id/img_stat"/>
                 <ImageView
                     android:id="@+id/iv_units_full"
                     android:layout_width="wrap_content"
