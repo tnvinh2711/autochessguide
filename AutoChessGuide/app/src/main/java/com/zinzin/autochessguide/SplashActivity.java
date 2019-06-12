@@ -26,12 +26,10 @@ import java.util.List;
 
 public class SplashActivity extends AppCompatActivity {
     private AVLoadingIndicatorView loading;
-    private ImageView ivLogo;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        ivLogo = findViewById(R.id.iv_logo);
         loading = findViewById(R.id.loading);
         YoYo.with(Techniques.Tada)
                 .onEnd(new YoYo.AnimatorCallback() {

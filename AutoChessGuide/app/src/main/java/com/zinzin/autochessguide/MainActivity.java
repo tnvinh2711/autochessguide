@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.ads.AdListener;
@@ -63,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
     private InterstitialAd mInterstitialAd,mInterstitialAdClick;
     private Animation slide_down;
     private Animation slide_up;
+    private LinearLayout llFooter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,11 +146,12 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
         mInterstitialAdClick.setAdListener(new AdListener(){
             @Override
             public void onAdLoaded() {
-                mInterstitialAdClick.show();
+                llFooter.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onAdClosed() {
+                llFooter.setVisibility(View.GONE);
                 mInterstitialAdClick.loadAd(new AdRequest.Builder().build());
             }
 
@@ -226,14 +229,23 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
         mMenuAdapter = new MenuAdapter(mTitles);
         mViewHolder.mDuoMenuView.setOnMenuClickListener(this);
         mViewHolder.mDuoMenuView.setAdapter(mMenuAdapter);
+        llFooter = mViewHolder.mDuoMenuView.findViewById(R.id.footer);
+        llFooter.setVisibility(View.GONE);
         ImageView ivFooter = mViewHolder.mDuoMenuView.findViewById(R.id.iv_footer);
         final Animation animShake = AnimationUtils.loadAnimation(this, R.anim.shake);
         ivFooter.startAnimation(animShake);
+        llFooter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("onFooterClicked",""+mInterstitialAdClick.isLoaded());
+                mInterstitialAdClick.show();
+            }
+        });
     }
 
     @Override
     public void onFooterClicked() {
-        if(mInterstitialAdClick.isLoaded()) mInterstitialAdClick.show();
+
     }
 
     @Override
