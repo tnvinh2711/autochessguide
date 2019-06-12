@@ -6,12 +6,13 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import com.google.android.gms.ads.AdListener;
@@ -23,6 +24,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.zinzin.autochessguide.fragment.BuiderFragment;
 import com.zinzin.autochessguide.fragment.CreepsFragment;
+import com.zinzin.autochessguide.fragment.DetailFragment;
 import com.zinzin.autochessguide.fragment.ItemFragment;
 import com.zinzin.autochessguide.fragment.UnitsFragment;
 import com.zinzin.autochessguide.model.ClassList;
@@ -32,7 +34,6 @@ import com.zinzin.autochessguide.model.RaceList;
 import com.zinzin.autochessguide.model.Units;
 import com.zinzin.autochessguide.utils.Preference;
 import com.zinzin.autochessguide.utils.SetImage;
-import com.zinzin.autochessguide.utils.Utils;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -47,7 +48,6 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
     private MenuAdapter mMenuAdapter;
     private ViewHolder mViewHolder;
     private AdView mAdView;
-    private boolean isloadedAds = false;
     private List<Units> unitsList = new ArrayList<>();
     private List<RaceList> raceList = new ArrayList<>();
     private List<ClassList> classList = new ArrayList<>();
@@ -60,11 +60,15 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
     private Fragment[] fragments;
     private ArrayList<String> mTitles = new ArrayList<>();
     private InterstitialAd mInterstitialAd;
+    private Animation slide_down;
+    private Animation slide_up;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        slide_down = AnimationUtils.loadAnimation(this, R.anim.slide_down);
+        slide_up = AnimationUtils.loadAnimation(this, R.anim.slide_up);
         MobileAds.initialize(this, "ca-app-pub-7188826417129130~8743853789");
         mInterstitialAd = new InterstitialAd(this);
         mInterstitialAd.setAdUnitId("ca-app-pub-7188826417129130/6429515781");
@@ -85,6 +89,7 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
             }
         }
         mAdView = findViewById(R.id.adView);
+        mAdView.setVisibility(View.GONE);
         loadAd();
         mTitles = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.menuOptions)));
         // Initialize the views
@@ -101,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
 
         mMenuAdapter.setViewSelected(0, true);
         setTitle(mTitles.get(0));
-
+        Log.e("vào main","vào main");
         loadData();
         initFragment();
 
@@ -121,13 +126,14 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
         mAdView.setAdListener(new AdListener() {
             @Override
             public void onAdLoaded() {
-                isloadedAds = true;
+                mAdView.setVisibility(View.VISIBLE);
+                mAdView.startAnimation(slide_up);
             }
 
             @Override
             public void onAdClicked() {
-                isloadedAds = false;
                 mAdView.setVisibility(View.GONE);
+                mAdView.startAnimation(slide_down);
             }
         });
 
@@ -142,7 +148,7 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
                         Preference.save(MainActivity.this, "LoadAds", true);
                         mInterstitialAd.show();
                     }
-                },60000);
+                }, 60000);
             }
 
             @Override
@@ -181,11 +187,25 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
     }
 
     private void loadData() {
-        unitsList = SetImage.fullUnitsList(this);
-        raceList = SetImage.fullRaceList(this);
-        classList = SetImage.fullClassList(this);
-        creepList = SetImage.fullCreepList(this);
-        itemList = SetImage.fullItemList(this);
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<Units>>() {}.getType();
+        unitsList = gson.fromJson(getIntent().getStringExtra("units"), type);
+
+        Gson gson2 = new Gson();
+        Type type2 = new TypeToken<List<RaceList>>() {}.getType();
+        raceList = gson2.fromJson(getIntent().getStringExtra("races"), type2);
+
+        Gson gson3 = new Gson();
+        Type type3 = new TypeToken<List<ClassList>>() {}.getType();
+        classList = gson3.fromJson(getIntent().getStringExtra("classl"), type3);
+
+        Gson gson4 = new Gson();
+        Type type4 = new TypeToken<List<Creep>>() {}.getType();
+        creepList = gson4.fromJson(getIntent().getStringExtra("creeps"), type4);
+
+        Gson gson5 = new Gson();
+        Type type5 = new TypeToken<List<Item>>() {}.getType();
+        itemList = gson5.fromJson(getIntent().getStringExtra("items"), type5);
     }
 
     private void handleToolbar() {

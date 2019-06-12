@@ -10,6 +10,9 @@ public class Units {
     private int icon_image;
     private int mini_image;
     private int skill_image;
+    private int race_image;
+    private Integer race_image2;
+    private int class_image;
     private int color_name;
     private boolean isClick = false;
     @SerializedName("name")
@@ -24,6 +27,8 @@ public class Units {
     @SerializedName("tier")
     @Expose
     private String tier;
+    @SerializedName("new")
+    @Expose
     private Integer _new;
     @SerializedName("updated")
     @Expose
@@ -330,5 +335,29 @@ public class Units {
 
     public void setClick(boolean click) {
         isClick = click;
+    }
+
+    public int getRace_image() {
+        return race_image;
+    }
+
+    public void setRace_image(int race_image) {
+        this.race_image = race_image;
+    }
+
+    public int getClass_image() {
+        return class_image;
+    }
+
+    public void setClass_image(int class_image) {
+        this.class_image = class_image;
+    }
+
+    public Integer getRace_image2() {
+        return race_image2;
+    }
+
+    public void setRace_image2(Integer race_image2) {
+        this.race_image2 = race_image2;
     }
 }

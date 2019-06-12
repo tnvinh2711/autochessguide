@@ -16,7 +16,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 public class SetImage {
-    public static List<Units> fullUnitsList(Activity activity){
+    public static List<Units> fullUnitsList(Activity activity, List<RaceList> raceLists, List<ClassList> classLists){
         String text = Utils.parseFile(activity,"Units.txt");
         text = text.replace("dota_name:","\"dota_convert\":");
         text = text.replace("name:","\"name\":");
@@ -380,6 +380,23 @@ public class SetImage {
         unitsList.get(54).setSkill_image(R.drawable.furion_s);
         unitsList.get(54).setColor_name(R.color.color_cost_2);
 
+        for(Units units: unitsList){
+            for (ClassList class_ : classLists) {
+                if (class_.getName().equals(units.getClass_())) {
+                    units.setClass_image(class_.getImgClass());
+                }
+            }
+            for (RaceList race : raceLists) {
+                if (race.getName().equals(units.getRace().get(0))) {
+                    units.setRace_image(race.getImgRace());
+                }
+                if (units.getRace().size() > 1) {
+                    if (race.getName().equals(units.getRace().get(1))) {
+                        units.setRace_image2(race.getImgRace());
+                    }
+                }
+            }
+        }
         return unitsList;
     }
 

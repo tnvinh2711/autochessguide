@@ -1,7 +1,6 @@
 package com.zinzin.autochessguide.fragment;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -12,7 +11,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -24,7 +22,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.zinzin.autochessguide.DetailFragment;
 import com.zinzin.autochessguide.R;
 import com.zinzin.autochessguide.adapter.UnitBuilderSynergyAdapter;
 import com.zinzin.autochessguide.adapter.UnitsBottomAdapter;

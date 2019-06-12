@@ -1,10 +1,9 @@
 apply plugin: 'com.android.application'
-
 android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.zinzin.autochessguide"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 28
         versionCode 3
         versionName "1.0.2"
@@ -37,5 +36,6 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.8.0'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation 'com.github.adroitandroid:ChipCloud:2.2.1'
-    implementation 'com.google.android.gms:play-services-ads:17.2.0'
+    implementation 'com.google.android.gms:play-services-ads:17.2.1'
+    implementation 'com.wang.avi:library:2.1.3'
 }

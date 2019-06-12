@@ -1,7 +1,6 @@
 package com.zinzin.autochessguide.fragment;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,12 +18,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.adroitandroid.chipcloud.ChipCloud;
 import com.adroitandroid.chipcloud.ChipListener;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.zinzin.autochessguide.DetailFragment;
 import com.zinzin.autochessguide.R;
 import com.zinzin.autochessguide.adapter.UnitsFullAdapter;
 import com.zinzin.autochessguide.model.ClassList;
@@ -57,6 +53,7 @@ public class UnitsFragment extends Fragment {
     private String[] listRace;
     private String[] listClass;
 
+    private String statusSelected = "";
     private String costSelected = "";
     private String classSelected = "";
     private String racesSelected = "";
@@ -74,7 +71,8 @@ public class UnitsFragment extends Fragment {
         initView(view);
         return view;
     }
-    public void setData(List<Units> unitsList,List<RaceList> raceList, List<ClassList> classList){
+
+    public void setData(List<Units> unitsList, List<RaceList> raceList, List<ClassList> classList) {
         this.unitsList.addAll(unitsList);
         this.raceList.addAll(raceList);
         this.classList.addAll(classList);
@@ -129,7 +127,7 @@ public class UnitsFragment extends Fragment {
             @Override
             public void OnItemClick(Units item, int position) {
                 DetailFragment detailFragment = DetailFragment.newInstance();
-                detailFragment.setData(item,raceList,classList);
+                detailFragment.setData(item, raceList, classList);
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.add(R.id.container, detailFragment, DetailFragment.TAG);
                 transaction.addToBackStack(DetailFragment.TAG);
@@ -140,24 +138,38 @@ public class UnitsFragment extends Fragment {
 
     private void setUpBottomSheetDialog() {
         final View sheetView = getActivity().getLayoutInflater().inflate(R.layout.bottom_sheet_filter, null);
+        final ChipCloud chipCloudStatus = sheetView.findViewById(R.id.chip_cloud_status);
         final ChipCloud chipCloudCost = sheetView.findViewById(R.id.chip_cloud_cost);
         final ChipCloud chipCloudClass = sheetView.findViewById(R.id.chip_cloud_class);
         final ChipCloud chipCloudRace = sheetView.findViewById(R.id.chip_cloud_race);
         Button btnDone = sheetView.findViewById(R.id.btn_done);
         TextView tvReset = sheetView.findViewById(R.id.tv_reset);
         final String[] listCost = new String[]{"1", "2", "3", "4", "5"};
+        final String[] listStatus = new String[]{"New", "Buff", "Nerf"};
         listRace = new String[raceList.size()];
         listClass = new String[classList.size()];
-        for(int i = 0; i<raceList.size(); i++){
+        for (int i = 0; i < raceList.size(); i++) {
             listRace[i] = raceList.get(i).getName();
         }
-        for(int i = 0; i<classList.size(); i++){
+        for (int i = 0; i < classList.size(); i++) {
             listClass[i] = classList.get(i).getName();
         }
 
+        chipCloudStatus.addChips(listStatus);
         chipCloudCost.addChips(listCost);
         chipCloudClass.addChips(listClass);
         chipCloudRace.addChips(listRace);
+        chipCloudStatus.setChipListener(new ChipListener() {
+            @Override
+            public void chipSelected(int index) {
+                statusSelected = listStatus[index];
+            }
+
+            @Override
+            public void chipDeselected(int index) {
+                statusSelected = "";
+            }
+        });
         chipCloudCost.setChipListener(new ChipListener() {
             @Override
             public void chipSelected(int index) {
@@ -194,10 +206,13 @@ public class UnitsFragment extends Fragment {
         tvReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                chipCloudStatus.setMode(ChipCloud.Mode.NONE);
                 chipCloudCost.setMode(ChipCloud.Mode.NONE);
                 chipCloudClass.setMode(ChipCloud.Mode.NONE);
                 chipCloudRace.setMode(ChipCloud.Mode.NONE);
+                chipCloudRace.setMode(ChipCloud.Mode.NONE);
 
+                statusSelected = "";
                 costSelected = "";
                 classSelected = "";
                 racesSelected = "";
@@ -221,15 +236,33 @@ public class UnitsFragment extends Fragment {
 
     private void getListFilter() {
         unitsFilter.clear();
-        if (!costSelected.equals("") || !classSelected.equals("") || !racesSelected.equals("")) {
+        if (!statusSelected.equals("") || !costSelected.equals("") || !classSelected.equals("") || !racesSelected.equals("")) {
             isFilter = true;
-            if (!costSelected.equals("")) {
+            if (!statusSelected.equals("")) {
                 for (int i = 0; i < unitsList.size(); i++) {
-                    if (unitsList.get(i).getCost().equals(costSelected))
-                        unitsFilter.add(unitsList.get(i));
+                    switch (statusSelected) {
+                        case "New":
+                            if (unitsList.get(i).getNew() == 0)
+                                unitsFilter.add(unitsList.get(i));
+                            break;
+                        case "Buff":
+                            if (unitsList.get(i).getBuff() == 0)
+                                unitsFilter.add(unitsList.get(i));
+                            break;
+                        case "Nerf":
+                            if (unitsList.get(i).getNerf() == 0)
+                                unitsFilter.add(unitsList.get(i));
+                            break;
+                    }
                 }
             } else {
                 unitsFilter.addAll(unitsList);
+            }
+            if (!costSelected.equals("")) {
+                for (int i = unitsFilter.size()-1; i >= 0; i--) {
+                    if (!unitsFilter.get(i).getCost().equals(costSelected))
+                        unitsFilter.remove(i);
+                }
             }
             if (!classSelected.equals("")) {
                 for (int i = unitsFilter.size() - 1; i >= 0; i--) {

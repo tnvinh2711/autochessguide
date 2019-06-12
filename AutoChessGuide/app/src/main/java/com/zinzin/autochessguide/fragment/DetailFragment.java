@@ -1,4 +1,4 @@
-package com.zinzin.autochessguide;
+package com.zinzin.autochessguide.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.zinzin.autochessguide.R;
 import com.zinzin.autochessguide.adapter.DetailUnitAdapter;
 import com.zinzin.autochessguide.adapter.MiniIconAdapter;
 import com.zinzin.autochessguide.model.ClassList;
@@ -41,7 +42,7 @@ public class DetailFragment extends Fragment {
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_detail, container, false);
+        View view = inflater.inflate(R.layout.fragment_detail, container, false);
         ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         initView(view);
         return view;
@@ -53,6 +54,7 @@ public class DetailFragment extends Fragment {
     }
 
     private void initView(View view) {
+        Utils.hideSoftKeyboard(getActivity());
         ivFullUnit = view.findViewById(R.id.iv_units_full);
         ivSkillUnit = view.findViewById(R.id.iv_skill);
         tvName = view.findViewById(R.id.tv_name);
