@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tier 1"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textAllCaps="true"
+            android:padding="5dp"
+            android:textColor="@color/white"
+            android:background="#F44336"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcv_tier_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:overScrollMode="never">
+        </androidx.recyclerview.widget.RecyclerView>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tier 2"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textAllCaps="true"
+            android:padding="5dp"
+            android:textColor="@color/white"
+            android:background="#03A9F4"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcv_tier_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:overScrollMode="never">
+        </androidx.recyclerview.widget.RecyclerView>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tier 3"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textAllCaps="true"
+            android:padding="5dp"
+            android:textColor="@color/white"
+            android:background="#4CAF50"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcv_tier_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:overScrollMode="never">
+        </androidx.recyclerview.widget.RecyclerView>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tier 4"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textAllCaps="true"
+            android:padding="5dp"
+            android:textColor="@color/white"
+            android:background="#9C27B0"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcv_tier_4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:overScrollMode="never">
+        </androidx.recyclerview.widget.RecyclerView>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tier 5"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textAllCaps="true"
+            android:padding="5dp"
+            android:textColor="@color/white"
+            android:background="#FF9800"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcv_tier_5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:overScrollMode="never">
+        </androidx.recyclerview.widget.RecyclerView>
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

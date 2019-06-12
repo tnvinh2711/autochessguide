@@ -19,7 +19,8 @@
             android:layout_above="@+id/adView"
             android:orientation="vertical"
             android:tag="@string/tag_menu"
-            app:header="@layout/view_header" />
+            app:header="@layout/view_header"
+            app:footer="@layout/view_footer" />
 
         <LinearLayout
             android:layout_width="match_parent"

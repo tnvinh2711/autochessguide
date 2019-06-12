@@ -5,8 +5,8 @@ android {
         applicationId "com.zinzin.autochessguide"
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 3
-        versionName "1.0.2"
+        versionCode 4
+        versionName "1.0.3"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -38,4 +38,9 @@ dependencies {
     implementation 'com.github.adroitandroid:ChipCloud:2.2.1'
     implementation 'com.google.android.gms:play-services-ads:17.2.1'
     implementation 'com.wang.avi:library:2.1.3'
+    implementation 'com.google.firebase:firebase-core:16.0.9'
+    implementation 'com.daimajia.easing:library:2.0@aar'
+    implementation 'com.daimajia.androidanimations:library:2.3@aar'
 }
+
+apply plugin: 'com.google.gms.google-services'

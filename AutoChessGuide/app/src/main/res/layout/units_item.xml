@@ -4,8 +4,8 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="8dp">
     <RelativeLayout
-        android:layout_width="90dp"
-        android:layout_height="96dp"
+        android:layout_width="110dp"
+        android:layout_height="100dp"
         android:layout_gravity="center_horizontal">
 
         <ImageView
@@ -13,6 +13,7 @@
             android:layout_height="90dp"
             android:layout_marginTop="8dp"
             android:padding="5dp"
+            android:layout_centerHorizontal="true"
             android:src="@drawable/a1"
             android:id="@+id/iv_icon_unit"
             android:background="@drawable/border_background_buff"/>
@@ -33,6 +34,16 @@
             android:id="@+id/img_new"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"/>
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginRight="2dp"
+            android:visibility="gone"
+            android:src="@mipmap/up"
+            android:background="@drawable/circle_background"
+            android:id="@+id/img_tier"
+            android:layout_alignParentRight="true"/>
+
     </RelativeLayout>
     <LinearLayout
         android:layout_width="wrap_content"

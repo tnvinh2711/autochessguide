@@ -211,7 +211,11 @@ public class UnitsFragment extends Fragment {
                 chipCloudClass.setMode(ChipCloud.Mode.NONE);
                 chipCloudRace.setMode(ChipCloud.Mode.NONE);
                 chipCloudRace.setMode(ChipCloud.Mode.NONE);
-
+                chipCloudStatus.setMode(ChipCloud.Mode.SINGLE);
+                chipCloudCost.setMode(ChipCloud.Mode.SINGLE);
+                chipCloudClass.setMode(ChipCloud.Mode.SINGLE);
+                chipCloudRace.setMode(ChipCloud.Mode.SINGLE);
+                chipCloudRace.setMode(ChipCloud.Mode.SINGLE);
                 statusSelected = "";
                 costSelected = "";
                 classSelected = "";

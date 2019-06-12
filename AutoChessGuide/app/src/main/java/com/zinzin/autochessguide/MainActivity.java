@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.ads.AdListener;
@@ -26,6 +27,7 @@ import com.zinzin.autochessguide.fragment.BuiderFragment;
 import com.zinzin.autochessguide.fragment.CreepsFragment;
 import com.zinzin.autochessguide.fragment.DetailFragment;
 import com.zinzin.autochessguide.fragment.ItemFragment;
+import com.zinzin.autochessguide.fragment.TierFragment;
 import com.zinzin.autochessguide.fragment.UnitsFragment;
 import com.zinzin.autochessguide.model.ClassList;
 import com.zinzin.autochessguide.model.Creep;
@@ -33,8 +35,6 @@ import com.zinzin.autochessguide.model.Item;
 import com.zinzin.autochessguide.model.RaceList;
 import com.zinzin.autochessguide.model.Units;
 import com.zinzin.autochessguide.utils.Preference;
-import com.zinzin.autochessguide.utils.SetImage;
-
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -57,9 +57,10 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
     private BuiderFragment buiderFragment;
     private CreepsFragment creepsFragment;
     private ItemFragment itemFragment;
+    private TierFragment tierFragment;
     private Fragment[] fragments;
     private ArrayList<String> mTitles = new ArrayList<>();
-    private InterstitialAd mInterstitialAd;
+    private InterstitialAd mInterstitialAd,mInterstitialAdClick;
     private Animation slide_down;
     private Animation slide_up;
 
@@ -71,7 +72,10 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
         slide_up = AnimationUtils.loadAnimation(this, R.anim.slide_up);
         MobileAds.initialize(this, "ca-app-pub-7188826417129130~8743853789");
         mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAdClick = new InterstitialAd(this);
         mInterstitialAd.setAdUnitId("ca-app-pub-7188826417129130/6429515781");
+        mInterstitialAdClick.setAdUnitId("ca-app-pub-7188826417129130/8978166813");
+        mInterstitialAdClick.loadAd(new AdRequest.Builder().build());
 
         if (Preference.getBoolean(this, "firstrun", true)) {
             mInterstitialAd.loadAd(new AdRequest.Builder().build());
@@ -112,10 +116,11 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
 
         unitsFragment.setData(unitsList, raceList, classList);
         buiderFragment.setData(unitsList, raceList, classList);
+        tierFragment.setData(unitsList, raceList, classList);
         creepsFragment.setData(creepList);
         itemFragment.setData(itemList);
         // Show main fragment in container
-        goToFragment(unitsFragment, UnitsFragment.TAG);
+        goToFragment(tierFragment, TierFragment.TAG);
 
 
     }
@@ -136,7 +141,18 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
                 mAdView.startAnimation(slide_down);
             }
         });
+        mInterstitialAdClick.setAdListener(new AdListener(){
+            @Override
+            public void onAdLoaded() {
+                mInterstitialAdClick.show();
+            }
 
+            @Override
+            public void onAdClosed() {
+                mInterstitialAdClick.loadAd(new AdRequest.Builder().build());
+            }
+
+        });
         mInterstitialAd.setAdListener(new AdListener() {
             @Override
             public void onAdLoaded() {
@@ -156,25 +172,6 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
                 Preference.getBoolean(MainActivity.this, "LoadAds", false);
             }
 
-            @Override
-            public void onAdOpened() {
-                // Code to be executed when the ad is displayed.
-            }
-
-            @Override
-            public void onAdClicked() {
-
-            }
-
-            @Override
-            public void onAdLeftApplication() {
-                // Code to be executed when the user has left the app.
-            }
-
-            @Override
-            public void onAdClosed() {
-                // Code to be executed when the interstitial ad is closed.
-            }
         });
     }
 
@@ -183,7 +180,8 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
         buiderFragment = BuiderFragment.newInstance();
         itemFragment = ItemFragment.newInstance();
         creepsFragment = CreepsFragment.newInstance();
-        fragments = new Fragment[]{unitsFragment, buiderFragment, creepsFragment, itemFragment};
+        tierFragment = TierFragment.newInstance();
+        fragments = new Fragment[]{tierFragment,unitsFragment, buiderFragment, creepsFragment, itemFragment};
     }
 
     private void loadData() {
@@ -226,14 +224,16 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
 
     private void handleMenu() {
         mMenuAdapter = new MenuAdapter(mTitles);
-
         mViewHolder.mDuoMenuView.setOnMenuClickListener(this);
         mViewHolder.mDuoMenuView.setAdapter(mMenuAdapter);
+        ImageView ivFooter = mViewHolder.mDuoMenuView.findViewById(R.id.iv_footer);
+        final Animation animShake = AnimationUtils.loadAnimation(this, R.anim.shake);
+        ivFooter.startAnimation(animShake);
     }
 
     @Override
     public void onFooterClicked() {
-        Toast.makeText(this, "onFooterClicked", Toast.LENGTH_SHORT).show();
+        if(mInterstitialAdClick.isLoaded()) mInterstitialAdClick.show();
     }
 
     @Override
@@ -271,18 +271,21 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
         // Navigate to the right fragment
         switch (position) {
             case 0:
-                goToFragment(unitsFragment, UnitsFragment.TAG);
+                goToFragment(tierFragment, TierFragment.TAG);
                 break;
             case 1:
-                goToFragment(itemFragment, ItemFragment.TAG);
+                goToFragment(unitsFragment, UnitsFragment.TAG);
                 break;
             case 2:
-                goToFragment(creepsFragment, CreepsFragment.TAG);
+                goToFragment(itemFragment, ItemFragment.TAG);
                 break;
             case 3:
-                goToFragment(buiderFragment, BuiderFragment.TAG);
+                goToFragment(creepsFragment, CreepsFragment.TAG);
                 break;
             case 4:
+                goToFragment(buiderFragment, BuiderFragment.TAG);
+                break;
+            case 5:
                 AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
                 alertDialog.setTitle("Attention");
                 alertDialog.setMessage("Are you want exit ?");
@@ -307,7 +310,7 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
         }
 
         // Close the drawer
-        if (position != 4) {
+        if (position != 5) {
             mViewHolder.mDuoDrawerLayout.postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -323,23 +326,27 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
         private Toolbar mToolbar;
 
         ViewHolder() {
-            mDuoDrawerLayout = (DuoDrawerLayout) findViewById(R.id.drawer);
+            mDuoDrawerLayout = findViewById(R.id.drawer);
             mDuoMenuView = (DuoMenuView) mDuoDrawerLayout.getMenuView();
-            mToolbar = (Toolbar) findViewById(R.id.toolbar);
+            mToolbar = findViewById(R.id.toolbar);
             mToolbar.setBackgroundColor(getResources().getColor(R.color.toolbar));
         }
     }
 
     @Override
     public void onBackPressed() {
-        Fragment detailF = getSupportFragmentManager().findFragmentByTag(DetailFragment.TAG);
+        try {
+            Fragment detailF = getSupportFragmentManager().findFragmentByTag(DetailFragment.TAG);
 
-        if (detailF instanceof DetailFragment && detailF.isVisible()) {
-            getSupportActionBar().show();
-            super.onBackPressed();
+            if (detailF instanceof DetailFragment && detailF.isVisible()) {
+                if(getSupportActionBar()!= null)getSupportActionBar().show();
+                super.onBackPressed();
 
-        } else {
-            mViewHolder.mDuoDrawerLayout.openDrawer();
+            } else {
+                mViewHolder.mDuoDrawerLayout.openDrawer();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

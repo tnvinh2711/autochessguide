@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 
+import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -48,6 +49,7 @@ public class ItemFragment extends Fragment {
         LinearLayoutManager layoutManager
                 = new CustomLayoutManager(getActivity());
         rcvItem.setLayoutManager(layoutManager);
+        ViewCompat.setNestedScrollingEnabled(rcvItem, false);
         itemAdapter = new ItemAdapter(getActivity(), itemList);
         rcvItem.setAdapter(itemAdapter);
     }
