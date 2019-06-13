@@ -1,6 +1,7 @@
 package com.zinzin.autochessguide.fragment;
 
 import android.content.DialogInterface;
+import android.content.res.Configuration;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -117,9 +118,27 @@ public class UnitsFragment extends Fragment {
             }
         });
     }
-
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        GridLayoutManager adapterManager = null;
+        // Checks the orientation of the screen
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            adapterManager = new GridLayoutManager(getActivity(), 5);
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+            adapterManager = new GridLayoutManager(getActivity(), 3);
+        }
+        rvUnits.setLayoutManager(adapterManager);
+        unitsFullAdapter.notifyDataSetChanged();
+    }
     private void setUpRecycleView() {
-        GridLayoutManager adapterManager = new GridLayoutManager(getActivity(), 3);
+        GridLayoutManager adapterManager;
+        int orientation = getResources().getConfiguration().orientation;
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            adapterManager = new GridLayoutManager(getActivity(), 5);
+        } else {
+            adapterManager = new GridLayoutManager(getActivity(), 3);
+        }
         rvUnits.setLayoutManager(adapterManager);
         unitsFullAdapter = new UnitsFullAdapter(getActivity(), unitsList);
         rvUnits.setAdapter(unitsFullAdapter);

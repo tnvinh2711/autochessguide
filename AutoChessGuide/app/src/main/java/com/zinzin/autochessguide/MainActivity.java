@@ -129,8 +129,7 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
     }
 
     private void loadAd() {
-        final AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+        mAdView.loadAd(new AdRequest.Builder().build());
         mAdView.setAdListener(new AdListener() {
             @Override
             public void onAdLoaded() {
@@ -139,9 +138,15 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
             }
 
             @Override
-            public void onAdClicked() {
+            public void onAdOpened() {
                 mAdView.setVisibility(View.GONE);
                 mAdView.startAnimation(slide_down);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mAdView.loadAd(new AdRequest.Builder().build());
+                    }
+                },1800000);
             }
         });
         mInterstitialAdClick.setAdListener(new AdListener(){
@@ -153,7 +158,12 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
             @Override
             public void onAdClosed() {
                 llFooter.setVisibility(View.GONE);
-                mInterstitialAdClick.loadAd(new AdRequest.Builder().build());
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mInterstitialAdClick.loadAd(new AdRequest.Builder().build());
+                    }
+                },1800000);
             }
 
         });

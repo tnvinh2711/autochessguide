@@ -1,6 +1,7 @@
 package com.zinzin.autochessguide.fragment;
 
 import android.content.DialogInterface;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -42,7 +43,11 @@ import java.util.Set;
 public class TierFragment extends Fragment {
     public static String TAG = TierFragment.class.getSimpleName();
     private RecyclerView rvTier1, rvTier2, rvTier3, rvTier4, rvTier5;
-    private UnitsTierAdapter unitsTierAdapter;
+    private UnitsTierAdapter unitsTierAdapter1;
+    private UnitsTierAdapter unitsTierAdapter2;
+    private UnitsTierAdapter unitsTierAdapter3;
+    private UnitsTierAdapter unitsTierAdapter4;
+    private UnitsTierAdapter unitsTierAdapter5;
 
     private List<Units> unitsList = new ArrayList<>();
     private List<Units> unitsListTier1 = new ArrayList<>();
@@ -96,30 +101,70 @@ public class TierFragment extends Fragment {
 
     private void initView(View view) {
         rvTier1 = view.findViewById(R.id.rcv_tier_1);
-        setUpRecycleView(rvTier1,unitsListTier1);
+        unitsTierAdapter1 =  new UnitsTierAdapter(getActivity(), unitsListTier1);
+        setUpRecycleView(rvTier1,unitsTierAdapter1);
 
         rvTier2 = view.findViewById(R.id.rcv_tier_2);
-        setUpRecycleView(rvTier2,unitsListTier2);
+        unitsTierAdapter2 =  new UnitsTierAdapter(getActivity(), unitsListTier2);
+        setUpRecycleView(rvTier2,unitsTierAdapter2);
 
         rvTier3 = view.findViewById(R.id.rcv_tier_3);
-        setUpRecycleView(rvTier3,unitsListTier3);
+        unitsTierAdapter3 =  new UnitsTierAdapter(getActivity(), unitsListTier3);
+        setUpRecycleView(rvTier3,unitsTierAdapter3);
 
         rvTier4 = view.findViewById(R.id.rcv_tier_4);
-        setUpRecycleView(rvTier4,unitsListTier4);
+        unitsTierAdapter4 =  new UnitsTierAdapter(getActivity(), unitsListTier4);
+        setUpRecycleView(rvTier4,unitsTierAdapter4);
 
         rvTier5 = view.findViewById(R.id.rcv_tier_5);
-        setUpRecycleView(rvTier5,unitsListTier5);
+        unitsTierAdapter5 =  new UnitsTierAdapter(getActivity(), unitsListTier5);
+        setUpRecycleView(rvTier5,unitsTierAdapter5);
 
     }
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
 
+        // Checks the orientation of the screen
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            updateRcv(rvTier1,unitsTierAdapter1,true);
+            updateRcv(rvTier2,unitsTierAdapter2,true);
+            updateRcv(rvTier3,unitsTierAdapter3,true);
+            updateRcv(rvTier4,unitsTierAdapter4,true);
+            updateRcv(rvTier5,unitsTierAdapter5,true);
 
-    private void setUpRecycleView(RecyclerView rcv, List<Units> units) {
-        GridLayoutManager adapterManager = new GridLayoutManager(getActivity(), 3);
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+            updateRcv(rvTier1,unitsTierAdapter1,false);
+            updateRcv(rvTier2,unitsTierAdapter2,false);
+            updateRcv(rvTier3,unitsTierAdapter3,false);
+            updateRcv(rvTier4,unitsTierAdapter4,false);
+            updateRcv(rvTier5,unitsTierAdapter5,false);
+        }
+    }
+
+    private void updateRcv(RecyclerView rcv,UnitsTierAdapter tierAdapter, boolean isLandscape) {
+        GridLayoutManager adapterManager;
+        if(isLandscape){
+            adapterManager = new GridLayoutManager(getActivity(), 5);
+        } else {
+            adapterManager = new GridLayoutManager(getActivity(), 3);
+        }
         rcv.setLayoutManager(adapterManager);
-        unitsTierAdapter = new UnitsTierAdapter(getActivity(), units);
-        rcv.setAdapter(unitsTierAdapter);
+        tierAdapter.notifyDataSetChanged();
+    }
+
+    private void setUpRecycleView(RecyclerView rcv, UnitsTierAdapter tierAdapter) {
+        GridLayoutManager adapterManager;
+        int orientation = getResources().getConfiguration().orientation;
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            adapterManager = new GridLayoutManager(getActivity(), 5);
+        } else {
+            adapterManager = new GridLayoutManager(getActivity(), 3);
+        }
+        rcv.setLayoutManager(adapterManager);
+        rcv.setAdapter(tierAdapter);
         ViewCompat.setNestedScrollingEnabled(rcv, false);
-        unitsTierAdapter.setListener(new UnitsTierAdapter.OnItemClickListener() {
+        tierAdapter.setListener(new UnitsTierAdapter.OnItemClickListener() {
             @Override
             public void OnItemClick(Units item, int position) {
                 DetailFragment detailFragment = DetailFragment.newInstance();
