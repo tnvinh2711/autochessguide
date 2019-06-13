@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.zinzin.autochessguide.R;
 import com.zinzin.autochessguide.model.Units;
 
@@ -62,7 +64,7 @@ public class UnitsTierAdapter extends RecyclerView.Adapter<UnitsTierAdapter.View
         } else {
             viewHolder.ivNew.setVisibility(View.GONE);
         }
-        viewHolder.ivIconUnit.setImageDrawable(activity.getResources().getDrawable(units.getIcon_image()));
+        Glide.with(activity).load(activity.getResources().getDrawable(units.getIcon_image())).apply(RequestOptions.circleCropTransform()).into(viewHolder.ivIconUnit);
         viewHolder.tvNameUnit.setText(units.getName());
         viewHolder.tvNameUnit.setTextColor(activity.getResources().getColor(units.getColor_name()));
         viewHolder.tvNameUnitDota.setText("("+units.getDotaConvert()+")");

@@ -16,8 +16,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 public class SetImage {
-    public static List<Units> fullUnitsList(Activity activity, List<RaceList> raceLists, List<ClassList> classLists){
-        String text = Utils.parseFile(activity,"Units.txt");
+    public static List<Units> fullUnitsList(String text, List<RaceList> raceLists, List<ClassList> classLists){
         text = text.replace("dota_name:","\"dota_convert\":");
         text = text.replace("name:","\"name\":");
         text = text.replace("id:","\"id\":");
@@ -400,8 +399,7 @@ public class SetImage {
         return unitsList;
     }
 
-    public static List<ClassList> fullClassList(Activity activity){
-        String text = Utils.parseFile(activity,"Class.txt");
+    public static List<ClassList> fullClassList(String text){
         text = text.replace("dota_name:","\"dota_convert\":");
         text = text.replace("name:","\"name\":");
         text = text.replace("tier_up:!","\"tier_up\":");
@@ -425,8 +423,7 @@ public class SetImage {
         return classLists;
     }
 
-    public static List<RaceList> fullRaceList(Activity activity){
-        String text2 = Utils.parseFile(activity,"Races.txt");
+    public static List<RaceList> fullRaceList(String text2){
         text2 = text2.replace("dota_name:","\"dota_convert\":");
         text2 = text2.replace("name:","\"name\":");
         text2 = text2.replace("tier_up:!","\"tier_up\":");
@@ -452,8 +449,7 @@ public class SetImage {
         raceList.get(12).setImgRace(R.drawable.spirit);
         return raceList;
     }
-    public static List<Item> fullItemList(Activity activity){
-        String text = Utils.parseFile(activity,"Items.txt");
+    public static List<Item> fullItemList(String text){
         text = text.replace("dota_name:","\"dota_convert\":");
         text = text.replace("name:","\"name\":");
         text = text.replace("bonus:","\"bonus\":");
@@ -511,8 +507,7 @@ public class SetImage {
         itemList.get(46).setImgItem(R.drawable.i47);
         return itemList;
     }
-    public static List<Creep> fullCreepList(Activity activity){
-        String text = Utils.parseFile(activity,"Creeps.txt");
+    public static List<Creep> fullCreepList(String text){
         text = text.replace("round:","\"round\":");
         text = text.replace("name:","\"name\":");
         text = text.replace("creeps:","\"creeps\":");

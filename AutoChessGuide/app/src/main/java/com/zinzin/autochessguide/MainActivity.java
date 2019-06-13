@@ -9,6 +9,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.animation.Animator;
 import android.content.DialogInterface;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -39,7 +41,10 @@ import com.zinzin.autochessguide.model.Creep;
 import com.zinzin.autochessguide.model.Item;
 import com.zinzin.autochessguide.model.RaceList;
 import com.zinzin.autochessguide.model.Units;
+import com.zinzin.autochessguide.utils.Contants;
 import com.zinzin.autochessguide.utils.Preference;
+import com.zinzin.autochessguide.utils.SetImage;
+
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -65,10 +70,11 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
     private TierFragment tierFragment;
     private Fragment[] fragments;
     private ArrayList<String> mTitles = new ArrayList<>();
-    private InterstitialAd mInterstitialAd,mInterstitialAdClick;
+    private InterstitialAd mInterstitialAd, mInterstitialAdClick;
     private Animation slide_down;
     private Animation slide_up;
     private LinearLayout llFooter;
+    private String versionN;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +88,12 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
         mInterstitialAd.setAdUnitId("ca-app-pub-7188826417129130/6429515781");
         mInterstitialAdClick.setAdUnitId("ca-app-pub-7188826417129130/8978166813");
         mInterstitialAdClick.loadAd(new AdRequest.Builder().build());
-
+        try {
+            PackageInfo pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
+            versionN = pInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
         if (Preference.getBoolean(this, "firstrun", true)) {
             mInterstitialAd.loadAd(new AdRequest.Builder().build());
         } else {
@@ -146,10 +157,10 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
                     public void run() {
                         mAdView.loadAd(new AdRequest.Builder().build());
                     }
-                },1800000);
+                }, 1800000);
             }
         });
-        mInterstitialAdClick.setAdListener(new AdListener(){
+        mInterstitialAdClick.setAdListener(new AdListener() {
             @Override
             public void onAdLoaded() {
                 llFooter.setVisibility(View.VISIBLE);
@@ -163,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
                     public void run() {
                         mInterstitialAdClick.loadAd(new AdRequest.Builder().build());
                     }
-                },1800000);
+                }, 1800000);
             }
 
         });
@@ -195,29 +206,19 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
         itemFragment = ItemFragment.newInstance();
         creepsFragment = CreepsFragment.newInstance();
         tierFragment = TierFragment.newInstance();
-        fragments = new Fragment[]{tierFragment,unitsFragment, buiderFragment, creepsFragment, itemFragment};
+        fragments = new Fragment[]{tierFragment, unitsFragment, buiderFragment, creepsFragment, itemFragment};
     }
 
     private void loadData() {
-        Gson gson = new Gson();
-        Type type = new TypeToken<List<Units>>() {}.getType();
-        unitsList = gson.fromJson(getIntent().getStringExtra("units"), type);
+        int isSubmit = getIntent().getIntExtra("submit", 1);
+        String versionName = getIntent().getStringExtra("version_name");
+        if (isSubmit == 0  && versionName.equals(versionN)) {return;}
+        raceList = SetImage.fullRaceList(Preference.getString(this, Contants.FIREBASE_LIST_RACE));
+        classList = SetImage.fullClassList(Preference.getString(this, Contants.FIREBASE_LIST_CLASS));
+        creepList = SetImage.fullCreepList(Preference.getString(this, Contants.FIREBASE_LIST_CREEP));
+        itemList = SetImage.fullItemList(Preference.getString(this, Contants.FIREBASE_LIST_ITEM));
+        unitsList = SetImage.fullUnitsList(Preference.getString(this, Contants.FIREBASE_LIST_UNIT), raceList, classList);
 
-        Gson gson2 = new Gson();
-        Type type2 = new TypeToken<List<RaceList>>() {}.getType();
-        raceList = gson2.fromJson(getIntent().getStringExtra("races"), type2);
-
-        Gson gson3 = new Gson();
-        Type type3 = new TypeToken<List<ClassList>>() {}.getType();
-        classList = gson3.fromJson(getIntent().getStringExtra("classl"), type3);
-
-        Gson gson4 = new Gson();
-        Type type4 = new TypeToken<List<Creep>>() {}.getType();
-        creepList = gson4.fromJson(getIntent().getStringExtra("creeps"), type4);
-
-        Gson gson5 = new Gson();
-        Type type5 = new TypeToken<List<Item>>() {}.getType();
-        itemList = gson5.fromJson(getIntent().getStringExtra("items"), type5);
     }
 
     private void handleToolbar() {
@@ -236,6 +237,7 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
         duoDrawerToggle.syncState();
 
     }
+
     private void handleMenu() {
         mMenuAdapter = new MenuAdapter(mTitles);
         mViewHolder.mDuoMenuView.setOnMenuClickListener(this);
@@ -346,9 +348,9 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
 
     @Override
     public void setDrawerEnabled(boolean enabled) {
-        if(enabled){
+        if (enabled) {
             mViewHolder.mDuoDrawerLayout.setDrawerLockMode(mViewHolder.mDuoDrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-        }else {
+        } else {
             mViewHolder.mDuoDrawerLayout.setDrawerLockMode(mViewHolder.mDuoDrawerLayout.LOCK_MODE_UNLOCKED);
         }
     }
@@ -372,7 +374,7 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
             Fragment detailF = getSupportFragmentManager().findFragmentByTag(DetailFragment.TAG);
 
             if (detailF instanceof DetailFragment && detailF.isVisible()) {
-                if(getSupportActionBar()!= null)getSupportActionBar().show();
+                if (getSupportActionBar() != null) getSupportActionBar().show();
                 super.onBackPressed();
 
             } else {

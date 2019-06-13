@@ -12,6 +12,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.zinzin.autochessguide.R;
 import com.zinzin.autochessguide.adapter.DetailUnitAdapter;
 import com.zinzin.autochessguide.adapter.MiniIconAdapter;
@@ -100,7 +102,7 @@ public class DetailFragment extends Fragment {
             tvStat.setVisibility(View.GONE);
         }
         ivFullUnit.setImageDrawable(getResources().getDrawable(units.getFull_image()));
-        ivSkillUnit.setImageDrawable(getResources().getDrawable(units.getSkill_image()));
+        Glide.with(getActivity()).load(getResources().getDrawable(units.getSkill_image())).apply(RequestOptions.circleCropTransform()).into(ivSkillUnit);
         tvName.setText(units.getName() + " (" + units.getDotaConvert() + ")");
         tvName.setTextColor(getResources().getColor(units.getColor_name()));
         tvCost.setText("Cost: " + units.getCost() + "$");
