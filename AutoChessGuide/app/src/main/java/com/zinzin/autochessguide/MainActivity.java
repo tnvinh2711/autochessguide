@@ -3,6 +3,7 @@ package com.zinzin.autochessguide;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -48,7 +49,7 @@ import nl.psdcompany.duonavigationdrawer.views.DuoDrawerLayout;
 import nl.psdcompany.duonavigationdrawer.views.DuoMenuView;
 import nl.psdcompany.duonavigationdrawer.widgets.DuoDrawerToggle;
 
-public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMenuClickListener {
+public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMenuClickListener, DetailFragment.DrawerLocker {
     private MenuAdapter mMenuAdapter;
     private ViewHolder mViewHolder;
     private AdView mAdView;
@@ -221,10 +222,10 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
                 R.string.navigation_drawer_close);
 
         mViewHolder.mDuoDrawerLayout.setDrawerListener(duoDrawerToggle);
+
         duoDrawerToggle.syncState();
 
     }
-
     private void handleMenu() {
         mMenuAdapter = new MenuAdapter(mTitles);
         mViewHolder.mDuoMenuView.setOnMenuClickListener(this);
@@ -330,6 +331,15 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
                     mViewHolder.mDuoDrawerLayout.closeDrawer();
                 }
             }, 50);
+        }
+    }
+
+    @Override
+    public void setDrawerEnabled(boolean enabled) {
+        if(enabled){
+            mViewHolder.mDuoDrawerLayout.setDrawerLockMode(mViewHolder.mDuoDrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        }else {
+            mViewHolder.mDuoDrawerLayout.setDrawerLockMode(mViewHolder.mDuoDrawerLayout.LOCK_MODE_UNLOCKED);
         }
     }
 

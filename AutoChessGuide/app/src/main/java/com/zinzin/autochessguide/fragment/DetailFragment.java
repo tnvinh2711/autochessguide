@@ -33,24 +33,34 @@ public class DetailFragment extends Fragment {
     private MiniIconAdapter miniIconAdapter;
     private DetailUnitAdapter detailUnitAdapter;
     private ImageView ivFullUnit, ivSkillUnit;
-    private TextView tvName, tvCost, tvHeart, tvArmor, tvMres, tvAtkDame, tvAtkSpd, tvAtkRange,tvStat;
+    private TextView tvName, tvCost, tvHeart, tvArmor, tvMres, tvAtkDame, tvAtkSpd, tvAtkRange, tvStat;
     private TextView tvSkillName, tvSkillStatus, tvSkillDes, tvSkillTag;
     private RecyclerView rcvUnit, rcvMiniIcon;
     private Units units;
+    private DrawerLocker drawerLocker;
+
     public static DetailFragment newInstance() {
         return new DetailFragment();
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_detail, container, false);
+
         ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+        ((DrawerLocker) getActivity()).setDrawerEnabled(true);
         initView(view);
         return view;
     }
-    public void setData(Units units,List<RaceList> raceList, List<ClassList> classList){
+
+    public void setData(Units units, List<RaceList> raceList, List<ClassList> classList) {
         this.units = units;
         this.raceLists.addAll(raceList);
         this.classLists.addAll(classList);
+    }
+
+    public interface DrawerLocker {
+        void setDrawerEnabled(boolean enabled);
     }
 
     private void initView(View view) {
@@ -78,15 +88,15 @@ public class DetailFragment extends Fragment {
     }
 
     private void setData() {
-        if(units.getBuff() == 0){
+        if (units.getBuff() == 0) {
             tvStat.setBackgroundResource(R.drawable.background_buff);
             tvStat.setText("BUFFED");
             tvStat.setVisibility(View.VISIBLE);
-        } else if(units.getNerf() == 0){
+        } else if (units.getNerf() == 0) {
             tvStat.setBackgroundResource(R.drawable.background_nerf);
             tvStat.setText("NERFED");
             tvStat.setVisibility(View.VISIBLE);
-        } else if(units.getBuff()!= 0 && units.getNerf() != 0){
+        } else if (units.getBuff() != 0 && units.getNerf() != 0) {
             tvStat.setVisibility(View.GONE);
         }
         ivFullUnit.setImageDrawable(getResources().getDrawable(units.getFull_image()));
@@ -166,8 +176,8 @@ public class DetailFragment extends Fragment {
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
+    public void onDestroy() {
+        ((DrawerLocker) getActivity()).setDrawerEnabled(false);
+        super.onDestroy();
     }
-
 }
