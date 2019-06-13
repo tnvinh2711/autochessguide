@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.animation.Animator;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,6 +18,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -81,12 +84,10 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
 
         if (Preference.getBoolean(this, "firstrun", true)) {
             mInterstitialAd.loadAd(new AdRequest.Builder().build());
-            Log.e("Timer", "first");
         } else {
             long timeOld = Preference.getLong(this, "Time", 0);
             long timeNew = System.currentTimeMillis();
             if (timeOld != 0 && timeNew - timeOld >= 86400000) {
-                Log.e("Timer", "Round 2");
                 mInterstitialAd.loadAd(new AdRequest.Builder().build());
             } else {
                 if (!Preference.getBoolean(MainActivity.this, "LoadAds", false)) {
@@ -112,7 +113,6 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
 
         mMenuAdapter.setViewSelected(0, true);
         setTitle(mTitles.get(0));
-        Log.e("vào main","vào main");
         loadData();
         initFragment();
 
@@ -231,13 +231,13 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
         mViewHolder.mDuoMenuView.setAdapter(mMenuAdapter);
         llFooter = mViewHolder.mDuoMenuView.findViewById(R.id.footer);
         llFooter.setVisibility(View.GONE);
-        ImageView ivFooter = mViewHolder.mDuoMenuView.findViewById(R.id.iv_footer);
-        final Animation animShake = AnimationUtils.loadAnimation(this, R.anim.shake);
-        ivFooter.startAnimation(animShake);
+        YoYo.with(Techniques.Wobble)
+                .duration(1500)
+                .repeat(5000)
+                .playOn(mViewHolder.mDuoMenuView.findViewById(R.id.iv_footer));
         llFooter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("onFooterClicked",""+mInterstitialAdClick.isLoaded());
                 mInterstitialAdClick.show();
             }
         });
@@ -256,6 +256,7 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         if (getSupportFragmentManager().findFragmentByTag(tag) == null) {
             transaction.add(R.id.container, fragment, tag);
+            transaction.addToBackStack(tag);
         }
         for (Fragment fragment1 : fragments) {
             if (fragment1.getTag() != null) {
