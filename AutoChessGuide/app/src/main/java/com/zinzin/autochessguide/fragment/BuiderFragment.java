@@ -149,7 +149,7 @@ public class BuiderFragment extends Fragment {
                             if(entry.getValue()>= bonus2_1 && entry.getValue() < bonus2_2){
                                 unitsInfo = new UnitsInfo(race.getImgRace(), entry.getKey(), "Race", race.getBonus().get(0), entry.getValue());
                             }
-                            if(entry.getValue() == bonus2_2){
+                            if(entry.getValue() >= bonus2_2){
                                 unitsInfo = new UnitsInfo(race.getImgRace(), entry.getKey(), "Race", getBonus(race.getBonus(),2), entry.getValue());
                             }
                             break;
@@ -166,7 +166,7 @@ public class BuiderFragment extends Fragment {
                             if(entry.getValue() >= bonus3_2 && entry.getValue() < bonus3_3){
                                 unitsInfo = new UnitsInfo(race.getImgRace(), entry.getKey(), "Race", getBonus(race.getBonus(),2), entry.getValue());
                             }
-                            if(entry.getValue() == bonus3_3){
+                            if(entry.getValue() >= bonus3_3){
                                 unitsInfo = new UnitsInfo(race.getImgRace(), entry.getKey(), "Race", getBonus(race.getBonus(),3), entry.getValue());
                             }
                             break;
@@ -198,7 +198,7 @@ public class BuiderFragment extends Fragment {
                             if(entry.getValue()>= bonus2_1 && entry.getValue() < bonus2_2){
                                 unitsInfo = new UnitsInfo(class_.getImgClass(), entry.getKey(), "Class", class_.getBonus().get(0), entry.getValue());
                             }
-                            if(entry.getValue() == bonus2_2){
+                            if(entry.getValue() >= bonus2_2){
                                 unitsInfo = new UnitsInfo(class_.getImgClass(), entry.getKey(), "Class", getBonus(class_.getBonus(),2), entry.getValue());
                             }
                             break;
@@ -215,7 +215,7 @@ public class BuiderFragment extends Fragment {
                             if(entry.getValue() >= bonus3_2 && entry.getValue() < bonus3_3){
                                 unitsInfo = new UnitsInfo(class_.getImgClass(), entry.getKey(), "Class", getBonus(class_.getBonus(),2), entry.getValue());
                             }
-                            if(entry.getValue() == bonus3_3){
+                            if(entry.getValue() >= bonus3_3){
                                 unitsInfo = new UnitsInfo(class_.getImgClass(), entry.getKey(), "Class", getBonus(class_.getBonus(),3), entry.getValue());
                             }
                             break;
