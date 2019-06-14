@@ -1,0 +1,99 @@
+package com.zinzin.tierbuilder.adapter;
+
+import android.app.Activity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.zinzin.tierbuilder.R;
+import com.zinzin.tierbuilder.model.Units;
+import com.zinzin.tierbuilder.utils.Utils;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class UnitsBottomAdapter extends RecyclerView.Adapter<UnitsBottomAdapter.ViewHolder> {
+
+    private Activity activity;
+    private List<Units> unitsList = new ArrayList<>();
+    private OnItemClickListener listener;
+
+    public UnitsBottomAdapter(Activity activity, List<Units> unitsList) {
+        this.activity = activity;
+        this.unitsList = unitsList;
+    }
+
+    public void setListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
+    @NonNull
+    @Override
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        View view = LayoutInflater.from(viewGroup.getContext())
+                .inflate(R.layout.units_item_bottom_sheet, viewGroup, false);
+        return new UnitsBottomAdapter.ViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
+        viewHolder.bind(unitsList.get(position), position, listener);
+        Units units = unitsList.get(position);
+        viewHolder.ivIconUnit.setImageDrawable(activity.getResources().getDrawable(units.getMini_image()));
+        viewHolder.tvNameUnit.setText(units.getName());
+
+        viewHolder.tvNameUnitDota.setText("("+units.getDotaConvert()+")");
+
+        if(units.isClick()){
+            Utils.setLocked(viewHolder.ivIconUnit);
+            viewHolder.tvNameUnit.setTextColor(activity.getResources().getColor(R.color.gray));
+            viewHolder.tvNameUnitDota.setTextColor(activity.getResources().getColor(R.color.gray));
+        } else {
+            Utils.setUnlocked(viewHolder.ivIconUnit);
+            viewHolder.tvNameUnit.setTextColor(activity.getResources().getColor(units.getColor_name()));
+            viewHolder.tvNameUnitDota.setTextColor(activity.getResources().getColor(units.getColor_name()));
+        }
+    }
+    public void updateList(List<Units> list){
+        unitsList = list;
+        notifyDataSetChanged();
+    }
+    @Override
+    public int getItemCount() {
+        return unitsList.size();
+    }
+
+    class ViewHolder extends RecyclerView.ViewHolder {
+        ImageView ivIconUnit;
+        TextView tvNameUnit, tvNameUnitDota;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            ivIconUnit = itemView.findViewById(R.id.iv_icon_unit);
+            tvNameUnit = itemView.findViewById(R.id.tv_name);
+            tvNameUnitDota = itemView.findViewById(R.id.tv_name_dota);
+        }
+
+        void bind(final Units item, final int position, final OnItemClickListener listener) {
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    itemView.setClickable(false);
+                    if (listener != null)
+                        listener.OnItemClick(item, position);
+                    notifyDataSetChanged();
+                }
+            });
+        }
+    }
+
+
+    public interface OnItemClickListener {
+        void OnItemClick(Units item, int position);
+    }
+}

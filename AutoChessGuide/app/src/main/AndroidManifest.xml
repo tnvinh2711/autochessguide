@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.zinzin.autochessguide">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.zinzin.tierbuilder">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -10,14 +11,15 @@
         android:label="@string/app_name"
         android:largeHeap="true"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:replace="android:theme">
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-7188826417129130~8743853789" />
 
         <activity
-            android:name=".SplashActivity"
+            android:name="com.zinzin.tierbuilder.SplashActivity"
             android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,7 +28,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name="com.zinzin.tierbuilder.MainActivity"
             android:configChanges="orientation|screenSize">
         </activity>
     </application>
