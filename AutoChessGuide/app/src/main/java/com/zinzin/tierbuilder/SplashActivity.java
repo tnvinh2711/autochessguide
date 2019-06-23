@@ -30,6 +30,7 @@ public class SplashActivity extends AppCompatActivity {
     private String classlist, unitlist, racelist, itemlist, creeplist, version, versionN, versionNFB;
     private Integer isSubmit;
     private NoInternetDialog noInternetDialog;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,7 +127,7 @@ public class SplashActivity extends AppCompatActivity {
 
                                 @Override
                                 public void onCancelled(@NonNull DatabaseError databaseError) {
-                                    Log.e("onCancelled",databaseError.getMessage());
+                                    Log.e("onCancelled", databaseError.getMessage());
                                 }
                             };
                             myRef.addValueEventListener(valueEventListener);
@@ -140,7 +141,7 @@ public class SplashActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e("onCancelled",databaseError.getMessage());
+                Log.e("onCancelled", databaseError.getMessage());
             }
         });
     }
@@ -162,6 +163,6 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        noInternetDialog.onDestroy();
+        if (noInternetDialog != null && noInternetDialog.isShowing()) noInternetDialog.onDestroy();
     }
 }

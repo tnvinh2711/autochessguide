@@ -74,11 +74,11 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
         setContentView(R.layout.activity_main);
         slide_down = AnimationUtils.loadAnimation(this, R.anim.slide_down);
         slide_up = AnimationUtils.loadAnimation(this, R.anim.slide_up);
-        MobileAds.initialize(this, "ca-app-pub-7188826417129130~8743853789");
+        MobileAds.initialize(this, "ca-app-pub-5796098881172039~1464434456");
         mInterstitialAd = new InterstitialAd(this);
         mInterstitialAdClick = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-7188826417129130/6429515781");
-        mInterstitialAdClick.setAdUnitId("ca-app-pub-7188826417129130/8978166813");
+        mInterstitialAd.setAdUnitId("ca-app-pub-5796098881172039/8642896953");
+        mInterstitialAdClick.setAdUnitId("ca-app-pub-5796098881172039/3125000488");
         mInterstitialAdClick.loadAd(new AdRequest.Builder().build());
         try {
             PackageInfo pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);

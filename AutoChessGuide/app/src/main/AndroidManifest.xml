@@ -16,7 +16,7 @@
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-7188826417129130~8743853789" />
+            android:value="ca-app-pub-5796098881172039~1464434456" />
 
         <activity
             android:name="com.zinzin.tierbuilder.SplashActivity"

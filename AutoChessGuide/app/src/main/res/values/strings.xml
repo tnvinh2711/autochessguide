@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Chess Builder</string>
-    <string name="google_ads_id">ca-app-pub-7188826417129130~8743853789</string>
+    <string name="google_ads_id">ca-app-pub-5796098881172039~1464434456</string>
 
     <array name="menuOptions">
         <item>Tier List</item>

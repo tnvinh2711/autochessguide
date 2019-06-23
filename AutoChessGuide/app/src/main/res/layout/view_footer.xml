@@ -22,7 +22,7 @@
         android:shadowDx="1"
         android:shadowDy="1"
         android:shadowRadius="2"
-        android:text="This is Ads, Please click to keep my application up to date."
+        android:text="View Ads to keep app up-to-date"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/light_font"
         android:textSize="12sp" />
