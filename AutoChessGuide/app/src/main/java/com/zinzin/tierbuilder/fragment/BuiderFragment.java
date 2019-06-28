@@ -1,5 +1,6 @@
 package com.zinzin.tierbuilder.fragment;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
@@ -49,7 +50,7 @@ public class BuiderFragment extends Fragment {
     private RecyclerView rcvChoose, rcvSynergy;
     private Button btnAdd;
     private Button btnReset;
-    private BottomSheetDialog mBottomSheetDialog;
+    private Dialog mBottomSheetDialog;
     private UnitsBuilderAdapter unitsBuilderAdapter;
     private UnitsBottomAdapter unitsBottomAdapter;
     private UnitBuilderSynergyAdapter unitBuilderSynergyAdapter;
@@ -81,7 +82,7 @@ public class BuiderFragment extends Fragment {
         rcvSynergy = view.findViewById(R.id.rcv_synergy);
         btnAdd = view.findViewById(R.id.btn_add);
         btnReset = view.findViewById(R.id.btn_reset);
-        mBottomSheetDialog = new BottomSheetDialog(getActivity());
+        mBottomSheetDialog = new Dialog(getActivity(), R.style.AppTheme);
         setUpBottomSheet();
         setUpBtnAdd();
         setUpBtnReset();

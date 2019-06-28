@@ -1,5 +1,6 @@
 package com.zinzin.tierbuilder.fragment;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -44,7 +45,7 @@ public class UnitsFragment extends Fragment {
     private RecyclerView rvUnits;
     private EditText edtSearch;
     private ImageView ivFilter;
-    private BottomSheetDialog mBottomSheetDialog;
+    private Dialog mBottomSheetDialog;
     private UnitsFullAdapter unitsFullAdapter;
 
     private List<Units> unitsList = new ArrayList<>();
@@ -83,7 +84,7 @@ public class UnitsFragment extends Fragment {
         rvUnits = view.findViewById(R.id.rcv_units);
         edtSearch = view.findViewById(R.id.edt_search);
         ivFilter = view.findViewById(R.id.iv_filter);
-        mBottomSheetDialog = new BottomSheetDialog(getActivity());
+        mBottomSheetDialog = new Dialog(getActivity(), R.style.AppTheme);
         setUpRecycleView();
         setUpEditText();
         setUpBottomSheetDialog();

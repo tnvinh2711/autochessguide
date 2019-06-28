@@ -2,8 +2,13 @@ package com.zinzin.tierbuilder.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 
@@ -32,7 +37,30 @@ public class Utils {
         }
         return text;
     }
+    public static Bitmap drawableToBitmap(Drawable drawable) {
+        Bitmap bitmap = null;
+        try {
+            if (drawable instanceof BitmapDrawable) {
+                return ((BitmapDrawable)drawable).getBitmap();
+            }
 
+            int width = drawable.getIntrinsicWidth();
+            width = width > 0 ? width : 1;
+            int height = drawable.getIntrinsicHeight();
+            height = height > 0 ? height : 1;
+
+            bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(bitmap);
+            drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+            drawable.draw(canvas);
+        }catch (Exception e){
+            e.printStackTrace();
+            bitmap = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888);
+            bitmap.eraseColor(Color.WHITE);
+        }
+
+        return bitmap;
+    }
     public static String convertObjToJson(Object obj) {
         Gson gson = new Gson();
         String json = gson.toJson(obj);
