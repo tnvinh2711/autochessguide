@@ -166,7 +166,7 @@ public class DetailFragment extends Fragment {
         for (int i = 0; i < bonus.size(); i++) {
             stringBonus.append(bonus.get(i)).append("\n");
         }
-        unitsInfos.add(new UnitsInfo(class_.getImgClass(), class_.getName(), "Class", stringBonus.toString().substring(0, stringBonus.toString().length() - 2)));
+        unitsInfos.add(new UnitsInfo(class_.getImgClass(), class_.getName(), "Class", stringBonus.toString().substring(0, stringBonus.toString().length() - 1)));
 
     }
 
@@ -177,7 +177,7 @@ public class DetailFragment extends Fragment {
         for (int i = 0; i < bonus.size(); i++) {
             stringBonus.append(bonus.get(i)).append("\n");
         }
-        unitsInfos.add(new UnitsInfo(race.getImgRace(), race.getName(), "Race", stringBonus.toString().substring(0, stringBonus.toString().length() - 2)));
+        unitsInfos.add(new UnitsInfo(race.getImgRace(), race.getName(), "Race", stringBonus.toString().substring(0, stringBonus.toString().length() - 1)));
 
     }
 

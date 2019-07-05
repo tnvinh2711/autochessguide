@@ -49,7 +49,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         }
         String desc = stringDes.toString();
         desc = desc.replace("(", "( ").replace(")", " )");
-        viewHolder.tvDes.setText(desc.substring(0, desc.length() - 2));
+        viewHolder.tvDes.setText(desc.substring(0, desc.length() - 1));
         CombineAdapter combineAdapter = new CombineAdapter(activity, itemList, item.getCombine());
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false);
