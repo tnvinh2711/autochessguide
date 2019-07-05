@@ -24,6 +24,7 @@ import com.adroitandroid.chipcloud.ChipCloud;
 import com.adroitandroid.chipcloud.ChipListener;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.zinzin.tierbuilder.R;
+import com.zinzin.tierbuilder.adapter.HeaderRecyclerViewSection;
 import com.zinzin.tierbuilder.adapter.UnitsFullAdapter;
 import com.zinzin.tierbuilder.model.ClassList;
 import com.zinzin.tierbuilder.model.RaceList;
@@ -36,6 +37,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -45,14 +48,19 @@ public class UnitsFragment extends Fragment {
     private EditText edtSearch;
     private ImageView ivFilter;
     private BottomSheetDialog mBottomSheetDialog;
-    private UnitsFullAdapter unitsFullAdapter;
-
+    private SectionedRecyclerViewAdapter sectionAdapter = new SectionedRecyclerViewAdapter();
     private List<Units> unitsList = new ArrayList<>();
     private List<RaceList> raceList = new ArrayList<>();
     private List<ClassList> classList = new ArrayList<>();
     private List<Units> unitsFilter = new ArrayList<>();
     private String[] listRace;
     private String[] listClass;
+
+    private List<Units> unitsListTier1 = new ArrayList<>();
+    private List<Units> unitsListTier2 = new ArrayList<>();
+    private List<Units> unitsListTier3 = new ArrayList<>();
+    private List<Units> unitsListTier4 = new ArrayList<>();
+    private List<Units> unitsListTier5 = new ArrayList<>();
 
     private String statusSelected = "";
     private String costSelected = "";
@@ -118,31 +126,12 @@ public class UnitsFragment extends Fragment {
             }
         });
     }
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        GridLayoutManager adapterManager = null;
-        // Checks the orientation of the screen
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            adapterManager = new GridLayoutManager(getActivity(), 5);
-        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
-            adapterManager = new GridLayoutManager(getActivity(), 3);
-        }
-        rvUnits.setLayoutManager(adapterManager);
-        unitsFullAdapter.notifyDataSetChanged();
-    }
+
     private void setUpRecycleView() {
-        GridLayoutManager adapterManager;
-        int orientation = getResources().getConfiguration().orientation;
-        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            adapterManager = new GridLayoutManager(getActivity(), 5);
-        } else {
-            adapterManager = new GridLayoutManager(getActivity(), 3);
-        }
-        rvUnits.setLayoutManager(adapterManager);
-        unitsFullAdapter = new UnitsFullAdapter(getActivity(), unitsList);
-        rvUnits.setAdapter(unitsFullAdapter);
-        unitsFullAdapter.setListener(new UnitsFullAdapter.OnItemClickListener() {
+        GridLayoutManager adapterManager = new GridLayoutManager(getActivity(), 3);
+        getListSection(unitsList);
+        HeaderRecyclerViewSection viewSection_S = new HeaderRecyclerViewSection(getActivity(), "Tier S", unitsListTier1, R.color.color_tier_s);
+        viewSection_S.setListener(new HeaderRecyclerViewSection.OnItemClickListener() {
             @Override
             public void OnItemClick(Units item, int position) {
                 DetailFragment detailFragment = DetailFragment.newInstance();
@@ -153,6 +142,82 @@ public class UnitsFragment extends Fragment {
                 transaction.commit();
             }
         });
+
+        HeaderRecyclerViewSection viewSection_A = new HeaderRecyclerViewSection(getActivity(), "Tier A", unitsListTier1, R.color.color_tier_s);
+        viewSection_A.setListener(new HeaderRecyclerViewSection.OnItemClickListener() {
+            @Override
+            public void OnItemClick(Units item, int position) {
+                DetailFragment detailFragment = DetailFragment.newInstance();
+                detailFragment.setData(item, raceList, classList);
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.add(R.id.container, detailFragment, DetailFragment.TAG);
+                transaction.addToBackStack(DetailFragment.TAG);
+                transaction.commit();
+            }
+        });
+
+        HeaderRecyclerViewSection viewSection_B = new HeaderRecyclerViewSection(getActivity(), "Tier B", unitsListTier1, R.color.color_tier_s);
+        viewSection_B.setListener(new HeaderRecyclerViewSection.OnItemClickListener() {
+            @Override
+            public void OnItemClick(Units item, int position) {
+                DetailFragment detailFragment = DetailFragment.newInstance();
+                detailFragment.setData(item, raceList, classList);
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.add(R.id.container, detailFragment, DetailFragment.TAG);
+                transaction.addToBackStack(DetailFragment.TAG);
+                transaction.commit();
+            }
+        });
+
+        HeaderRecyclerViewSection viewSection_C = new HeaderRecyclerViewSection(getActivity(), "Tier C", unitsListTier1, R.color.color_tier_s);
+        viewSection_C.setListener(new HeaderRecyclerViewSection.OnItemClickListener() {
+            @Override
+            public void OnItemClick(Units item, int position) {
+                DetailFragment detailFragment = DetailFragment.newInstance();
+                detailFragment.setData(item, raceList, classList);
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.add(R.id.container, detailFragment, DetailFragment.TAG);
+                transaction.addToBackStack(DetailFragment.TAG);
+                transaction.commit();
+            }
+        });
+
+        HeaderRecyclerViewSection viewSection_D = new HeaderRecyclerViewSection(getActivity(), "Tier D", unitsListTier1, R.color.color_tier_s);
+        viewSection_D.setListener(new HeaderRecyclerViewSection.OnItemClickListener() {
+            @Override
+            public void OnItemClick(Units item, int position) {
+                DetailFragment detailFragment = DetailFragment.newInstance();
+                detailFragment.setData(item, raceList, classList);
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.add(R.id.container, detailFragment, DetailFragment.TAG);
+                transaction.addToBackStack(DetailFragment.TAG);
+                transaction.commit();
+            }
+        });
+
+        sectionAdapter.addSection(viewSection_S);
+        sectionAdapter.addSection(viewSection_A);
+        sectionAdapter.addSection(viewSection_B);
+        sectionAdapter.addSection(viewSection_C);
+        sectionAdapter.addSection(viewSection_D);
+        adapterManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                switch (sectionAdapter.getSectionItemViewType(position)) {
+                    case SectionedRecyclerViewAdapter.VIEW_TYPE_HEADER:
+                        int orientation = getResources().getConfiguration().orientation;
+                        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                            return 5;
+                        } else {
+                            return 3;
+                        }
+                    default:
+                        return 1;
+                }
+            }
+        });
+        rvUnits.setLayoutManager(adapterManager);
+        rvUnits.setAdapter(sectionAdapter);
     }
 
     private void setUpBottomSheetDialog() {
@@ -322,7 +387,8 @@ public class UnitsFragment extends Fragment {
                 return lhs.getName().compareToIgnoreCase(rhs.getName());
             }
         });
-        unitsFullAdapter.updateList(unitsFilter);
+        getListSection(unitsFilter);
+        sectionAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -352,6 +418,28 @@ public class UnitsFragment extends Fragment {
             unitsFullAdapter.updateList(unitsBase);
         } else {
             unitsFullAdapter.updateList(listUnitsFilter);
+        }
+    }
+
+    private void getListSection(List<Units> heroList) {
+        for (Units units : heroList) {
+            switch (units.getTier()) {
+                case "1":
+                    unitsListTier1.add(units);
+                    break;
+                case "2":
+                    unitsListTier2.add(units);
+                    break;
+                case "3":
+                    unitsListTier3.add(units);
+                    break;
+                case "4":
+                    unitsListTier4.add(units);
+                    break;
+                case "5":
+                    unitsListTier5.add(units);
+                    break;
+            }
         }
     }
 }
