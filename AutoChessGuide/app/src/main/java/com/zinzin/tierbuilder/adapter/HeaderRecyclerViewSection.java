@@ -1,13 +1,8 @@
 package com.zinzin.tierbuilder.adapter;
 
 import android.app.Activity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -15,36 +10,48 @@ import com.bumptech.glide.request.RequestOptions;
 import com.zinzin.tierbuilder.R;
 import com.zinzin.tierbuilder.model.Units;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class UnitsFullAdapter extends RecyclerView.Adapter<UnitsFullAdapter.ViewHolder> {
+import io.github.luizgrp.sectionedrecyclerviewadapter.SectionParameters;
+import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection;
 
+public class HeaderRecyclerViewSection extends StatelessSection {
+    private static final String TAG = HeaderRecyclerViewSection.class.getSimpleName();
+    private String title;
+    private List<Units> list;
     private Activity activity;
-    private List<Units> unitsList = new ArrayList<>();
+    private int colorTitle;
     private OnItemClickListener listener;
-
-    public UnitsFullAdapter(Activity activity, List<Units> unitsList) {
-        this.activity = activity;
-        this.unitsList = unitsList;
-    }
 
     public void setListener(OnItemClickListener listener) {
         this.listener = listener;
     }
 
-    @NonNull
-    @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.units_item, viewGroup, false);
-        return new UnitsFullAdapter.ViewHolder(view);
+    public HeaderRecyclerViewSection(Activity activity, String title, List<Units> list, int colorTitle) {
+        super(SectionParameters.builder()
+                .itemResourceId(R.layout.units_item)
+                .headerResourceId(R.layout.header_hero_layout)
+                .build());
+        this.activity = activity;
+        this.title = title;
+        this.list = list;
+        this.colorTitle = colorTitle;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
-        viewHolder.bind(unitsList.get(position), position, listener);
-        Units units = unitsList.get(position);
+    public int getContentItemsTotal() {
+        return list.size();
+    }
+
+    @Override
+    public RecyclerView.ViewHolder getItemViewHolder(View view) {
+        return new HeroViewHolder(view);
+    }
+
+    @Override
+    public void onBindItemViewHolder(RecyclerView.ViewHolder holder, final int position) {
+        final HeroViewHolder viewHolder = (HeroViewHolder) holder;
+        final Units units = list.get(position);
         if (units.getBuff() == 0) {
             viewHolder.ivIconUnit.setBackgroundResource(R.drawable.border_background_buff);
             viewHolder.tvStat.setBackgroundResource(R.drawable.background_buff);
@@ -82,48 +89,27 @@ public class UnitsFullAdapter extends RecyclerView.Adapter<UnitsFullAdapter.View
         } else {
             viewHolder.ivIcon3.setVisibility(View.GONE);
         }
-    }
-
-    public void updateList(List<Units> list) {
-        unitsList = list;
-        notifyDataSetChanged();
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewHolder.itemView.setClickable(false);
+                if (listener != null)
+                    listener.OnItemClick(units, position);
+            }
+        });
     }
 
     @Override
-    public int getItemCount() {
-        return unitsList.size();
+    public RecyclerView.ViewHolder getHeaderViewHolder(View view) {
+        return new HeaderViewHolder(view);
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView ivIconUnit, ivNew, ivIcon1, ivIcon2, ivIcon3;
-        TextView tvNameUnit, tvNameUnitDota, tvStat;
-
-        public ViewHolder(View itemView) {
-            super(itemView);
-            ivIconUnit = itemView.findViewById(R.id.iv_icon_unit);
-            ivNew = itemView.findViewById(R.id.img_new);
-            ivIcon1 = itemView.findViewById(R.id.iv_icon1);
-            ivIcon2 = itemView.findViewById(R.id.iv_icon2);
-            ivIcon3 = itemView.findViewById(R.id.iv_icon3);
-            tvNameUnit = itemView.findViewById(R.id.tv_name);
-            tvNameUnitDota = itemView.findViewById(R.id.tv_name_dota);
-            tvStat = itemView.findViewById(R.id.tv_stat);
-            tvNameUnitDota = itemView.findViewById(R.id.tv_name_dota);
-        }
-
-        void bind(final Units item, final int position, final OnItemClickListener listener) {
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    itemView.setClickable(false);
-                    if (listener != null)
-                        listener.OnItemClick(item, position);
-                    notifyDataSetChanged();
-                }
-            });
-        }
+    @Override
+    public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder) {
+        HeaderViewHolder hHolder = (HeaderViewHolder) holder;
+        hHolder.headerTitle.setText(title);
+        hHolder.headerTitle.setBackgroundColor(activity.getResources().getColor(colorTitle));
     }
-
 
     public interface OnItemClickListener {
         void OnItemClick(Units item, int position);

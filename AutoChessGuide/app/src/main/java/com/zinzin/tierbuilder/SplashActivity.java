@@ -66,7 +66,7 @@ public class SplashActivity extends AppCompatActivity {
     private void loadData() {
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = database.getReference("chess");
-        myRef.child("new_version").child("info").addValueEventListener(new ValueEventListener() {
+        myRef.child("chess").child("new_version").child("info").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
@@ -90,9 +90,6 @@ public class SplashActivity extends AppCompatActivity {
                     } else {
                         String versionOld = Preference.getString(SplashActivity.this, Contants.VERSION_CHESS);
                         if (!versionOld.equals(version)) {
-                            Preference.remove(SplashActivity.this, Contants.KEY_BUILDER_LIST_UNITS);
-                            Preference.remove(SplashActivity.this, Contants.KEY_BUILDER_LIST_CHOOSE);
-                            Preference.remove(SplashActivity.this, Contants.KEY_BUILDER_LIST_SYNERGY);
                             valueEventListener = new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -135,7 +132,7 @@ public class SplashActivity extends AppCompatActivity {
                                     Log.e("onCancelled", databaseError.getMessage());
                                 }
                             };
-                            myRef.child("new_version").addValueEventListener(valueEventListener);
+                            myRef.child("chess").child("new_version").addValueEventListener(valueEventListener);
                         } else {
                             gotoMain();
                         }
