@@ -20,6 +20,7 @@
 
         <activity
             android:name="com.zinzin.tierbuilder.SplashActivity"
+            android:screenOrientation="portrait"
             android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,6 +30,7 @@
         </activity>
         <activity
             android:name="com.zinzin.tierbuilder.MainActivity"
+            android:screenOrientation="portrait"
             android:configChanges="orientation|screenSize">
         </activity>
         <service

@@ -180,12 +180,7 @@ public class BuiderFragment extends Fragment {
             builders.set(idEdit, teamName);
         }
         Preference.save(getActivity(), Contants.KEY_BUILDER_LIST_CHOOSE_NAME, Utils.convertObjToJson(builders));
-        ListBuilderFragment listBuilderFragment = ListBuilderFragment.newInstance();
-        listBuilderFragment.setData(unitsListNotClick, raceList, classList);
-        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.container, listBuilderFragment, ListBuilderFragment.TAG);
-        transaction.addToBackStack(ListBuilderFragment.TAG);
-        transaction.commit();
+        getActivity().onBackPressed();
     }
 
     private void getDataFromPreferrence() {
@@ -484,7 +479,7 @@ public class BuiderFragment extends Fragment {
         for (int i = 0; i < size; i++) {
             stringBonus.append(bonus.get(i)).append("\n");
         }
-        return stringBonus.toString().substring(0, stringBonus.toString().length() - 2);
+        return stringBonus.toString().substring(0, stringBonus.toString().length() - 1);
     }
 
     @Override

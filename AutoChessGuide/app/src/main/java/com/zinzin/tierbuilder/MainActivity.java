@@ -366,9 +366,9 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
                 if (getSupportActionBar() != null) getSupportActionBar().show();
                 super.onBackPressed();
 
-            }
-            if (builderF instanceof BuiderFragment && builderF.isVisible()) {
+            } else if (builderF instanceof BuiderFragment && builderF.isVisible()) {
                 if (getSupportActionBar() != null) getSupportActionBar().show();
+                buiderFragment.updateData();
                 super.onBackPressed();
             } else {
                 mViewHolder.mDuoDrawerLayout.openDrawer();
