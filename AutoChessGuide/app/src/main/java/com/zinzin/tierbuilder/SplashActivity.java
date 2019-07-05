@@ -66,7 +66,7 @@ public class SplashActivity extends AppCompatActivity {
     private void loadData() {
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = database.getReference("chess");
-        myRef.child("new_version").child("info").addValueEventListener(new ValueEventListener() {
+        myRef.child("chess").child("new_version").child("info").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
@@ -132,7 +132,7 @@ public class SplashActivity extends AppCompatActivity {
                                     Log.e("onCancelled", databaseError.getMessage());
                                 }
                             };
-                            myRef.child("new_version").addValueEventListener(valueEventListener);
+                            myRef.child("chess").child("new_version").addValueEventListener(valueEventListener);
                         } else {
                             gotoMain();
                         }
