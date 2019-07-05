@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.zinzin.tierbuilder.DrawerLocker;
 import com.zinzin.tierbuilder.R;
 import com.zinzin.tierbuilder.adapter.DetailUnitAdapter;
 import com.zinzin.tierbuilder.adapter.MiniIconAdapter;
@@ -39,7 +40,6 @@ public class DetailFragment extends Fragment {
     private TextView tvSkillName, tvSkillStatus, tvSkillDes, tvSkillTag;
     private RecyclerView rcvUnit, rcvMiniIcon;
     private Units units;
-    private DrawerLocker drawerLocker;
 
     public static DetailFragment newInstance() {
         return new DetailFragment();
@@ -61,9 +61,6 @@ public class DetailFragment extends Fragment {
         this.classLists.addAll(classList);
     }
 
-    public interface DrawerLocker {
-        void setDrawerEnabled(boolean enabled);
-    }
 
     private void initView(View view) {
         Utils.hideSoftKeyboard(getActivity());

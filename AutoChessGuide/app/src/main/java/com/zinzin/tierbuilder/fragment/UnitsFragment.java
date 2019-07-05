@@ -1,5 +1,6 @@
 package com.zinzin.tierbuilder.fragment;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -22,10 +23,8 @@ import android.widget.TextView;
 
 import com.adroitandroid.chipcloud.ChipCloud;
 import com.adroitandroid.chipcloud.ChipListener;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.zinzin.tierbuilder.R;
 import com.zinzin.tierbuilder.adapter.HeaderRecyclerViewSection;
-import com.zinzin.tierbuilder.adapter.UnitsFullAdapter;
 import com.zinzin.tierbuilder.model.ClassList;
 import com.zinzin.tierbuilder.model.RaceList;
 import com.zinzin.tierbuilder.model.Units;
@@ -47,8 +46,9 @@ public class UnitsFragment extends Fragment {
     private RecyclerView rvUnits;
     private EditText edtSearch;
     private ImageView ivFilter;
-    private BottomSheetDialog mBottomSheetDialog;
     private SectionedRecyclerViewAdapter sectionAdapter = new SectionedRecyclerViewAdapter();
+    private Dialog mBottomSheetDialog;
+
     private List<Units> unitsList = new ArrayList<>();
     private List<RaceList> raceList = new ArrayList<>();
     private List<ClassList> classList = new ArrayList<>();
@@ -91,7 +91,7 @@ public class UnitsFragment extends Fragment {
         rvUnits = view.findViewById(R.id.rcv_units);
         edtSearch = view.findViewById(R.id.edt_search);
         ivFilter = view.findViewById(R.id.iv_filter);
-        mBottomSheetDialog = new BottomSheetDialog(getActivity());
+        mBottomSheetDialog = new Dialog(getActivity(), R.style.AppTheme);
         setUpRecycleView();
         setUpEditText();
         setUpBottomSheetDialog();
@@ -143,7 +143,7 @@ public class UnitsFragment extends Fragment {
             }
         });
 
-        HeaderRecyclerViewSection viewSection_A = new HeaderRecyclerViewSection(getActivity(), "Tier A", unitsListTier1, R.color.color_tier_s);
+        HeaderRecyclerViewSection viewSection_A = new HeaderRecyclerViewSection(getActivity(), "Tier A", unitsListTier2, R.color.color_tier_a);
         viewSection_A.setListener(new HeaderRecyclerViewSection.OnItemClickListener() {
             @Override
             public void OnItemClick(Units item, int position) {
@@ -156,7 +156,7 @@ public class UnitsFragment extends Fragment {
             }
         });
 
-        HeaderRecyclerViewSection viewSection_B = new HeaderRecyclerViewSection(getActivity(), "Tier B", unitsListTier1, R.color.color_tier_s);
+        HeaderRecyclerViewSection viewSection_B = new HeaderRecyclerViewSection(getActivity(), "Tier B", unitsListTier3, R.color.color_tier_b);
         viewSection_B.setListener(new HeaderRecyclerViewSection.OnItemClickListener() {
             @Override
             public void OnItemClick(Units item, int position) {
@@ -169,7 +169,7 @@ public class UnitsFragment extends Fragment {
             }
         });
 
-        HeaderRecyclerViewSection viewSection_C = new HeaderRecyclerViewSection(getActivity(), "Tier C", unitsListTier1, R.color.color_tier_s);
+        HeaderRecyclerViewSection viewSection_C = new HeaderRecyclerViewSection(getActivity(), "Tier C", unitsListTier4, R.color.color_tier_c);
         viewSection_C.setListener(new HeaderRecyclerViewSection.OnItemClickListener() {
             @Override
             public void OnItemClick(Units item, int position) {
@@ -182,7 +182,7 @@ public class UnitsFragment extends Fragment {
             }
         });
 
-        HeaderRecyclerViewSection viewSection_D = new HeaderRecyclerViewSection(getActivity(), "Tier D", unitsListTier1, R.color.color_tier_s);
+        HeaderRecyclerViewSection viewSection_D = new HeaderRecyclerViewSection(getActivity(), "Tier D", unitsListTier5, R.color.color_tier_d);
         viewSection_D.setListener(new HeaderRecyclerViewSection.OnItemClickListener() {
             @Override
             public void OnItemClick(Units item, int position) {
@@ -415,13 +415,20 @@ public class UnitsFragment extends Fragment {
         }
         if (text.equals("")) {
             listUnitsFilter.clear();
-            unitsFullAdapter.updateList(unitsBase);
+            getListSection(unitsBase);
+            sectionAdapter.notifyDataSetChanged();
         } else {
-            unitsFullAdapter.updateList(listUnitsFilter);
+            getListSection(listUnitsFilter);
+            sectionAdapter.notifyDataSetChanged();
         }
     }
 
     private void getListSection(List<Units> heroList) {
+        unitsListTier1.clear();
+        unitsListTier2.clear();
+        unitsListTier3.clear();
+        unitsListTier4.clear();
+        unitsListTier5.clear();
         for (Units units : heroList) {
             switch (units.getTier()) {
                 case "1":

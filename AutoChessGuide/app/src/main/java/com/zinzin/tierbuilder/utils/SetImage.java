@@ -376,6 +376,18 @@ public class SetImage {
         unitsList.get(54).setSkill_image(R.drawable.furion_s);
         unitsList.get(54).setColor_name(R.color.color_cost_2);
 
+        unitsList.get(55).setFull_image(R.drawable.god_f_2);
+        unitsList.get(55).setIcon_image(R.drawable.god_a_2);
+        unitsList.get(55).setMini_image(R.drawable.god_m_2);
+        unitsList.get(55).setSkill_image(R.drawable.god_s_2);
+        unitsList.get(55).setColor_name(R.color.color_cost_1);
+
+        unitsList.get(56).setFull_image(R.drawable.god_f_1);
+        unitsList.get(56).setIcon_image(R.drawable.god_a_1);
+        unitsList.get(56).setMini_image(R.drawable.god_m_1);
+        unitsList.get(56).setSkill_image(R.drawable.god_s_1);
+        unitsList.get(56).setColor_name(R.color.color_cost_5);
+
         for(Units units: unitsList){
             for (ClassList class_ : classLists) {
                 if (class_.getName().equals(units.getClass_())) {
@@ -440,18 +452,20 @@ public class SetImage {
         raceList.get(6).setImgRace(R.drawable.feathered);
         raceList.get(7).setImgRace(R.drawable.glacier_clan);
         raceList.get(8).setImgRace(R.drawable.goblin);
-        raceList.get(9).setImgRace(R.drawable.human);
-        raceList.get(10).setImgRace(R.drawable.kira);
-        raceList.get(11).setImgRace(R.drawable.marine);
-        raceList.get(12).setImgRace(R.drawable.spirit);
+        raceList.get(9).setImgRace(R.drawable.race_god);
+        raceList.get(10).setImgRace(R.drawable.human);
+        raceList.get(11).setImgRace(R.drawable.kira);
+        raceList.get(12).setImgRace(R.drawable.marine);
+        raceList.get(13).setImgRace(R.drawable.spirit);
         return raceList;
     }
     public static List<Item> fullItemList(String text){
         text = text.replace("dota_name:","\"dota_convert\":");
+        text = text.replace("dota_combine:","\"dota_convert_cb\":");
         text = text.replace("name:","\"name\":");
         text = text.replace("bonus:","\"bonus\":");
         text = text.replace("combine:","\"combine\":");
-        text = text.replace("dota_combine:","\"dota_convert_cb\":");
+
         Gson gson = new Gson();
         Type type = new TypeToken<List<Item>>() {}.getType();
         List<Item> itemList = gson.fromJson(text, type);

@@ -5,8 +5,8 @@ android {
         applicationId "com.zinzin.tierbuilder"
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 8
-        versionName "1.0.7"
+        versionCode 9
+        versionName "1.0.8"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -46,6 +46,7 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
     implementation 'am.appwise.components:NoInternetDialog:1.1.3'
     implementation 'io.github.luizgrp.sectionedrecyclerviewadapter:sectionedrecyclerviewadapter:2.0.0'
+    implementation 'com.google.firebase:firebase-messaging:19.0.1'
 }
 
 apply plugin: 'com.google.gms.google-services'

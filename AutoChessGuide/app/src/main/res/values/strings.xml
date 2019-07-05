@@ -3,7 +3,6 @@
     <string name="google_ads_id">ca-app-pub-5796098881172039~1464434456</string>
 
     <array name="menuOptions">
-        <item>Tier List</item>
         <item>Units</item>
         <item>Items</item>
         <item>Creeps</item>

@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -64,7 +66,7 @@ public class SplashActivity extends AppCompatActivity {
     private void loadData() {
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = database.getReference("chess");
-        myRef.child("info").addValueEventListener(new ValueEventListener() {
+        myRef.child("new_version").child("info").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
@@ -94,23 +96,23 @@ public class SplashActivity extends AppCompatActivity {
                                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
                                         if (ds.getKey() != null) {
                                             switch (ds.getKey()) {
-                                                case "classlist":
+                                                case "classlist_new":
                                                     classlist = ds.getValue(String.class);
                                                     Preference.save(SplashActivity.this, Contants.FIREBASE_LIST_CLASS, classlist);
                                                     break;
-                                                case "creeplist":
+                                                case "creeplist_new":
                                                     creeplist = ds.getValue(String.class);
                                                     Preference.save(SplashActivity.this, Contants.FIREBASE_LIST_CREEP, creeplist);
                                                     break;
-                                                case "itemlist":
+                                                case "itemlist_new":
                                                     itemlist = ds.getValue(String.class);
                                                     Preference.save(SplashActivity.this, Contants.FIREBASE_LIST_ITEM, itemlist);
                                                     break;
-                                                case "racelist":
+                                                case "racelist_new":
                                                     racelist = ds.getValue(String.class);
                                                     Preference.save(SplashActivity.this, Contants.FIREBASE_LIST_RACE, racelist);
                                                     break;
-                                                case "unitlist":
+                                                case "unitlist_new":
                                                     unitlist = ds.getValue(String.class);
                                                     Preference.save(SplashActivity.this, Contants.FIREBASE_LIST_UNIT, unitlist);
                                                     break;
@@ -130,7 +132,7 @@ public class SplashActivity extends AppCompatActivity {
                                     Log.e("onCancelled", databaseError.getMessage());
                                 }
                             };
-                            myRef.addValueEventListener(valueEventListener);
+                            myRef.child("new_version").addValueEventListener(valueEventListener);
                         } else {
                             gotoMain();
                         }
@@ -165,4 +167,5 @@ public class SplashActivity extends AppCompatActivity {
         super.onDestroy();
         if (noInternetDialog != null && noInternetDialog.isShowing()) noInternetDialog.onDestroy();
     }
+
 }

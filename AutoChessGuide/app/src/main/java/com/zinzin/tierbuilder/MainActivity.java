@@ -27,7 +27,7 @@ import com.zinzin.tierbuilder.fragment.BuiderFragment;
 import com.zinzin.tierbuilder.fragment.CreepsFragment;
 import com.zinzin.tierbuilder.fragment.DetailFragment;
 import com.zinzin.tierbuilder.fragment.ItemFragment;
-import com.zinzin.tierbuilder.fragment.TierFragment;
+import com.zinzin.tierbuilder.fragment.ListBuilderFragment;
 import com.zinzin.tierbuilder.fragment.UnitsFragment;
 import com.zinzin.tierbuilder.model.ClassList;
 import com.zinzin.tierbuilder.model.Creep;
@@ -46,7 +46,7 @@ import nl.psdcompany.duonavigationdrawer.views.DuoDrawerLayout;
 import nl.psdcompany.duonavigationdrawer.views.DuoMenuView;
 import nl.psdcompany.duonavigationdrawer.widgets.DuoDrawerToggle;
 
-public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMenuClickListener, DetailFragment.DrawerLocker {
+public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMenuClickListener, DrawerLocker {
     private MenuAdapter mMenuAdapter;
     private ViewHolder mViewHolder;
     private AdView mAdView;
@@ -56,10 +56,9 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
     private List<Creep> creepList = new ArrayList<>();
     private List<Item> itemList = new ArrayList<>();
     private UnitsFragment unitsFragment;
-    private BuiderFragment buiderFragment;
+    private ListBuilderFragment buiderFragment;
     private CreepsFragment creepsFragment;
     private ItemFragment itemFragment;
-    private TierFragment tierFragment;
     private Fragment[] fragments;
     private ArrayList<String> mTitles = new ArrayList<>();
     private InterstitialAd mInterstitialAd, mInterstitialAdClick;
@@ -122,11 +121,10 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
 
         unitsFragment.setData(unitsList, raceList, classList);
         buiderFragment.setData(unitsList, raceList, classList);
-        tierFragment.setData(unitsList, raceList, classList);
         creepsFragment.setData(creepList);
         itemFragment.setData(itemList);
         // Show main fragment in container
-        goToFragment(tierFragment, TierFragment.TAG);
+        goToFragment(unitsFragment, UnitsFragment.TAG);
 
 
     }
@@ -194,17 +192,18 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
 
     private void initFragment() {
         unitsFragment = UnitsFragment.newInstance();
-        buiderFragment = BuiderFragment.newInstance();
+        buiderFragment = ListBuilderFragment.newInstance();
         itemFragment = ItemFragment.newInstance();
         creepsFragment = CreepsFragment.newInstance();
-        tierFragment = TierFragment.newInstance();
-        fragments = new Fragment[]{tierFragment, unitsFragment, buiderFragment, creepsFragment, itemFragment};
+        fragments = new Fragment[]{unitsFragment, buiderFragment, creepsFragment, itemFragment};
     }
 
     private void loadData() {
         int isSubmit = getIntent().getIntExtra("submit", 1);
         String versionName = getIntent().getStringExtra("version_name");
-        if (isSubmit == 0  && versionName.equals(versionN)) {return;}
+        if (isSubmit == 0 && versionName.equals(versionN)) {
+            return;
+        }
         raceList = SetImage.fullRaceList(Preference.getString(this, Contants.FIREBASE_LIST_RACE));
         classList = SetImage.fullClassList(Preference.getString(this, Contants.FIREBASE_LIST_CLASS));
         creepList = SetImage.fullCreepList(Preference.getString(this, Contants.FIREBASE_LIST_CREEP));
@@ -289,21 +288,18 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
         // Navigate to the right fragment
         switch (position) {
             case 0:
-                goToFragment(tierFragment, TierFragment.TAG);
-                break;
-            case 1:
                 goToFragment(unitsFragment, UnitsFragment.TAG);
                 break;
-            case 2:
+            case 1:
                 goToFragment(itemFragment, ItemFragment.TAG);
                 break;
-            case 3:
+            case 2:
                 goToFragment(creepsFragment, CreepsFragment.TAG);
                 break;
-            case 4:
+            case 3:
                 goToFragment(buiderFragment, BuiderFragment.TAG);
                 break;
-            case 5:
+            case 4:
                 AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
                 alertDialog.setTitle("Attention");
                 alertDialog.setMessage("Are you want exit ?");
@@ -328,7 +324,7 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
         }
 
         // Close the drawer
-        if (position != 5) {
+        if (position != 4) {
             mViewHolder.mDuoDrawerLayout.postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -364,14 +360,20 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
     public void onBackPressed() {
         try {
             Fragment detailF = getSupportFragmentManager().findFragmentByTag(DetailFragment.TAG);
+            Fragment builderF = getSupportFragmentManager().findFragmentByTag(BuiderFragment.TAG);
 
             if (detailF instanceof DetailFragment && detailF.isVisible()) {
                 if (getSupportActionBar() != null) getSupportActionBar().show();
                 super.onBackPressed();
 
+            }
+            if (builderF instanceof BuiderFragment && builderF.isVisible()) {
+                if (getSupportActionBar() != null) getSupportActionBar().show();
+                super.onBackPressed();
             } else {
                 mViewHolder.mDuoDrawerLayout.openDrawer();
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
