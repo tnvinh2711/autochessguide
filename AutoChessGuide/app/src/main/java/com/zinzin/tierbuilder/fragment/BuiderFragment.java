@@ -30,6 +30,7 @@ import com.zinzin.tierbuilder.R;
 import com.zinzin.tierbuilder.adapter.UnitBuilderSynergyAdapter;
 import com.zinzin.tierbuilder.adapter.UnitsBottomAdapter;
 import com.zinzin.tierbuilder.adapter.UnitsBuilderAdapter;
+import com.zinzin.tierbuilder.model.Bonus;
 import com.zinzin.tierbuilder.model.Builder;
 import com.zinzin.tierbuilder.model.ClassList;
 import com.zinzin.tierbuilder.model.RaceList;
@@ -222,21 +223,23 @@ public class BuiderFragment extends Fragment {
         Map<String, Integer> duplicatesRace = new HashMap<String, Integer>();
 
         for (Units units : unitsChoose) {
-            if (duplicatesClass.containsKey(units.getClass_())) {
-                duplicatesClass.put(units.getClass_(), duplicatesClass.get(units.getClass_()) + 1);
-            } else {
-                duplicatesClass.put(units.getClass_(), 1);
-            }
-            if (duplicatesRace.containsKey(units.getRace().get(0))) {
-                duplicatesRace.put(units.getRace().get(0), duplicatesRace.get(units.getRace().get(0)) + 1);
-            } else {
-                duplicatesRace.put(units.getRace().get(0), 1);
-            }
-            if (units.getRace().size() == 2) {
-                if (duplicatesRace.containsKey(units.getRace().get(1))) {
-                    duplicatesRace.put(units.getRace().get(1), duplicatesRace.get(units.getRace().get(1)) + 1);
+            if (units.getType() != null && units.getOrigin() != null) {
+                if (duplicatesClass.containsKey(units.getType().get(0))) {
+                    duplicatesClass.put(units.getType().get(0), duplicatesClass.get(units.getType().get(0)) + 1);
                 } else {
-                    duplicatesRace.put(units.getRace().get(1), 1);
+                    duplicatesClass.put(units.getType().get(0), 1);
+                }
+                if (duplicatesRace.containsKey(units.getOrigin().get(0))) {
+                    duplicatesRace.put(units.getOrigin().get(0), duplicatesRace.get(units.getOrigin().get(0)) + 1);
+                } else {
+                    duplicatesRace.put(units.getOrigin().get(0), 1);
+                }
+                if (units.getOrigin().size() == 2) {
+                    if (duplicatesRace.containsKey(units.getOrigin().get(1))) {
+                        duplicatesRace.put(units.getOrigin().get(1), duplicatesRace.get(units.getOrigin().get(1)) + 1);
+                    } else {
+                        duplicatesRace.put(units.getOrigin().get(1), 1);
+                    }
                 }
             }
         }
@@ -247,35 +250,35 @@ public class BuiderFragment extends Fragment {
                     UnitsInfo unitsInfo = null;
                     switch (race.getBonus().size()) {
                         case 1:
-                            int bonus1_1 = Character.getNumericValue(race.getBonus().get(0).charAt(1));
+                            int bonus1_1 = Character.getNumericValue(Integer.parseInt(race.getBonus().get(0).getCount()));
                             if (entry.getValue() >= bonus1_1) {
-                                unitsInfo = new UnitsInfo(race.getImgRace(), entry.getKey(), "Race", race.getBonus().get(0), entry.getValue());
+                                unitsInfo = new UnitsInfo(race.getImgRace(), entry.getKey(), "Race", race.getBonus().get(0).getCount() + ". " + race.getBonus().get(0).getValue(), entry.getValue());
                             } else {
                                 unitsInfo = new UnitsInfo(race.getImgRace(), entry.getKey(), "Race", "", entry.getValue());
                             }
                             break;
                         case 2:
-                            int bonus2_1 = Character.getNumericValue(race.getBonus().get(0).charAt(1));
-                            int bonus2_2 = Character.getNumericValue(race.getBonus().get(1).charAt(1));
+                            int bonus2_1 = Character.getNumericValue(Integer.valueOf(race.getBonus().get(0).getCount()));
+                            int bonus2_2 = Character.getNumericValue(Integer.valueOf(race.getBonus().get(1).getCount()));
                             if (entry.getValue() < bonus2_1) {
                                 unitsInfo = new UnitsInfo(race.getImgRace(), entry.getKey(), "Race", "", entry.getValue());
                             }
                             if (entry.getValue() >= bonus2_1 && entry.getValue() < bonus2_2) {
-                                unitsInfo = new UnitsInfo(race.getImgRace(), entry.getKey(), "Race", race.getBonus().get(0), entry.getValue());
+                                unitsInfo = new UnitsInfo(race.getImgRace(), entry.getKey(), "Race", race.getBonus().get(0).getCount() + ". " + race.getBonus().get(0).getValue(), entry.getValue());
                             }
                             if (entry.getValue() >= bonus2_2) {
                                 unitsInfo = new UnitsInfo(race.getImgRace(), entry.getKey(), "Race", getBonus(race.getBonus(), 2), entry.getValue());
                             }
                             break;
                         case 3:
-                            int bonus3_1 = Character.getNumericValue(race.getBonus().get(0).charAt(1));
-                            int bonus3_2 = Character.getNumericValue(race.getBonus().get(1).charAt(1));
-                            int bonus3_3 = Character.getNumericValue(race.getBonus().get(2).charAt(1));
+                            int bonus3_1 = Character.getNumericValue(Integer.valueOf(race.getBonus().get(0).getCount()));
+                            int bonus3_2 = Character.getNumericValue(Integer.valueOf(race.getBonus().get(1).getCount()));
+                            int bonus3_3 = Character.getNumericValue(Integer.valueOf(race.getBonus().get(2).getCount()));
                             if (entry.getValue() < bonus3_1) {
                                 unitsInfo = new UnitsInfo(race.getImgRace(), entry.getKey(), "Race", "", entry.getValue());
                             }
                             if (entry.getValue() >= bonus3_1 && entry.getValue() < bonus3_2) {
-                                unitsInfo = new UnitsInfo(race.getImgRace(), entry.getKey(), "Race", race.getBonus().get(0), entry.getValue());
+                                unitsInfo = new UnitsInfo(race.getImgRace(), entry.getKey(), "Race", race.getBonus().get(0).getCount() + ". " + race.getBonus().get(0), entry.getValue());
                             }
                             if (entry.getValue() >= bonus3_2 && entry.getValue() < bonus3_3) {
                                 unitsInfo = new UnitsInfo(race.getImgRace(), entry.getKey(), "Race", getBonus(race.getBonus(), 2), entry.getValue());
@@ -296,35 +299,35 @@ public class BuiderFragment extends Fragment {
                     UnitsInfo unitsInfo = null;
                     switch (class_.getBonus().size()) {
                         case 1:
-                            int bonus1_1 = Character.getNumericValue(class_.getBonus().get(0).charAt(1));
+                            int bonus1_1 = Character.getNumericValue(Integer.valueOf(class_.getBonus().get(0).getCount()));
                             if (entry.getValue() >= bonus1_1) {
-                                unitsInfo = new UnitsInfo(class_.getImgClass(), entry.getKey(), "Class", class_.getBonus().get(0), entry.getValue());
+                                unitsInfo = new UnitsInfo(class_.getImgClass(), entry.getKey(), "Class", class_.getBonus().get(0).getCount() + ". " + class_.getBonus().get(0).getValue(), entry.getValue());
                             } else {
                                 unitsInfo = new UnitsInfo(class_.getImgClass(), entry.getKey(), "Class", "", entry.getValue());
                             }
                             break;
                         case 2:
-                            int bonus2_1 = Character.getNumericValue(class_.getBonus().get(0).charAt(1));
-                            int bonus2_2 = Character.getNumericValue(class_.getBonus().get(1).charAt(1));
+                            int bonus2_1 = Character.getNumericValue(Integer.valueOf(class_.getBonus().get(0).getCount()));
+                            int bonus2_2 = Character.getNumericValue(Integer.valueOf(class_.getBonus().get(1).getCount()));
                             if (entry.getValue() < bonus2_1) {
                                 unitsInfo = new UnitsInfo(class_.getImgClass(), entry.getKey(), "Class", "", entry.getValue());
                             }
                             if (entry.getValue() >= bonus2_1 && entry.getValue() < bonus2_2) {
-                                unitsInfo = new UnitsInfo(class_.getImgClass(), entry.getKey(), "Class", class_.getBonus().get(0), entry.getValue());
+                                unitsInfo = new UnitsInfo(class_.getImgClass(), entry.getKey(), "Class", class_.getBonus().get(0).getCount() + ". " + class_.getBonus().get(0).getValue(), entry.getValue());
                             }
                             if (entry.getValue() >= bonus2_2) {
                                 unitsInfo = new UnitsInfo(class_.getImgClass(), entry.getKey(), "Class", getBonus(class_.getBonus(), 2), entry.getValue());
                             }
                             break;
                         case 3:
-                            int bonus3_1 = Character.getNumericValue(class_.getBonus().get(0).charAt(1));
-                            int bonus3_2 = Character.getNumericValue(class_.getBonus().get(1).charAt(1));
-                            int bonus3_3 = Character.getNumericValue(class_.getBonus().get(2).charAt(1));
+                            int bonus3_1 = Character.getNumericValue(Integer.valueOf(class_.getBonus().get(0).getCount()));
+                            int bonus3_2 = Character.getNumericValue(Integer.valueOf(class_.getBonus().get(1).getCount()));
+                            int bonus3_3 = Character.getNumericValue(Integer.valueOf(class_.getBonus().get(2).getCount()));
                             if (entry.getValue() < bonus3_1) {
                                 unitsInfo = new UnitsInfo(class_.getImgClass(), entry.getKey(), "Class", "", entry.getValue());
                             }
                             if (entry.getValue() >= bonus3_1 && entry.getValue() < bonus3_2) {
-                                unitsInfo = new UnitsInfo(class_.getImgClass(), entry.getKey(), "Class", class_.getBonus().get(0), entry.getValue());
+                                unitsInfo = new UnitsInfo(class_.getImgClass(), entry.getKey(), "Class", class_.getBonus().get(0).getCount() + ". " + class_.getBonus().get(0).getValue(), entry.getValue());
                             }
                             if (entry.getValue() >= bonus3_2 && entry.getValue() < bonus3_3) {
                                 unitsInfo = new UnitsInfo(class_.getImgClass(), entry.getKey(), "Class", getBonus(class_.getBonus(), 2), entry.getValue());
@@ -474,10 +477,10 @@ public class BuiderFragment extends Fragment {
         });
     }
 
-    private String getBonus(List<String> bonus, int size) {
+    private String getBonus(List<Bonus> bonus, int size) {
         StringBuilder stringBonus = new StringBuilder();
         for (int i = 0; i < size; i++) {
-            stringBonus.append(bonus.get(i)).append("\n");
+            stringBonus.append(bonus.get(i).getCount() + ". " + bonus.get(i).getValue()).append("\n");
         }
         return stringBonus.toString().substring(0, stringBonus.toString().length() - 1);
     }

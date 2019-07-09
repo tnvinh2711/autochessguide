@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.zinzin.tierbuilder.R;
 import com.zinzin.tierbuilder.model.UnitsInfo;
 
@@ -38,8 +39,8 @@ public class UnitBuilderSynergyAdapter extends RecyclerView.Adapter<UnitBuilderS
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
         viewHolder.bind(infos.get(position), position);
         UnitsInfo unitsInfo = infos.get(position);
-        viewHolder.ivIcon.setImageDrawable(activity.getResources().getDrawable(unitsInfo.getImgInfo()));
-        viewHolder.tvName.setText(unitsInfo.getName() + " - " + unitsInfo.getCount());
+        Glide.with(activity).load(unitsInfo.getImgInfo()).into(viewHolder.ivIcon);
+        viewHolder.tvName.setText(unitsInfo.getName() + ". " + unitsInfo.getCount());
         viewHolder.tvType.setText(unitsInfo.getType());
         if (unitsInfo.getDes().equals("")) {
             viewHolder.tvDes.setVisibility(View.GONE);

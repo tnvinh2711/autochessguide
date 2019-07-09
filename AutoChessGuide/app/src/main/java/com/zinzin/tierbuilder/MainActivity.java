@@ -23,6 +23,11 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.zinzin.tierbuilder.fragment.BuiderFragment;
 import com.zinzin.tierbuilder.fragment.CreepsFragment;
 import com.zinzin.tierbuilder.fragment.DetailFragment;
@@ -36,7 +41,6 @@ import com.zinzin.tierbuilder.model.RaceList;
 import com.zinzin.tierbuilder.model.Units;
 import com.zinzin.tierbuilder.utils.Contants;
 import com.zinzin.tierbuilder.utils.Preference;
-import com.zinzin.tierbuilder.utils.SetImage;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
     private MenuAdapter mMenuAdapter;
     private ViewHolder mViewHolder;
     private AdView mAdView;
+    private LinearLayout llLoading;
     private List<Units> unitsList = new ArrayList<>();
     private List<RaceList> raceList = new ArrayList<>();
     private List<ClassList> classList = new ArrayList<>();
@@ -116,15 +121,8 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
 
         mMenuAdapter.setViewSelected(0, true);
         setTitle(mTitles.get(0));
+        llLoading = findViewById(R.id.ll_loading);
         loadData();
-        initFragment();
-
-        unitsFragment.setData(unitsList, raceList, classList);
-        buiderFragment.setData(unitsList, raceList, classList);
-        creepsFragment.setData(creepList);
-        itemFragment.setData(itemList);
-        // Show main fragment in container
-        goToFragment(unitsFragment, UnitsFragment.TAG);
 
 
     }
@@ -204,11 +202,66 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
         if (isSubmit == 0 && versionName.equals(versionN)) {
             return;
         }
-        raceList = SetImage.fullRaceList(Preference.getString(this, Contants.FIREBASE_LIST_RACE));
-        classList = SetImage.fullClassList(Preference.getString(this, Contants.FIREBASE_LIST_CLASS));
-        creepList = SetImage.fullCreepList(Preference.getString(this, Contants.FIREBASE_LIST_CREEP));
-        itemList = SetImage.fullItemList(Preference.getString(this, Contants.FIREBASE_LIST_ITEM));
-        unitsList = SetImage.fullUnitsList(Preference.getString(this, Contants.FIREBASE_LIST_UNIT), raceList, classList);
+        final DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("autochess").child("upload");
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot != null) {
+                    for (DataSnapshot ds : dataSnapshot.child("unitList").getChildren()) {
+                        Units unit = ds.getValue(Units.class);
+                        unitsList.add(unit);
+                    }
+                    for (DataSnapshot ds : dataSnapshot.child("classList").getChildren()) {
+                        ClassList classL = ds.getValue(ClassList.class);
+                        classList.add(classL);
+                    }
+                    for (DataSnapshot ds : dataSnapshot.child("raceList").getChildren()) {
+                        RaceList raceL = ds.getValue(RaceList.class);
+                        raceList.add(raceL);
+                    }
+                    for (DataSnapshot ds : dataSnapshot.child("itemList").getChildren()) {
+                        Item item = ds.getValue(Item.class);
+                        itemList.add(item);
+                    }
+                    for (DataSnapshot ds : dataSnapshot.child("creepList").getChildren()) {
+                        Creep creep = ds.getValue(Creep.class);
+                        creepList.add(creep);
+                    }
+                    for(Units units: unitsList){
+                        for (ClassList class_ : classList) {
+                            if (units.getType()!= null && class_.getName().equals(units.getType().get(0))) {
+                                units.setClass_image(class_.getImgClass());
+                            }
+                        }
+                        for (RaceList race : raceList) {
+                            if (units.getOrigin()!= null &&  race.getName().equals(units.getOrigin().get(0))) {
+                                units.setRace_image(race.getImgRace());
+                            }
+                            if ( units.getOrigin()!= null && units.getOrigin().size() > 1) {
+                                if (units.getOrigin()!= null &&  race.getName().equals(units.getOrigin().get(1))) {
+                                    units.setRace_image2(race.getImgRace());
+                                }
+                            }
+                        }
+                    }
+                    initFragment();
+                    unitsFragment.setData(unitsList, raceList, classList);
+                    buiderFragment.setData(unitsList, raceList, classList);
+                    creepsFragment.setData(creepList);
+                    itemFragment.setData(itemList);
+
+                    // Show main fragment in container
+                    myRef.removeEventListener(this);
+                    llLoading.setVisibility(View.GONE);
+                    goToFragment(unitsFragment, UnitsFragment.TAG);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+
+            }
+        });
 
     }
 

@@ -10,9 +10,13 @@ public class Units {
     private int icon_image;
     private int mini_image;
     private int skill_image;
-    private int race_image;
-    private Integer race_image2;
-    private int class_image;
+    private String url_full_image;
+    private String url_icon_image;
+    private String url_mini_image;
+    private String url_skill_image;
+    private String race_image;
+    private String race_image2;
+    private String class_image;
     private int color_name;
     private boolean isClick = false;
     @SerializedName("name")
@@ -51,18 +55,18 @@ public class Units {
     @SerializedName("info")
     @Expose
     private String info;
-    @SerializedName("race")
+    @SerializedName("origin")
     @Expose
-    private List<String> race = null;
+    private List<String> origin = null;
     @SerializedName("dota_convert_r")
     @Expose
     private List<String> dotaConvertR = null;
-    @SerializedName("class")
+    @SerializedName("type")
     @Expose
-    private String _class;
+    private List<String> type;
     @SerializedName("dota_convert_c")
     @Expose
-    private String dotaConvertC;
+    private List<String> dotaConvertC;
     @SerializedName("cost")
     @Expose
     private String cost;
@@ -185,14 +189,6 @@ public class Units {
         this.info = info;
     }
 
-    public List<String> getRace() {
-        return race;
-    }
-
-    public void setRace(List<String> race) {
-        this.race = race;
-    }
-
     public List<String> getDotaConvertR() {
         return dotaConvertR;
     }
@@ -201,21 +197,6 @@ public class Units {
         this.dotaConvertR = dotaConvertR;
     }
 
-    public String getClass_() {
-        return _class;
-    }
-
-    public void setClass_(String _class) {
-        this._class = _class;
-    }
-
-    public String getDotaConvertC() {
-        return dotaConvertC;
-    }
-
-    public void setDotaConvertC(String dotaConvertC) {
-        this.dotaConvertC = dotaConvertC;
-    }
 
     public String getCost() {
         return cost;
@@ -337,27 +318,83 @@ public class Units {
         isClick = click;
     }
 
-    public int getRace_image() {
+    public String getRace_image() {
         return race_image;
     }
 
-    public void setRace_image(int race_image) {
+    public void setRace_image(String race_image) {
         this.race_image = race_image;
     }
 
-    public int getClass_image() {
+    public String getClass_image() {
         return class_image;
     }
 
-    public void setClass_image(int class_image) {
+    public void setClass_image(String class_image) {
         this.class_image = class_image;
     }
 
-    public Integer getRace_image2() {
+    public String getRace_image2() {
         return race_image2;
     }
 
-    public void setRace_image2(Integer race_image2) {
+    public void setRace_image2(String race_image2) {
         this.race_image2 = race_image2;
+    }
+
+    public List<String> getOrigin() {
+        return origin;
+    }
+
+    public void setOrigin(List<String> origin) {
+        this.origin = origin;
+    }
+
+    public List<String> getType() {
+        return type;
+    }
+
+    public void setType(List<String> type) {
+        this.type = type;
+    }
+
+    public List<String> getDotaConvertC() {
+        return dotaConvertC;
+    }
+
+    public void setDotaConvertC(List<String> dotaConvertC) {
+        this.dotaConvertC = dotaConvertC;
+    }
+
+    public String getUrl_full_image() {
+        return url_full_image;
+    }
+
+    public void setUrl_full_image(String url_full_image) {
+        this.url_full_image = url_full_image;
+    }
+
+    public String getUrl_icon_image() {
+        return url_icon_image;
+    }
+
+    public void setUrl_icon_image(String url_icon_image) {
+        this.url_icon_image = url_icon_image;
+    }
+
+    public String getUrl_mini_image() {
+        return url_mini_image;
+    }
+
+    public void setUrl_mini_image(String url_mini_image) {
+        this.url_mini_image = url_mini_image;
+    }
+
+    public String getUrl_skill_image() {
+        return url_skill_image;
+    }
+
+    public void setUrl_skill_image(String url_skill_image) {
+        this.url_skill_image = url_skill_image;
     }
 }

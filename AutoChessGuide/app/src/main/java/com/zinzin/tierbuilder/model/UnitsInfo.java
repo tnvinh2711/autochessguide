@@ -1,24 +1,24 @@
 package com.zinzin.tierbuilder.model;
 
 public class UnitsInfo {
-    int imgInfo;
+    String imgInfo;
     String name;
     String type;
     String des;
     int count;
 
-    public UnitsInfo(int imgInfo, String name, String type, String des) {
+    public UnitsInfo(String imgInfo, String name, String type, String des) {
         this.imgInfo = imgInfo;
         this.name = name;
         this.type = type;
         this.des = des;
     }
 
-    public int getImgInfo() {
+    public String getImgInfo() {
         return imgInfo;
     }
 
-    public void setImgInfo(int imgInfo) {
+    public void setImgInfo(String imgInfo) {
         this.imgInfo = imgInfo;
     }
 
@@ -54,7 +54,7 @@ public class UnitsInfo {
         this.count = count;
     }
 
-    public UnitsInfo(int imgInfo, String name, String type, String des, int count) {
+    public UnitsInfo(String imgInfo, String name, String type, String des, int count) {
         this.imgInfo = imgInfo;
         this.name = name;
         this.type = type;

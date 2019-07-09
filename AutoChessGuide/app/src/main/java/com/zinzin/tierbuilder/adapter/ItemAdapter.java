@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.zinzin.tierbuilder.R;
 import com.zinzin.tierbuilder.model.Item;
 
@@ -40,7 +41,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         viewHolder.bind(itemList.get(position), position);
         Item item = itemList.get(position);
         viewHolder.tvName.setText(item.getName() + " ( " + item.getDotaConvert() + " ) ");
-        viewHolder.ivIcon.setImageDrawable(activity.getResources().getDrawable(item.getImgItem()));
+        Glide.with(activity).load(item.getUrlItem()).into(viewHolder.ivIcon);
         List<String> desItem = item.getBonus();
         StringBuilder stringDes = new StringBuilder();
         for (int i = 0; i < desItem.size(); i++) {

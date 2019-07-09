@@ -76,23 +76,53 @@ public class HeaderRecyclerViewSection extends StatelessSection {
         } else {
             viewHolder.ivNew.setVisibility(View.GONE);
         }
-        Glide.with(activity).load(activity.getResources().getDrawable(units.getIcon_image())).apply(RequestOptions.circleCropTransform()).into(viewHolder.ivIconUnit);
+        Glide.with(activity).load(units.getUrl_icon_image()).apply(RequestOptions.circleCropTransform()).into(viewHolder.ivIconUnit);
         viewHolder.tvNameUnit.setText(units.getName());
-        viewHolder.tvNameUnit.setTextColor(activity.getResources().getColor(units.getColor_name()));
+        switch (units.getCost()){
+            case "1":
+                viewHolder.tvNameUnit.setTextColor(activity.getResources().getColor(R.color.color_cost_1));
+                viewHolder.tvNameUnitDota.setTextColor(activity.getResources().getColor(R.color.color_cost_1));
+                break;
+            case "2":
+                viewHolder.tvNameUnit.setTextColor(activity.getResources().getColor(R.color.color_cost_2));
+                viewHolder.tvNameUnitDota.setTextColor(activity.getResources().getColor(R.color.color_cost_2));
+                break;
+            case "3":
+                viewHolder.tvNameUnit.setTextColor(activity.getResources().getColor(R.color.color_cost_3));
+                viewHolder.tvNameUnitDota.setTextColor(activity.getResources().getColor(R.color.color_cost_3));
+                break;
+            case "4":
+                viewHolder.tvNameUnit.setTextColor(activity.getResources().getColor(R.color.color_cost_4));
+                viewHolder.tvNameUnitDota.setTextColor(activity.getResources().getColor(R.color.color_cost_4));
+                break;
+            case "5":
+                viewHolder.tvNameUnit.setTextColor(activity.getResources().getColor(R.color.color_cost_5));
+                viewHolder.tvNameUnitDota.setTextColor(activity.getResources().getColor(R.color.color_cost_5));
+                break;
+
+        }
         viewHolder.tvNameUnitDota.setText("(" + units.getDotaConvert() + ")");
-        viewHolder.tvNameUnitDota.setTextColor(activity.getResources().getColor(units.getColor_name()));
-        viewHolder.ivIcon1.setImageDrawable(activity.getResources().getDrawable(units.getClass_image()));
-        viewHolder.ivIcon2.setImageDrawable(activity.getResources().getDrawable(units.getRace_image()));
-        if (units.getRace().size() > 1) {
+        if(units.getClass_image()!= null){
+            Glide.with(activity).load(units.getClass_image()).into(viewHolder.ivIcon1);
+            viewHolder.ivIcon1.setVisibility(View.VISIBLE);
+        } else {
+            viewHolder.ivIcon1.setVisibility(View.GONE);
+        }
+        if(units.getRace_image()!= null){
+            Glide.with(activity).load(units.getRace_image()).into(viewHolder.ivIcon2);
+            viewHolder.ivIcon2.setVisibility(View.VISIBLE);
+        } else {
+            viewHolder.ivIcon2.setVisibility(View.GONE);
+        }
+        if (units.getRace_image2()!= null) {
             viewHolder.ivIcon3.setVisibility(View.VISIBLE);
-            viewHolder.ivIcon3.setImageDrawable(activity.getResources().getDrawable(units.getRace_image2()));
+            Glide.with(activity).load(units.getRace_image2()).into(viewHolder.ivIcon3);
         } else {
             viewHolder.ivIcon3.setVisibility(View.GONE);
         }
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                viewHolder.itemView.setClickable(false);
                 if (listener != null)
                     listener.OnItemClick(units, position);
             }

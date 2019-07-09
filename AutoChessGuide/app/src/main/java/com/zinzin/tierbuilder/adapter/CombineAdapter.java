@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.zinzin.tierbuilder.R;
 import com.zinzin.tierbuilder.model.Item;
 
@@ -41,7 +42,7 @@ public class CombineAdapter extends RecyclerView.Adapter<CombineAdapter.ViewHold
         String combine = combineList.get(position);
         for (Item item: itemList){
             if(item.getName().equals(combine)){
-                viewHolder.ivIcon.setImageDrawable(activity.getResources().getDrawable(item.getImgItem()));
+                Glide.with(activity).load(item.getUrlItem()).into(viewHolder.ivIcon);
             }
         }
     }

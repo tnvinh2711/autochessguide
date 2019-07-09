@@ -18,6 +18,7 @@ import com.zinzin.tierbuilder.DrawerLocker;
 import com.zinzin.tierbuilder.R;
 import com.zinzin.tierbuilder.adapter.DetailUnitAdapter;
 import com.zinzin.tierbuilder.adapter.MiniIconAdapter;
+import com.zinzin.tierbuilder.model.Bonus;
 import com.zinzin.tierbuilder.model.ClassList;
 import com.zinzin.tierbuilder.model.RaceList;
 import com.zinzin.tierbuilder.model.Units;
@@ -102,10 +103,27 @@ public class DetailFragment extends Fragment {
         } else if (units.getBuff() != 0 && units.getNerf() != 0 && units.getUpdated() != 0) {
             tvStat.setVisibility(View.GONE);
         }
-        ivFullUnit.setImageDrawable(getResources().getDrawable(units.getFull_image()));
-        Glide.with(getActivity()).load(getResources().getDrawable(units.getSkill_image())).apply(RequestOptions.circleCropTransform()).into(ivSkillUnit);
+        Glide.with(getActivity()).load(units.getUrl_full_image()).apply(RequestOptions.circleCropTransform()).into(ivFullUnit);
+        Glide.with(getActivity()).load(units.getUrl_skill_image()).apply(RequestOptions.circleCropTransform()).into(ivSkillUnit);
         tvName.setText(units.getName() + " (" + units.getDotaConvert() + ")");
-        tvName.setTextColor(getResources().getColor(units.getColor_name()));
+        switch (units.getCost()){
+            case "1":
+                tvName.setTextColor(getResources().getColor(R.color.color_cost_1));
+                break;
+            case "2":
+                tvName.setTextColor(getResources().getColor(R.color.color_cost_2));
+                break;
+            case "3":
+                tvName.setTextColor(getResources().getColor(R.color.color_cost_3));
+                break;
+            case "4":
+                tvName.setTextColor(getResources().getColor(R.color.color_cost_4));
+                break;
+            case "5":
+                tvName.setTextColor(getResources().getColor(R.color.color_cost_5));
+                break;
+
+        }
         tvCost.setText("Cost: " + units.getCost() + "$");
         tvHeart.setText("Heart: " + Utils.linkStringFromArray(units.getHealth()));
         tvArmor.setText("Armor: " + Utils.linkStringFromArray(units.getArmor()));
@@ -118,28 +136,30 @@ public class DetailFragment extends Fragment {
         tvSkillDes.setText(units.getSkill().get(0).getDescription());
         List<UnitsTags> unitsTags = units.getSkill().get(0).getTags();
         StringBuilder stringTag = new StringBuilder();
-        for (int i = 0; i < unitsTags.size(); i++) {
-            String tag = unitsTags.get(i).getName()
-                    + ": " + Utils.linkStringFromArray(unitsTags.get(i).getBonus()) + "\n";
-            stringTag.append(tag);
+        if(unitsTags!= null){
+            for (int i = 0; i < unitsTags.size(); i++) {
+                String tag = unitsTags.get(i).getName()
+                        + ": " + Utils.linkStringFromArray(unitsTags.get(i).getBonus()) + "\n";
+                stringTag.append(tag);
+            }
+            tvSkillTag.setText(stringTag.toString().substring(0, stringTag.toString().length() - 2));
         }
-        tvSkillTag.setText(stringTag.toString().substring(0, stringTag.toString().length() - 2));
     }
 
     private void setUpRcv() {
-        List<Integer> listImg = new ArrayList<>();
+        List<String> listImg = new ArrayList<>();
         List<UnitsInfo> unitsInfos = new ArrayList<>();
         for (ClassList class_ : classLists) {
-            if (class_.getName().equals(units.getClass_())) {
+            if (units.getType()!= null && class_.getName().equals(units.getType().get(0))) {
                 addClass(class_, listImg, unitsInfos);
             }
         }
         for (RaceList race : raceLists) {
-            if (race.getName().equals(units.getRace().get(0))) {
+            if (units.getOrigin()!= null && race.getName().equals(units.getOrigin().get(0))) {
                 addRace(race, listImg, unitsInfos);
             }
-            if (units.getRace().size() > 1) {
-                if (race.getName().equals(units.getRace().get(1))) {
+            if (units.getOrigin()!= null && units.getOrigin().size() > 1) {
+                if (race.getName().equals(units.getOrigin().get(1))) {
                     addRace(race, listImg, unitsInfos);
                 }
             }
@@ -156,23 +176,23 @@ public class DetailFragment extends Fragment {
         rcvUnit.setAdapter(detailUnitAdapter);
     }
 
-    private void addClass(ClassList class_, List<Integer> listImg, List<UnitsInfo> unitsInfos) {
+    private void addClass(ClassList class_, List<String> listImg, List<UnitsInfo> unitsInfos) {
         listImg.add(class_.getImgClass());
-        List<String> bonus = class_.getBonus();
+        List<Bonus> bonus = class_.getBonus();
         StringBuilder stringBonus = new StringBuilder();
         for (int i = 0; i < bonus.size(); i++) {
-            stringBonus.append(bonus.get(i)).append("\n");
+            stringBonus.append(bonus.get(i).getCount()+". "+ bonus.get(i).getValue()).append("\n");
         }
         unitsInfos.add(new UnitsInfo(class_.getImgClass(), class_.getName(), "Class", stringBonus.toString().substring(0, stringBonus.toString().length() - 1)));
 
     }
 
-    private void addRace(RaceList race, List<Integer> listImg, List<UnitsInfo> unitsInfos) {
+    private void addRace(RaceList race, List<String> listImg, List<UnitsInfo> unitsInfos) {
         listImg.add(race.getImgRace());
-        List<String> bonus = race.getBonus();
+        List<Bonus> bonus = race.getBonus();
         StringBuilder stringBonus = new StringBuilder();
         for (int i = 0; i < bonus.size(); i++) {
-            stringBonus.append(bonus.get(i)).append("\n");
+            stringBonus.append(bonus.get(i).getCount()+". "+ bonus.get(i).getValue()).append("\n");
         }
         unitsInfos.add(new UnitsInfo(race.getImgRace(), race.getName(), "Race", stringBonus.toString().substring(0, stringBonus.toString().length() - 1)));
 

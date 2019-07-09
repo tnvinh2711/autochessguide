@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.zinzin.tierbuilder.R;
 import com.zinzin.tierbuilder.model.Units;
 import com.zinzin.tierbuilder.utils.Utils;
@@ -44,7 +45,7 @@ public class UnitsBottomAdapter extends RecyclerView.Adapter<UnitsBottomAdapter.
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
         viewHolder.bind(unitsList.get(position), position, listener);
         Units units = unitsList.get(position);
-        viewHolder.ivIconUnit.setImageDrawable(activity.getResources().getDrawable(units.getMini_image()));
+        Glide.with(activity).load(units.getUrl_mini_image()).into(viewHolder.ivIconUnit);
         viewHolder.tvNameUnit.setText(units.getName());
 
         viewHolder.tvNameUnitDota.setText("("+units.getDotaConvert()+")");
@@ -55,8 +56,29 @@ public class UnitsBottomAdapter extends RecyclerView.Adapter<UnitsBottomAdapter.
             viewHolder.tvNameUnitDota.setTextColor(activity.getResources().getColor(R.color.gray));
         } else {
             Utils.setUnlocked(viewHolder.ivIconUnit);
-            viewHolder.tvNameUnit.setTextColor(activity.getResources().getColor(units.getColor_name()));
-            viewHolder.tvNameUnitDota.setTextColor(activity.getResources().getColor(units.getColor_name()));
+            switch (units.getCost()){
+                case "1":
+                    viewHolder.tvNameUnit.setTextColor(activity.getResources().getColor(R.color.color_cost_1));
+                    viewHolder.tvNameUnitDota.setTextColor(activity.getResources().getColor(R.color.color_cost_1));
+                    break;
+                case "2":
+                    viewHolder.tvNameUnit.setTextColor(activity.getResources().getColor(R.color.color_cost_2));
+                    viewHolder.tvNameUnitDota.setTextColor(activity.getResources().getColor(R.color.color_cost_2));
+                    break;
+                case "3":
+                    viewHolder.tvNameUnit.setTextColor(activity.getResources().getColor(R.color.color_cost_3));
+                    viewHolder.tvNameUnitDota.setTextColor(activity.getResources().getColor(R.color.color_cost_3));
+                    break;
+                case "4":
+                    viewHolder.tvNameUnit.setTextColor(activity.getResources().getColor(R.color.color_cost_4));
+                    viewHolder.tvNameUnitDota.setTextColor(activity.getResources().getColor(R.color.color_cost_4));
+                    break;
+                case "5":
+                    viewHolder.tvNameUnit.setTextColor(activity.getResources().getColor(R.color.color_cost_5));
+                    viewHolder.tvNameUnitDota.setTextColor(activity.getResources().getColor(R.color.color_cost_5));
+                    break;
+
+            }
         }
     }
     public void updateList(List<Units> list){

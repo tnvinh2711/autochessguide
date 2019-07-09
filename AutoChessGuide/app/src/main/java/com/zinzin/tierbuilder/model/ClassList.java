@@ -7,7 +7,7 @@ import java.util.List;
 
 public class ClassList {
     private int count;
-    private  int imgClass;
+    private  String imgClass;
     @SerializedName("name")
     @Expose
     private String name;
@@ -22,7 +22,7 @@ public class ClassList {
     private String effect;
     @SerializedName("bonus")
     @Expose
-    private List<String> bonus = null;
+    private List<Bonus> bonus = null;
 
     public String getName() {
         return name;
@@ -56,19 +56,19 @@ public class ClassList {
         this.effect = effect;
     }
 
-    public List<String> getBonus() {
+    public List<Bonus> getBonus() {
         return bonus;
     }
 
-    public void setBonus(List<String> bonus) {
+    public void setBonus(List<Bonus> bonus) {
         this.bonus = bonus;
     }
 
-    public int getImgClass() {
+    public String getImgClass() {
         return imgClass;
     }
 
-    public void setImgClass(int imgClass) {
+    public void setImgClass(String imgClass) {
         this.imgClass = imgClass;
     }
 

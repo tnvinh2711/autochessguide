@@ -347,28 +347,35 @@ public class UnitsFragment extends Fragment {
                 unitsFilter.addAll(unitsList);
             }
             if (!costSelected.equals("")) {
-                for (int i = unitsFilter.size()-1; i >= 0; i--) {
+                for (int i = unitsFilter.size() - 1; i >= 0; i--) {
                     if (!unitsFilter.get(i).getCost().equals(costSelected))
                         unitsFilter.remove(i);
                 }
             }
             if (!classSelected.equals("")) {
                 for (int i = unitsFilter.size() - 1; i >= 0; i--) {
-                    if (!unitsFilter.get(i).getClass_().equals(classSelected)) {
+                    if (unitsFilter.get(i).getType() == null) {
+                        unitsFilter.remove(i);
+                        continue;
+                    }
+                    if (!unitsFilter.get(i).getType().get(0).equals(classSelected)) {
                         unitsFilter.remove(i);
                     }
                 }
             }
             if (!racesSelected.equals("")) {
                 for (int i = unitsFilter.size() - 1; i >= 0; i--) {
-                    if (unitsFilter.get(i).getRace().size() > 1) {
-                        if (!unitsFilter.get(i).getRace().get(0).equals(racesSelected) && !unitsFilter.get(i).getRace().get(1).equals(racesSelected))
+                    if (unitsFilter.get(i).getOrigin() == null) {
+                        unitsFilter.remove(i);
+                        continue;
+                    }
+                    if (unitsFilter.get(i).getOrigin().size() > 1) {
+                        if (!unitsFilter.get(i).getOrigin().get(0).equals(racesSelected) && !unitsFilter.get(i).getOrigin().get(1).equals(racesSelected))
                             unitsFilter.remove(i);
                     } else {
-                        if (!unitsFilter.get(i).getRace().get(0).equals(racesSelected))
+                        if (!unitsFilter.get(i).getOrigin().get(0).equals(racesSelected))
                             unitsFilter.remove(i);
                     }
-
                 }
             }
             Set<Units> set = new HashSet<>(unitsFilter);

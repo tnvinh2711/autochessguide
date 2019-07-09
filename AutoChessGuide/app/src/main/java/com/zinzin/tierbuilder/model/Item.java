@@ -8,6 +8,7 @@ import java.util.List;
 
 public class Item {
     private int imgItem;
+    private String urlItem;
     @SerializedName("name")
     @Expose
     private String name;
@@ -70,5 +71,13 @@ public class Item {
 
     public void setImgItem(int imgItem) {
         this.imgItem = imgItem;
+    }
+
+    public String getUrlItem() {
+        return urlItem;
+    }
+
+    public void setUrlItem(String urlItem) {
+        this.urlItem = urlItem;
     }
 }

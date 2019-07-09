@@ -1,11 +1,12 @@
 package com.zinzin.tierbuilder.model;
 
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class RaceList {
-    private int imgRace;
+    private String imgRace;
     private int count;
     @SerializedName("name")
     @Expose
@@ -21,7 +22,7 @@ public class RaceList {
     private String effect;
     @SerializedName("bonus")
     @Expose
-    private List<String> bonus = null;
+    private List<Bonus> bonus;
 
     public String getName() {
         return name;
@@ -55,19 +56,19 @@ public class RaceList {
         this.effect = effect;
     }
 
-    public List<String> getBonus() {
+    public List<Bonus> getBonus() {
         return bonus;
     }
 
-    public void setBonus(List<String> bonus) {
+    public void setBonus(List<Bonus> bonus) {
         this.bonus = bonus;
     }
 
-    public int getImgRace() {
+    public String getImgRace() {
         return imgRace;
     }
 
-    public void setImgRace(int imgRace) {
+    public void setImgRace(String imgRace) {
         this.imgRace = imgRace;
     }
 
@@ -78,4 +79,6 @@ public class RaceList {
     public void setCount(int count) {
         this.count = count;
     }
+
+
 }
