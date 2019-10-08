@@ -62,7 +62,6 @@ public class UnitsFragment extends Fragment {
     private List<Units> unitsListTier4 = new ArrayList<>();
     private List<Units> unitsListTier5 = new ArrayList<>();
 
-    private String statusSelected = "";
     private String costSelected = "";
     private String classSelected = "";
     private String racesSelected = "";
@@ -222,14 +221,13 @@ public class UnitsFragment extends Fragment {
 
     private void setUpBottomSheetDialog() {
         final View sheetView = getActivity().getLayoutInflater().inflate(R.layout.bottom_sheet_filter, null);
-        final ChipCloud chipCloudStatus = sheetView.findViewById(R.id.chip_cloud_status);
         final ChipCloud chipCloudCost = sheetView.findViewById(R.id.chip_cloud_cost);
         final ChipCloud chipCloudClass = sheetView.findViewById(R.id.chip_cloud_class);
         final ChipCloud chipCloudRace = sheetView.findViewById(R.id.chip_cloud_race);
         Button btnDone = sheetView.findViewById(R.id.btn_done);
         TextView tvReset = sheetView.findViewById(R.id.tv_reset);
         final String[] listCost = new String[]{"1", "2", "3", "4", "5"};
-        final String[] listStatus = new String[]{"New", "Buff", "Nerf"};
+
         listRace = new String[raceList.size()];
         listClass = new String[classList.size()];
         for (int i = 0; i < raceList.size(); i++) {
@@ -239,21 +237,10 @@ public class UnitsFragment extends Fragment {
             listClass[i] = classList.get(i).getName();
         }
 
-        chipCloudStatus.addChips(listStatus);
         chipCloudCost.addChips(listCost);
         chipCloudClass.addChips(listClass);
         chipCloudRace.addChips(listRace);
-        chipCloudStatus.setChipListener(new ChipListener() {
-            @Override
-            public void chipSelected(int index) {
-                statusSelected = listStatus[index];
-            }
 
-            @Override
-            public void chipDeselected(int index) {
-                statusSelected = "";
-            }
-        });
         chipCloudCost.setChipListener(new ChipListener() {
             @Override
             public void chipSelected(int index) {
@@ -290,17 +277,14 @@ public class UnitsFragment extends Fragment {
         tvReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                chipCloudStatus.setMode(ChipCloud.Mode.NONE);
                 chipCloudCost.setMode(ChipCloud.Mode.NONE);
                 chipCloudClass.setMode(ChipCloud.Mode.NONE);
                 chipCloudRace.setMode(ChipCloud.Mode.NONE);
                 chipCloudRace.setMode(ChipCloud.Mode.NONE);
-                chipCloudStatus.setMode(ChipCloud.Mode.SINGLE);
                 chipCloudCost.setMode(ChipCloud.Mode.SINGLE);
                 chipCloudClass.setMode(ChipCloud.Mode.SINGLE);
                 chipCloudRace.setMode(ChipCloud.Mode.SINGLE);
                 chipCloudRace.setMode(ChipCloud.Mode.SINGLE);
-                statusSelected = "";
                 costSelected = "";
                 classSelected = "";
                 racesSelected = "";
@@ -324,33 +308,15 @@ public class UnitsFragment extends Fragment {
 
     private void getListFilter() {
         unitsFilter.clear();
-        if (!statusSelected.equals("") || !costSelected.equals("") || !classSelected.equals("") || !racesSelected.equals("")) {
+        if (!costSelected.equals("") || !classSelected.equals("") || !racesSelected.equals("")) {
             isFilter = true;
-            if (!statusSelected.equals("")) {
-                for (int i = 0; i < unitsList.size(); i++) {
-                    switch (statusSelected) {
-                        case "New":
-                            if (unitsList.get(i).getNew() == 0)
-                                unitsFilter.add(unitsList.get(i));
-                            break;
-                        case "Buff":
-                            if (unitsList.get(i).getBuff() == 0)
-                                unitsFilter.add(unitsList.get(i));
-                            break;
-                        case "Nerf":
-                            if (unitsList.get(i).getNerf() == 0)
-                                unitsFilter.add(unitsList.get(i));
-                            break;
-                    }
-                }
-            } else {
-                unitsFilter.addAll(unitsList);
-            }
             if (!costSelected.equals("")) {
                 for (int i = unitsFilter.size() - 1; i >= 0; i--) {
                     if (!unitsFilter.get(i).getCost().equals(costSelected))
                         unitsFilter.remove(i);
                 }
+            } else {
+                unitsFilter.addAll(unitsList);
             }
             if (!classSelected.equals("")) {
                 for (int i = unitsFilter.size() - 1; i >= 0; i--) {
@@ -437,20 +403,20 @@ public class UnitsFragment extends Fragment {
         unitsListTier4.clear();
         unitsListTier5.clear();
         for (Units units : heroList) {
-            switch (units.getTier()) {
-                case "1":
+            switch (units.getCost()) {
+                case "5":
                     unitsListTier1.add(units);
                     break;
-                case "2":
+                case "4":
                     unitsListTier2.add(units);
                     break;
                 case "3":
                     unitsListTier3.add(units);
                     break;
-                case "4":
+                case "2":
                     unitsListTier4.add(units);
                     break;
-                case "5":
+                case "1":
                     unitsListTier5.add(units);
                     break;
             }

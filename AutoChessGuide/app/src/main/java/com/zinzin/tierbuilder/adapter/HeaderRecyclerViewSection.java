@@ -52,30 +52,6 @@ public class HeaderRecyclerViewSection extends StatelessSection {
     public void onBindItemViewHolder(RecyclerView.ViewHolder holder, final int position) {
         final HeroViewHolder viewHolder = (HeroViewHolder) holder;
         final Units units = list.get(position);
-        if (units.getBuff() == 0) {
-            viewHolder.ivIconUnit.setBackgroundResource(R.drawable.border_background_buff);
-            viewHolder.tvStat.setBackgroundResource(R.drawable.background_buff);
-            viewHolder.tvStat.setText("BUFFED");
-            viewHolder.tvStat.setVisibility(View.VISIBLE);
-        } else if (units.getNerf() == 0) {
-            viewHolder.ivIconUnit.setBackgroundResource(R.drawable.border_background_neft);
-            viewHolder.tvStat.setBackgroundResource(R.drawable.background_nerf);
-            viewHolder.tvStat.setText("NERFED");
-            viewHolder.tvStat.setVisibility(View.VISIBLE);
-        } else if (units.getUpdated() == 0) {
-            viewHolder.ivIconUnit.setBackgroundResource(R.drawable.border_background_updated);
-            viewHolder.tvStat.setBackgroundResource(R.drawable.background_updated);
-            viewHolder.tvStat.setText("UPDATED");
-            viewHolder.tvStat.setVisibility(View.VISIBLE);
-        } else if (units.getBuff() != 0 && units.getNerf() != 0 && units.getUpdated() != 0) {
-            viewHolder.ivIconUnit.setBackgroundResource(R.drawable.border_background);
-            viewHolder.tvStat.setVisibility(View.GONE);
-        }
-        if (units.getNew() == 0) {
-            viewHolder.ivNew.setVisibility(View.VISIBLE);
-        } else {
-            viewHolder.ivNew.setVisibility(View.GONE);
-        }
         Glide.with(activity).load(units.getUrl_icon_image()).apply(RequestOptions.circleCropTransform()).into(viewHolder.ivIconUnit);
         viewHolder.tvNameUnit.setText(units.getName());
         switch (units.getCost()){

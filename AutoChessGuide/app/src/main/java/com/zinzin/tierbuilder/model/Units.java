@@ -8,11 +8,9 @@ import java.util.List;
 public class Units {
     private int full_image;
     private int icon_image;
-    private int mini_image;
     private int skill_image;
     private String url_full_image;
     private String url_icon_image;
-    private String url_mini_image;
     private String url_skill_image;
     private String race_image;
     private String race_image2;
@@ -286,14 +284,6 @@ public class Units {
         this.icon_image = icon_image;
     }
 
-    public int getMini_image() {
-        return mini_image;
-    }
-
-    public void setMini_image(int mini_image) {
-        this.mini_image = mini_image;
-    }
-
     public int getSkill_image() {
         return skill_image;
     }
@@ -382,13 +372,6 @@ public class Units {
         this.url_icon_image = url_icon_image;
     }
 
-    public String getUrl_mini_image() {
-        return url_mini_image;
-    }
-
-    public void setUrl_mini_image(String url_mini_image) {
-        this.url_mini_image = url_mini_image;
-    }
 
     public String getUrl_skill_image() {
         return url_skill_image;

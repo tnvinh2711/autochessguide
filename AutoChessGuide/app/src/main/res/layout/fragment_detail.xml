@@ -30,21 +30,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="200dp" />
 
-                <TextView
-                    android:layout_width="60dp"
-                    android:layout_height="wrap_content"
-                    android:text="Buffed"
-                    android:id="@+id/tv_stat"
-                    android:visibility="gone"
-                    android:textAllCaps="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="5dp"
-                    android:elevation="5dp"
-                    android:gravity="center"
-                    android:padding="2dp"
-                    android:textSize="12sp"
-                    android:background="@drawable/background_nerf"
-                    android:textColor="@color/white"/>
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rcv_mini"
                     android:layout_width="wrap_content"

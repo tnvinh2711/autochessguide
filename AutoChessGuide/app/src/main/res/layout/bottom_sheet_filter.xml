@@ -54,33 +54,7 @@
                 android:layout_height="0.1dp"
                 android:background="#D1D1DB" />
 
-            <TextView
-                android:id="@+id/tv_filter_status"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="16dp"
-                android:text="Status"
-                android:textColor="@color/text_search_box"
-                android:textSize="16sp" />
 
-            <com.adroitandroid.chipcloud.ChipCloud
-                android:id="@+id/chip_cloud_status"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginBottom="10dp"
-                app:selectMode="single"
-                app:selectedColor="#F44336" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.1dp"
-                android:background="#D1D1DB" />
 
             <TextView
                 android:id="@+id/tv_filter_cost"

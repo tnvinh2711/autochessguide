@@ -202,7 +202,7 @@ public class MainActivity extends AppCompatActivity implements DuoMenuView.OnMen
         if (isSubmit == 0 && versionName.equals(versionN)) {
             return;
         }
-        final DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("autochess").child("upload");
+        final DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("autochess").child("upload2");
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

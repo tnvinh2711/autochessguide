@@ -40,7 +40,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
         viewHolder.bind(itemList.get(position), position);
         Item item = itemList.get(position);
-        viewHolder.tvName.setText(item.getName() + " ( " + item.getDotaConvert() + " ) ");
+        viewHolder.tvName.setText(item.getName());
         Glide.with(activity).load(item.getUrlItem()).into(viewHolder.ivIcon);
         List<String> desItem = item.getBonus();
         StringBuilder stringDes = new StringBuilder();

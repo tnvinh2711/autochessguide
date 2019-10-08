@@ -44,7 +44,7 @@ public class UnitsBuilderAdapter extends RecyclerView.Adapter<UnitsBuilderAdapte
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
         viewHolder.bind(unitsList.get(position), position, listener);
         Units units = unitsList.get(position);
-        Glide.with(activity).load(units.getUrl_mini_image()).into(viewHolder.ivIconUnit);
+        Glide.with(activity).load(units.getUrl_icon_image()).into(viewHolder.ivIconUnit);
 
         viewHolder.tvNameUnit.setText(units.getName());
 

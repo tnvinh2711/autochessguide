@@ -37,7 +37,7 @@ public class DetailFragment extends Fragment {
     private MiniIconAdapter miniIconAdapter;
     private DetailUnitAdapter detailUnitAdapter;
     private ImageView ivFullUnit, ivSkillUnit;
-    private TextView tvName, tvCost, tvHeart, tvArmor, tvMres, tvAtkDame, tvAtkSpd, tvAtkRange, tvStat;
+    private TextView tvName, tvCost, tvHeart, tvArmor, tvMres, tvAtkDame, tvAtkSpd, tvAtkRange;
     private TextView tvSkillName, tvSkillStatus, tvSkillDes, tvSkillTag;
     private RecyclerView rcvUnit, rcvMiniIcon;
     private Units units;
@@ -68,7 +68,6 @@ public class DetailFragment extends Fragment {
         ivFullUnit = view.findViewById(R.id.iv_units_full);
         ivSkillUnit = view.findViewById(R.id.iv_skill);
         tvName = view.findViewById(R.id.tv_name);
-        tvStat = view.findViewById(R.id.tv_stat);
         tvCost = view.findViewById(R.id.tv_cost);
         tvHeart = view.findViewById(R.id.tv_heart);
         tvArmor = view.findViewById(R.id.tv_armor);
@@ -88,21 +87,6 @@ public class DetailFragment extends Fragment {
     }
 
     private void setData() {
-        if (units.getBuff() == 0) {
-            tvStat.setBackgroundResource(R.drawable.background_buff);
-            tvStat.setText("BUFFED");
-            tvStat.setVisibility(View.VISIBLE);
-        } else if (units.getNerf() == 0) {
-            tvStat.setBackgroundResource(R.drawable.background_nerf);
-            tvStat.setText("NERFED");
-            tvStat.setVisibility(View.VISIBLE);
-        } else if (units.getUpdated() == 0) {
-            tvStat.setBackgroundResource(R.drawable.background_updated);
-            tvStat.setText("UPDATED");
-            tvStat.setVisibility(View.VISIBLE);
-        } else if (units.getBuff() != 0 && units.getNerf() != 0 && units.getUpdated() != 0) {
-            tvStat.setVisibility(View.GONE);
-        }
         Glide.with(getActivity()).load(units.getUrl_full_image()).apply(RequestOptions.circleCropTransform()).into(ivFullUnit);
         Glide.with(getActivity()).load(units.getUrl_skill_image()).apply(RequestOptions.circleCropTransform()).into(ivSkillUnit);
         tvName.setText(units.getName() + " (" + units.getDotaConvert() + ")");
