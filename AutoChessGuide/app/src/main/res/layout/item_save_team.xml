@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/border_background_re"
+    android:background="@drawable/border_background_builder_re"
     android:layout_marginTop="16dp"
     android:orientation="vertical">
 
@@ -28,11 +28,19 @@
             android:src="@mipmap/multiply" />
 
         <ImageView
-            android:id="@+id/iv_edit"
+            android:id="@+id/iv_share"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_margin="10dp"
             android:layout_toLeftOf="@id/iv_close"
+            android:src="@mipmap/share" />
+
+        <ImageView
+            android:id="@+id/iv_edit"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_margin="10dp"
+            android:layout_toLeftOf="@id/iv_share"
             android:src="@mipmap/edit" />
     </RelativeLayout>
 
@@ -41,22 +49,31 @@
         android:layout_height="1dp"
         android:background="@color/white" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcv_unit"
+    <LinearLayout
+        android:id="@+id/ll_capture"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"></androidx.recyclerview.widget.RecyclerView>
+        android:orientation="vertical"
+        android:background="@drawable/border_background_builder_re">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/white"></View>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcv_unit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"></androidx.recyclerview.widget.RecyclerView>
 
-  <TextView
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_margin="10dp"
-      android:id="@+id/tv_type"
-      android:textColor="@color/white"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/white"></View>
+
+        <TextView
+            android:id="@+id/tv_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_margin="10dp"
+            android:textColor="@color/white" />
+    </LinearLayout>
 
 </LinearLayout>
